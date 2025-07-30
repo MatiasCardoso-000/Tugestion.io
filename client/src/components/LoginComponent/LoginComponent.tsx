@@ -15,11 +15,7 @@ export const LoginComponent = () => {
     formState: { errors },
   } = useForm<User>();
 
-  const {
-    signIn,
-    isAuthenticated,
-    errors: LoginErrors,
-  } = useAuth();
+  const { signIn, isAuthenticated, errors: LoginErrors } = useAuth();
 
   const navigate = useNavigate();
 
@@ -41,37 +37,56 @@ export const LoginComponent = () => {
             TuGestión.io
           </h1>
         </div>
-        <div className="flex items-center justify-start w-1/2 h-full pl-60">
+        <div className="flex flex-col items-center justify-center w-1/2 h-full pl-60 gap-7">
+          {LoginErrors.map((error, i) => {
+            return (
+              <div
+                className="bg-red-500 p-3 rounded-md text-white w-1/2 text-xl"
+                key={i}
+              >
+                {error}
+              </div>
+            );
+          })}
           <Form
             formStyle={
-              "p-12 rounded-xl shadow-2xl bg-white max-w-lg w-full min-h-[500px] flex flex-col justify-center"
+              "p-12 rounded-xl shadow-2xl bg-white max-w-lg w-full min-h-[500px] flex flex-col justify-center gap-6"
             }
             titleStyle={"text-3xl font-bold text-zinc-900 mb-8 text-left"}
             title={"Inicia sesión"}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Input
-              inputStyle={
-                "w-full p-3 mb-6 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-              }
-              type="email"
-              placeholder="email"
-              register={{ ...register("email", { required: true }) }}
-            />
-            {
-              errors.email && <div>El email es requerido</div>
-            }
-            <Input
-              inputStyle={
-                "w-full p-3 mb-8 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-              }
-              type="password"
-              placeholder="Contraseña"
-              register={{ ...register("password", { required: true }) }}
-            />
-              {
-              errors.password && <div>El password es requerido</div>
-            }
+            <div>
+              <Input
+                inputStyle={
+                  "w-full p-3 mb-2 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
+                }
+                type="email"
+                placeholder="email"
+                register={{ ...register("email", { required: true }) }}
+              />
+              {errors.email && (
+                <div className="bg-red-400 text-white p-2 rounded-md">
+                  El correo electrónico es requerido
+                </div>
+              )}
+            </div>
+            <div>
+              <Input
+                inputStyle={
+                  "w-full p-3 mb-2  border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
+                }
+                type="password"
+                placeholder="Contraseña"
+                register={{ ...register("password", { required: true }) }}
+              />
+              {errors.password && (
+                <div className="bg-red-400 text-white p-2 rounded-md">
+                  La contraseña es requerida
+                </div>
+              )}
+            </div>
+
             <Button buttonStyle="w-full py-3 bg-zinc-900 text-zinc-100 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800 transition-colors">
               Iniciar sesión
             </Button>

@@ -7,7 +7,6 @@ interface AuthContextType {
   signUp: (data: User) => void;
   signIn: (data: User) => void;
   logout: () => void;
-  registerSuccesfully:boolean;
   isAuthenticated:boolean;
   errors: string[];
   isLoading: boolean;
@@ -19,7 +18,6 @@ export const AuthContext = createContext<AuthContextType>({
   signUp: (data: User) => data,
   signIn: (data: User) => data,
   logout: () => {},
-  registerSuccesfully:false,
   isAuthenticated:false,
   errors: [],
   isLoading: true,

@@ -1,8 +1,18 @@
 // Componente de botón reutilizable
-import React from "react";
+import React, { MouseEventHandler } from "react";
 
-export const Button = ({ children, buttonStyle}) => {
-  return <button className={buttonStyle} >{children}</button>;
+interface ButtonType {
+  children: React.ReactNode;
+  buttonStyle: string;
+  onClick?: MouseEventHandler;
+}
+
+export const Button = ({ children, buttonStyle,onClick }: ButtonType) => {
+  return (
+    <button className={buttonStyle} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;

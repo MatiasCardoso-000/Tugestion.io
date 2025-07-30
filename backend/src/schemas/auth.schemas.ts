@@ -4,7 +4,7 @@ export const registerSchema = z.object({
   // Validación para el nombre de usuario (username)
   username: z
     .string("El nombre de usuario es requerido.")
-    .min(6, "El nombre de usuario debe tener al menos 6 caracteres.")
+    .min(4, "El nombre de usuario debe tener al menos 6 caracteres.")
     .max(50, "El nombre de usuario no puede exceder los 50 caracteres.")
     .trim(), // Elimina espacios en blanco al inicio y al final
 

@@ -11,12 +11,12 @@ router.get(
   CategoryController.getCategoriesByUser
 );
 router.put(
-  "/categories/:id",
+  "/:id",
   validateToken,
   CategoryController.updateCategory
 );
 router.delete(
-  "/categories/:id",
+  "/:id",
   validateToken,
   CategoryController.deleteCategory
 );

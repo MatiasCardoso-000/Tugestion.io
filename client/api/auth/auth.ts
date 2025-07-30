@@ -1,15 +1,18 @@
 import { User } from "../../src/types/user.types";
 import { BASE_URL } from "./api";
 
-export const registerRequest = async (user: User) => {
-  return await fetch(`${BASE_URL}/auth/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials:"include",
-    body: JSON.stringify(user),
-  });
+export const registerRequest = async (user: User)=> {
+ return await fetch(`${BASE_URL}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(user),
+    });
+   
+
+
 };
 
 export const loginRequest = async (user: User) => {
@@ -18,7 +21,7 @@ export const loginRequest = async (user: User) => {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials:"include",
+    credentials: "include",
     body: JSON.stringify(user),
   });
 };
@@ -26,7 +29,6 @@ export const loginRequest = async (user: User) => {
 export const logoutRequest = async () => {
   return await fetch(`${BASE_URL}/auth/logout`, {
     method: "POST",
-    credentials: "include",
   });
 };
 

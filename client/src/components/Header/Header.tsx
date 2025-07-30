@@ -5,11 +5,6 @@ import { useAuth } from "../../hooks/useAuth";
 const Header = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isAuthenticated) navigate("/login");
-  }, [isAuthenticated]);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -30,10 +25,10 @@ const Header = () => {
               Inicio
             </Link>
           </li>
-          {user ? (
+          {user && isAuthenticated ? (
             <li className="relative">
               <button
-                className="flex items-center gap-2 text-zinc-700 hover:text-zinc-900 font-semibold focus:outline-none"
+                className="flex items-center gap-2 text-zinc-700 hover:text-zinc-900 font-semibold focus:outline-none cursor-pointer"
                 onClick={() => setMenuOpen((open) => !open)}
               >
                 {user.username || user.email}

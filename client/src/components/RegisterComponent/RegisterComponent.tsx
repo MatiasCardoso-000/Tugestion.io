@@ -3,7 +3,7 @@
 import Button from "../Button/Button";
 import { Form } from "../Form/Form";
 import { Input } from "../Input/Input";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {useAuth} from "../../hooks/useAuth";
 import { User } from "../../types/user.types";
@@ -15,7 +15,7 @@ export const RegisterComponent = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<User>();
-  const { signUp,isAuthenticated,registerSuccesfully, errors: RegisterErrors } = useAuth();
+  const { signUp,isAuthenticated,errors: RegisterErrors } = useAuth();
 
   const navigate = useNavigate()
 
@@ -31,14 +31,14 @@ export const RegisterComponent = () => {
 
 
   return (
-    <div className="h-screen w-full flex items-center bg-zinc-100">
-      <div className="flex w-full h-full">
+    <div className="h-screen w-full flex items-center  bg-zinc-100">
+      <div className="flex w-full h-full ">
         <div className="absolute top-10 right-20">
           <h1 className="text-6xl font-extrabold text-zinc-800">
             TuGestión.io
           </h1>
         </div>
-        <div className="flex items-center justify-start w-1/2 pl-60 h-full gap-7">
+        <div className="flex flex-col items-center justify-center w-1/2 pl-60 h-full gap-7">
           { RegisterErrors.map((error,i) => {
             return <div className="bg-red-500 p-3 rounded-md text-white w-1/2 text-xl" key={i}>{error}</div>;
           })}

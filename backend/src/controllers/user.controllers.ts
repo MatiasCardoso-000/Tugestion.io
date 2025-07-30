@@ -37,7 +37,7 @@ const register = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({ newUser, accessToken });
+    res.status(201).json({ accessToken });
   } catch (error: any) {
     console.error("Error en el registro de usuario:", error);
     res.status(500).json({ message: ["Error interno del servidor."] });
@@ -54,9 +54,12 @@ const login = async (req: Request, res: Response) => {
       return res.status(400).json({ message: ["Invalid credentials"] });
     }
 
-    const checkPassword = bcrypt.compare(password, userFound.password_hash);
+    const checkPassword = await bcrypt.compare(
+      password,
+      userFound.password_hash
+    );
     if (!checkPassword) {
-      res.status(400).json({ message: ["Invalid credentials"] });
+      return res.status(400).json({ message: ["Invalid credentials"] });
     }
 
     const { accessToken, refreshToken } = generateTokens({
@@ -167,7 +170,7 @@ export const refreshTokenController = async (req: Request, res: Response) => {
     );
 
     // 5. ENVIAR EL NUEVO ACCESS TOKEN AL CLIENTE
-    res.json({user, accessToken: newAccessToken });
+    res.json({ user, accessToken: newAccessToken });
   } catch (error) {
     // Este catch se activará si jwt.verify falla (token expirado, malformado, etc.)
     // o si falta alguna variable de entorno.

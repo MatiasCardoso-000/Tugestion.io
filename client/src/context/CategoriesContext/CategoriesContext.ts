@@ -1,10 +1,16 @@
 import { createContext } from "react";
-import { Categories } from "../../types/categories.types";
+import { Category } from "../../types/categories.types";
 
 interface CategoriesContextType {
-  categories: Categories[];
+  categories: Category[];
+  createCategory: (category: Category) => void;
+  deleteCategory: ( category_id: string) => void;
+  getCategories: () => void;
 }
 
 export const CategoriesContext = createContext<CategoriesContextType>({
   categories: [],
+  createCategory: (category: Category) => category,
+  deleteCategory: () => {},
+  getCategories: () => {},
 });

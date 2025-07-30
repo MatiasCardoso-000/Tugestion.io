@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { CategoryModel } from "../models/category.model";
-import { UserModel } from "../models/user.model";
 import { z } from "zod";
 
 // Definimos un tipo para la request que ya pasó por el middleware de auth
@@ -22,7 +21,7 @@ const categorySchema = z.object({
     .trim(),
 });
 
-const createCategory = async (req: Request, res: Response) => {
+const createCategory = async (req: Request, res: Response)=> {
   try {
     const validationResult = categorySchema.safeParse(req.body);
     if (!validationResult.success) {

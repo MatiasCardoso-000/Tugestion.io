@@ -16,17 +16,16 @@ interface AuthProviderType {
 
 export const AuthProvider = ({ children }: AuthProviderType) => {
   const [user, setUser] = useState<User | null>(null);
-  const [registerSuccesfully, setRegisterSuccesfully] = useState(false);
-  const [isLoading, setisLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState<string[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const signUp = async (data: User) => {
     try {
-      setisLoading(true);
+      setIsLoading(true);
       const response = await registerRequest(data);
       const responseData = await response.json();
-
+      
       if (!response.ok) {
         let errorMessages;
 
@@ -45,7 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
         }
 
         setErrors(errorMessages);
-        setRegisterSuccesfully(false);
+        setIsAuthenticated(false)
         return; // Detenemos la ejecución
       }
 
@@ -53,14 +52,13 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
       // Aquí iría tu lógica de éxito, como guardar el token y el usuario
       localStorage.setItem("session_active", "true");
       localStorage.setItem("accessToken", responseData.accessToken);
-      setUser(responseData.user);
       setIsAuthenticated(true);
-      setRegisterSuccesfully(true);
+      setUser(responseData.user);
     } catch (error) {
       setErrors(["No se pudo conectar con el servidor."]);
-      setRegisterSuccesfully(false);
+      setIsAuthenticated(false)
     } finally {
-      setisLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -98,11 +96,11 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
       localStorage.setItem("accessToken", responseData.accessToken);
       setIsAuthenticated(true);
       setUser(responseData.user);
-      setisLoading(false);
+      setIsLoading(false);
     } catch (error) {
       setErrors(["No se pudo conectar con el servidor."]);
       setIsAuthenticated(false);
-      setisLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -111,8 +109,8 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
 
     localStorage.removeItem("session_active");
     localStorage.removeItem("accessToken");
-    setUser(null);
     setIsAuthenticated(false);
+    setUser(null);
   };
 
   useEffect(() => {
@@ -120,7 +118,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
       const sessionActive = localStorage.getItem("session_active");
 
       if (!sessionActive) {
-        setisLoading(false);
+        setIsLoading(false);
         setIsAuthenticated(false);
         setUser(null);
         return;
@@ -129,7 +127,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
       try {
         const res = await verifyTokenRequest();
         if (!res.ok) {
-          setisLoading(false);
+          setIsLoading(false);
           setIsAuthenticated(false);
           setUser(null);
           return;
@@ -143,12 +141,19 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
         setIsAuthenticated(false);
         setUser(null);
       } finally {
-        setisLoading(false);
+        setIsLoading(false);
       }
     };
 
     checkLoginStatus();
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrors([]);
+    }, 4000);
+     return ()=>clearInterval(timer);
+  });
 
   return (
     <AuthContext.Provider
@@ -159,7 +164,6 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
         signIn,
         logout,
         isAuthenticated,
-        registerSuccesfully,
         errors,
         isLoading,
       }}
