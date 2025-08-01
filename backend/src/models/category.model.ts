@@ -34,13 +34,13 @@ const create = async ({
  * @returns La categoría encontrada o undefined si no existe o no le pertenece al usuario.
  */
 const findById = async (
-  category_id: number,
+  category_id: string,
   user_id: string
 ): Promise<Category | undefined> => {
   const query = {
     text: `
       SELECT * FROM CATEGORY
-      WHERE category_id = $1 AND user_id = $2
+      WHERE category_id = $1 AND user_id = $2 OR user_id is NULL
     `,
     values: [category_id, user_id],
   };
@@ -102,7 +102,7 @@ const update = async ({
  * @returns La categoría eliminada o undefined si no se encontró.
  */
 const remove = async (
-  category_id: number,
+  category_id: string,
   user_id: string
 ): Promise<Category | undefined> => {
   const query = {

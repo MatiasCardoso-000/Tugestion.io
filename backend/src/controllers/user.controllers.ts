@@ -37,7 +37,14 @@ const register = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({ accessToken });
+  const  registeredUser = {
+      username: newUser.username,
+      email: newUser.email,
+      role: newUser.role,
+      user_id: newUser.user_id,
+    };
+
+    res.status(201).json({user : registeredUser, accessToken });
   } catch (error: any) {
     console.error("Error en el registro de usuario:", error);
     res.status(500).json({ message: ["Error interno del servidor."] });

@@ -1,11 +1,13 @@
+interface FormType {
+  formStyle: string;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  children: React.ReactNode;
+}
 
-export const Form = ({ formStyle,titleStyle,title, onSubmit, children }) => {
-
+export const Form = ({ formStyle, onSubmit, children }: FormType) => {
   return (
     <form className={formStyle} onSubmit={onSubmit}>
-      <h2 className={titleStyle}>{title}</h2>
       {children}
     </form>
   );
 };
-

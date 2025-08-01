@@ -3,22 +3,21 @@ import { ExpensesModel } from "../models/expenses.model";
 import { CategoryModel } from "../models/category.model";
 import { UserModel } from "../models/user.model";
 import { z } from "zod";
-import { validateSchema } from "../middleware/validateSchema";
 
 interface RequestWithUser extends Request {
   user?: { uid: string };
 }
 
 const createExpenseSchema = z.object({
-  amount: z.number().positive("El monto debe ser un número positivo."),
-  category_id: z.number().int().positive(),
+  amount: z.string(),
+  category_id: z.string(),
   description: z.string().min(1, "La descripción es requerida.").max(255),
   expense_date: z.string().datetime().optional(), // Fecha como string ISO 8601, opcional
 });
 
 const updateExpenseSchema = z.object({
-  amount: z.number().positive().optional(),
-  category_id: z.number().int().positive().optional(),
+  amount: z.string(),
+  category_id:z.string(),
   description: z.string().min(1).max(255).optional(),
   expense_date: z.string().datetime().optional(),
 });
@@ -53,7 +52,7 @@ const registerExpense = async (
     const newExpense = await ExpensesModel.create({
       category_id,
       user_id,
-      amount,
+      amount ,
       description,
       expense_date: expense_date ? new Date(expense_date) : undefined,
     });
@@ -102,7 +101,7 @@ const getAllExpenses = async (
 
 const getExpensesByUser = async (req: RequestWithUser, res: Response) => {
   try {
-    const user_id = req.user?.uid;
+    const user_id = req.user!.uid;
 
     if (!user_id) {
       return res.status(401).json({ message: "User not authenticated" });

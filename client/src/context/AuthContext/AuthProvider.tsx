@@ -22,10 +22,11 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
 
   const signUp = async (data: User) => {
     try {
-      setIsLoading(true);
+    
       const response = await registerRequest(data);
       const responseData = await response.json();
-      
+    
+        
       if (!response.ok) {
         let errorMessages;
 

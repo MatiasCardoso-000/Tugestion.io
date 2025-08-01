@@ -33,9 +33,9 @@ export const LoginComponent = () => {
     <div className="h-screen w-full flex items-center bg-zinc-100">
       <div className="flex w-full h-full">
         <div className="absolute top-10 right-20">
-          <h1 className="text-6xl font-extrabold text-zinc-800">
+          <Link to={'/'} className="text-6xl font-extrabold text-zinc-800">
             TuGestión.io
-          </h1>
+          </Link>
         </div>
         <div className="flex flex-col items-center justify-center w-1/2 h-full pl-60 gap-7">
           {LoginErrors.map((error, i) => {

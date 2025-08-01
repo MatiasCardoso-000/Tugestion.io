@@ -3,7 +3,7 @@ import React, { MouseEventHandler } from "react";
 
 interface ButtonType {
   children: React.ReactNode;
-  buttonStyle: string;
+  buttonStyle?: string;
   onClick?: MouseEventHandler;
 }
 

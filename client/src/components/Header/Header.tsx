@@ -25,13 +25,13 @@ const Header = () => {
               Inicio
             </Link>
           </li>
-          {user && isAuthenticated ? (
+          {user ? (
             <li className="relative">
               <button
                 className="flex items-center gap-2 text-zinc-700 hover:text-zinc-900 font-semibold focus:outline-none cursor-pointer"
                 onClick={() => setMenuOpen((open) => !open)}
               >
-                {user.username || user.email}
+                {user && user.username || user.email}
                 <svg
                   className="w-4 h-4"
                   fill="none"

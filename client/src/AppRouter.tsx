@@ -7,12 +7,14 @@ import Layout from "./components/Layout/Layout";
 import { UserProfile } from "./components/UserProfile/UserProfile";
 import { PrivateRoutes } from "./components/PrivateRoutes/PrivateRoutes";
 import ExpenseForm from "./components/ExpenseForm/ExpenseForm";
+import { Home } from "./pages/Home";
 
 export const AppRouter = () => {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<PrivateRoutes redirectTo={"/login"} />}>
