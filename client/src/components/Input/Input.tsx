@@ -5,6 +5,7 @@ interface InputType {
   register?: Record<string, any>;
   value?: string;
   required: boolean;
+  id:string;
 }
 
 // Componente de campo de entrada reutilizable
@@ -14,6 +15,7 @@ export const Input = ({
   placeholder,
   register,
   required,
+  id
 }: InputType) => {
   return (
     <input
@@ -22,6 +24,7 @@ export const Input = ({
       placeholder={placeholder}
       {...register}
       required={required}
+      id={id}
     />
   );
 };

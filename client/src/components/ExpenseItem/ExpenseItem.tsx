@@ -41,6 +41,7 @@ export const ExpenseItem = ({ expense }) => {
         <Button
           buttonStyle="p-2 rounded hover:bg-red-100 transition-colors cursor-pointer"
           onClick={() => deleteExpense(expense.expense_id)}
+          
         >
           <TrashIcon />
         </Button>
