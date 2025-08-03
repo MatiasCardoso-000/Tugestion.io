@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { CategoriesContext } from "./CategoriesContext";
 import { Category } from "../../types/categories.types";
-import { createCategoryRequest, deleteCategoryRequest, getCategoriesRequest, updateCategoryRequest } from "../../../api/categories/categories";
+import {
+  createCategoryRequest,
+  deleteCategoryRequest,
+  getCategoriesRequest,
+  updateCategoryRequest,
+} from "../../../api/categories/categories";
 import { useAuth } from "../../hooks/useAuth";
 
 interface CategoriesProviderType {
@@ -10,59 +15,68 @@ interface CategoriesProviderType {
 
 export const CategoriesProvider = ({ children }: CategoriesProviderType) => {
   const [categories, setCategories] = useState<Category[]>([]);
- const {isAuthenticated} =  useAuth()
-  const [savedCategoryId, setSavedCategoryId] = useState<string[]>([]);
-  const [toUpdate, setToUpdate] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const [editingId, setEditingId] = useState<string>("");
+  const [newCategoryName, setNewCategoryName] = useState<string>("");
 
 
-  const createCategory = async(category:Category)=> {
-    const res = await createCategoryRequest(category)
-    const newCategory = await res.json()
-    setCategories((prevCategories) => [...prevCategories,newCategory])
-    setSavedCategoryId([])
-  }
 
-
-  const getCategories = async () => {
-    try {
-      const res = await getCategoriesRequest();
-
-      if (!res.ok) {
-        setCategories([]);
-        throw new Error("Hubo un problema en la peticion de las categorias");
-      }
-
-      const categoriesData = await res.json();
-      setCategories(categoriesData);
-    } catch (error) {
-      console.error(error);
-    }
+  const createCategory = async (category: Category) => {
+    const res = await createCategoryRequest(category);
+    const newCategory = await res.json();
+    setCategories((prevCategories) => [...prevCategories, newCategory]);
   };
 
+  const updateCategory = async (
+    category_id: string,
+    newCategoryName: string
+  ) => {
+    await updateCategoryRequest(category_id, newCategoryName);
+    setCategories((prevCategories) =>
+      prevCategories.map((prevCategory) =>
+        prevCategory.category_id === category_id
+          ? { ...prevCategory, category_name: newCategoryName }
+          : prevCategory
+      )
+    );
 
-  const updateCategory = async(category_id:string,category:string) => {
-    await updateCategoryRequest(category_id,category)
-  }
-
-
-  const deleteCategory = async( category_id:string) => {
-    await deleteCategoryRequest(category_id)
-  }
-
-
-  const handleUpdate = (id: string) => {
-    setToUpdate(!toUpdate);
-    setSavedCategoryId([id]);
   };
 
-
+  const deleteCategory = async (category_id: string) => {
+    await deleteCategoryRequest(category_id);
+    setCategories((prevCategories) =>
+      prevCategories.filter((category) => category.category_id !== category_id)
+    );
+  };
 
   useEffect(() => {
-    getCategories();
-  },[isAuthenticated,categories]);
+    if (isAuthenticated) {
+      const getCategories = async () => {
+        try {
+          const res = await getCategoriesRequest();
+          const categoriesData = await res.json();
+          setCategories(categoriesData);
+        } catch (error) {
+          console.error("Error fetching categories:", error);
+        }
+      };
+      getCategories();
+    }
+  }, [isAuthenticated]);
 
   return (
-    <CategoriesContext.Provider value={{ categories,createCategory,getCategories,updateCategory,deleteCategory,savedCategoryId,toUpdate,handleUpdate }}>
+    <CategoriesContext.Provider
+      value={{
+        categories,
+        createCategory,
+        updateCategory,
+        deleteCategory,
+        setEditingId,
+        setNewCategoryName,
+        editingId,
+        newCategoryName,
+      }}
+    >
       {children}
     </CategoriesContext.Provider>
   );

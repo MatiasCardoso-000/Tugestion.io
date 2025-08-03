@@ -9,7 +9,7 @@ interface ButtonType {
 
 export const Button = ({ children, buttonStyle,onClick }: ButtonType) => {
   return (
-    <button className={buttonStyle} onClick={onClick}>
+    <button className={buttonStyle} onClick={onClick} type="submit">
       {children}
     </button>
   );

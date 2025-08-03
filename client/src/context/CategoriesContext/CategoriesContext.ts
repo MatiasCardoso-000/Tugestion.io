@@ -4,12 +4,12 @@ import { Category } from "../../types/categories.types";
 interface CategoriesContextType {
   categories: Category[];
   createCategory: (category: Category) => void;
-  updateCategory: (category_id: string,category:string) => void;
-  deleteCategory: ( category_id: string) => void;
-  getCategories: () => void;
-  savedCategoryId: string[];
-  toUpdate:boolean;
-  handleUpdate:(id:string) => void;
+  updateCategory: (category_id: string, category: string) => void;
+  deleteCategory: (category_id: string) => void;
+  editingId: string ;
+  setEditingId: (id: string) => void;
+  newCategoryName: string;
+  setNewCategoryName: (name: string) => void;
 }
 
 export const CategoriesContext = createContext<CategoriesContextType>({
@@ -17,8 +17,8 @@ export const CategoriesContext = createContext<CategoriesContextType>({
   createCategory: (category: Category) => category,
   updateCategory: () => {},
   deleteCategory: () => {},
-  getCategories: () => {},
-  savedCategoryId: [],
-  toUpdate: false,
-  handleUpdate : () => {}
+  editingId: "",
+  setEditingId: () => {},
+  newCategoryName: "",
+  setNewCategoryName: () => {},
 });

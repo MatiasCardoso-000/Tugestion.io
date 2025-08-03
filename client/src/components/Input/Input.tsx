@@ -2,7 +2,7 @@ interface InputType {
   type: string;
   inputStyle: string;
   placeholder: string;
-  register: Record<string, any>;
+  register?: Record<string, any>;
   value?: string;
   required: boolean;
 }

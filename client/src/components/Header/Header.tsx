@@ -1,37 +1,37 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { HamburguerIcon, SettingsIcon } from "../Icons/Icons";
 
-const Header = () => {
-  const { user, logout, isAuthenticated } = useAuth();
+const Header = ({ toggleMenu }) => {
+  const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleOpenMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   useEffect(() => {
     setMenuOpen(false);
-  },[]);
+  }, []);
 
   return (
-    <header className="w-full bg-white shadow-md py-4 px-8 flex items-center justify-between">
+    <header className="w-full flex flex-row-reverse items-center justify-between py-4 px-8  ">
       <Link to="/dashboard" className="text-2xl font-extrabold text-zinc-900">
         TuGestión.io
       </Link>
       <nav>
-        <ul className="flex items-center gap-6">
-          <li>
-            <Link
-              to="/dashboard"
-              className="text-zinc-700 hover:text-zinc-900 font-semibold"
-            >
-              Inicio
-            </Link>
-          </li>
+        <ul className="flex items-center gap-6 ">
+          <button onClick={toggleMenu}>
+            <HamburguerIcon />
+          </button>
           {user ? (
             <li className="relative">
               <button
                 className="flex items-center gap-2 text-zinc-700 hover:text-zinc-900 font-semibold focus:outline-none cursor-pointer"
-                onClick={() => setMenuOpen((open) => !open)}
+                onClick={handleOpenMenu}
               >
-                {user && user.username || user.email}
+                <SettingsIcon />
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -47,16 +47,19 @@ const Header = () => {
                 </svg>
               </button>
               {menuOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
-                  <Link
+                <div
+                  className={` absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 `}
+                >
+                  {/* <Link
                     to="/dashboard/profile"
                     className="block px-4 py-2 text-zinc-700 hover:bg-zinc-100"
                     onClick={() => setMenuOpen(false)}
                   >
                     Perfil
-                  </Link>
+                  </Link> */}
                   <button
-                    className="block w-full text-left px-4 py-2 text-zinc-700 hover:bg-zinc-100"
+                    className={`block w-full text-left px-4 py-2 rounded-md cursor-pointer text-zinc-900  hover:bg-zinc-800 transition-colors hover:text-white 
+                ` }
                     onClick={logout}
                   >
                     Cerrar sesión

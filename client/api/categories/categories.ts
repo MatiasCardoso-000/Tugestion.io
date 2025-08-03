@@ -17,17 +17,18 @@ export const getCategoriesRequest = async () => {
   });
 };
 
-
-export const updateCategoryRequest = async(id:string,category:string) => {
-  return await apiFetch(`/categories/${id}`,{
-    method:"PUT",
-     headers: {
+export const updateCategoryRequest = async (
+  id: string,
+  newCategoryName: string
+) => {
+  return await apiFetch(`/categories/${id}`, {
+    method: "PUT",
+    headers: {
       "Content-Type": "application/json",
     },
-    body : JSON.stringify(category)
-  })
-}
-
+    body: JSON.stringify({ category_name: newCategoryName }),
+  });
+};
 
 export const deleteCategoryRequest = async (id: string) => {
   return await apiFetch(`/categories/${id}`, {

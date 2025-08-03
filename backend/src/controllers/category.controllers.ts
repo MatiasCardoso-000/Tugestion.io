@@ -82,9 +82,10 @@ const updateCategory = async (req: Request, res: Response) => {
     }
 
     const { category_name } = validationResult.data;
-
+    console.log(category_name);
+    
     const updatedCategory = await CategoryModel.update({
-      category_id: Number(id),
+      category_id: id,
       user_id,
       category_name,
     });
@@ -114,7 +115,7 @@ const deleteCategory = async (req: Request, res: Response) => {
     const { id } = req.params;
     const user_id = req.user!.uid;
 
-      const deletedCategory = await CategoryModel.remove(Number(id), user_id);
+      const deletedCategory = await CategoryModel.remove(id, user_id);
 
       if (!deletedCategory) {
         return res.status(404).json({

@@ -7,35 +7,28 @@ import { Input } from "../Input/Input";
 import { useExpenses } from "../../hooks/useExpenses";
 import { Expenses } from "../../types/expenses.types";
 import { Form } from "../Form/Form";
+import { Link } from "react-router-dom";
+import { LeftArrowIcon } from "../Icons/Icons";
 
 const ExpenseForm = () => {
   const { handleSubmit, register } = useForm<any>();
 
-  const [createNewCategory, setCreateNewCategory] = useState(false);
   const { addExpense } = useExpenses();
   const { categories, createCategory } = useCategories();
 
-  const handleCategory = async (data: Category) => {
+  const handleNewCategory = async (data: Category) => {
     createCategory(data);
   };
 
   const handleNewExpense = async (expense: Expenses[]) => {
     addExpense(expense);
-    // console.log(expense);
-    
   };
 
   return (
     <div className="relative">
-      <Button
-        buttonStyle="w-1/11 py-3 bg-zinc-900 text-zinc-100 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800 transition-colors mt-2 absolute right-20"
-        onClick={() => {
-          setCreateNewCategory(!createNewCategory);
-        }}
-      >
-        Crear Categoria
-      </Button>
-
+      <Link to={"/dashboard"} className="flex gap-4 p-4">
+        <LeftArrowIcon /> Volver al inicio
+      </Link>
       <Form
         formStyle="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto "
         onSubmit={handleSubmit(handleNewExpense)}
@@ -53,7 +46,6 @@ const ExpenseForm = () => {
             inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
             placeholder="Ej: 1000"
             required
-
           />
         </div>
         <div>
@@ -72,7 +64,7 @@ const ExpenseForm = () => {
           <label className="block text-zinc-700 font-semibold mb-1">
             Categoria
           </label>
-          <select className="border rounded-md p-3 w-full bg-zinc-50 text-shadow-zinc-900 focus:outline-none" >
+          <select className="border rounded-md p-3 w-full bg-zinc-50 text-shadow-zinc-900 focus:outline-none">
             <option disabled selected className="disabled:hidden text-zinc-400">
               Ej: Transporte
             </option>
@@ -90,14 +82,14 @@ const ExpenseForm = () => {
             })}
           </select>
         </div>
-        <Button buttonStyle="w-full py-3 bg-zinc-900 text-zinc-100 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800 transition-colors mt-2">
+        <Button buttonStyle="w-full py-3 bg-zinc-900 text-zinc-100 rounded-lg font-bold text-lg cursor-pointer shadow-md  hover:bg-zinc-800  transition-colors  mt-2">
           Registrar gasto
         </Button>
       </Form>
-      {createNewCategory && (
+      {/* {createNewCategory && (
         <form
-          className="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto absolute right-20 top-20"
-          onSubmit={handleSubmit(handleCategory)}
+          className="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto absolute right-20 top-36"
+          onSubmit={handleSubmit(handleNewCategory)}
         >
           <div>
             <label className="block text-zinc-700 font-semibold mb-1">
@@ -115,7 +107,7 @@ const ExpenseForm = () => {
             Agregar categoría
           </Button>
         </form>
-      )}
+      )} */}
     </div>
   );
 };
