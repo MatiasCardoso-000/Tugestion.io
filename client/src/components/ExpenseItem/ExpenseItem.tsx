@@ -8,16 +8,18 @@ export const ExpenseItem = ({ expense }) => {
 
   return (
     <li className="flex justify-between items-center py-3 px-2 hover:bg-zinc-50 rounded transition-colors">
-      <div className="flex gap-8 items-center">
-        <UserIcon/>
+      <div className="w-full flex gap-8 items-center">
         <div>
+          <UserIcon />
+        </div>
+        <div className="w-1/4">
           <h3 className="text-zinc-400 text-xl">Descripción</h3>
           <span className="font-semibold text-zinc-800 text-xl">
             {expense.description}
           </span>
         </div>
 
-        <div>
+        <div className="w-full">
           <h3 className="text-zinc-400 text-xl">Fecha</h3>
           <span className="block  text-zinc-400 text-xl">
             {expense.expense_date.split("T")[0].split("-").reverse().join("/")}
@@ -41,7 +43,6 @@ export const ExpenseItem = ({ expense }) => {
         <Button
           buttonStyle="p-2 rounded hover:bg-red-100 transition-colors cursor-pointer"
           onClick={() => deleteExpense(expense.expense_id)}
-          
         >
           <TrashIcon />
         </Button>

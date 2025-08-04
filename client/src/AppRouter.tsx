@@ -2,13 +2,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Dashboard } from "./pages/DashBoard";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-import { useAuth } from "./hooks/useAuth";
 import Layout from "./components/Layout/Layout";
-import { UserProfile } from "./components/UserProfile/UserProfile";
+
 import { PrivateRoutes } from "./components/PrivateRoutes/PrivateRoutes";
 import ExpenseForm from "./components/ExpenseForm/ExpenseForm";
 import { Home } from "./pages/Home";
 import { CategoriesList } from "./components/CategoriesList/CategoriesList";
+import { UserProfile } from "./components/UserProfile/UserProfile";
 
 export const AppRouter = () => {
   return (
@@ -21,7 +21,7 @@ export const AppRouter = () => {
           <Route element={<PrivateRoutes redirectTo={"/login"} />}>
             <Route path="/dashboard" element={<Layout />}>
               <Route index element={<Dashboard />} />
-              {/* <Route path="/dashboard/perfil" element={<UserProfile />} /> */}
+              <Route path="/dashboard/perfil" element={<UserProfile />} />
            
               <Route path="/dashboard/categorias" element={<CategoriesList />} />
               <Route path="/dashboard/registrar-gasto" element={<ExpenseForm />} />

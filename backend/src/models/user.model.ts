@@ -65,7 +65,7 @@ const findByEmailForAuth = async (
 const findById = async (user_id: string): Promise<User | undefined> => {
   const query = {
     text: `
-    SELECT user_id,username,email,role FROM USERS
+    SELECT user_id,username,email,role,created_at FROM USERS
     WHERE user_id = $1
     `,
     values: [user_id],
