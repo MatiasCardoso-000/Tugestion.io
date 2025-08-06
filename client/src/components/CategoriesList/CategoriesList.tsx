@@ -50,7 +50,7 @@ export const CategoriesList = () => {
       </Link>
       <div>
         <Button
-          buttonStyle="w-1/11 py-3 bg-zinc-900  text-zinc-100 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800  transition-colors mt-2 absolute right-20 top-8"
+          buttonStyle="w-1/11 py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800  hover:text-white transition-colors mt-2 absolute right-20 top-8"
           onClick={() => {
             setCreateNewCategory(!createNewCategory);
             setEditingId("");
@@ -65,18 +65,23 @@ export const CategoriesList = () => {
             onSubmit={handleSubmit(onCreateCategorySubmit)}
           >
             <div>
-              <label className="block text-zinc-700 font-semibold mb-1">
+              <label
+                className="block text-zinc-700 font-semibold mb-1"
+                htmlFor="category_name"
+              >
                 Nueva categoría
               </label>
               <Input
                 type="text"
-                inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
+                inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-zinc-400 focus:border-zinc-500"
                 placeholder="Ej: Ropa"
                 register={{ ...register("category_name", { required: true }) }}
                 required
+                id="category_name"
+                autoComplete="off"
               />
             </div>
-            <Button buttonStyle="w-full py-3 bg-zinc-900 text-zinc-100 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800 transition-colors mt-2">
+            <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800 hover:text-white transition-colors mt-2">
               Agregar categoría
             </Button>
           </Form>
@@ -84,12 +89,12 @@ export const CategoriesList = () => {
       </div>
       <section className="w-full flex flex-col  justify-center gap-6 px-8 py-8">
         <h1 className="w-1/4 text-left text-6xl ">Categorías</h1>
-        <ul className="w-1/3 flex flex-col  gap-4  px-10 py-8 bg-white rounded-md shadow-2xl text-2xl ">
+        <ul className="w-full grid grid-cols-4  gap-4  py-8 bg-white  text-2xl ">
           {categories.map((category: Category) => {
             return (
               <li
                 key={category.category_id}
-                className="flex items-center justify-between gap-2"
+                className="flex items-center justify-between gap-2 p-2 px-10 py-2 cursor-pointer hover:bg-zinc-50 transition-colors"
               >
                 {editingId === category.category_id ? (
                   <div className="w-full flex items-center gap-4">
@@ -128,27 +133,31 @@ export const CategoriesList = () => {
                     </Form>
                   </div>
                 ) : (
-                  category.category_name.slice(0, 1).toLocaleUpperCase() +
-                  category.category_name.slice(1)
+                  <p>
+                    {category.category_name.slice(0, 1).toLocaleUpperCase() +
+                      category.category_name.slice(1)}
+                  </p>
                 )}{" "}
-                <div className="flex items-center gap-2">
-                  <Button
-                    buttonStyle="p-1 hover:bg-zinc-200 transition-colors cursor-pointer "
-                    onClick={() => {
-                      setEditingId(category.category_id);
-                      setNewCategoryName(category.category_name);
-                      setCreateNewCategory(false);
-                    }}
-                  >
-                    <SquarePenIcon />
-                  </Button>
-                  <Button
-                    buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer"
-                    onClick={() => deleteCategory(category.category_id)}
-                  >
-                    <TrashIcon />
-                  </Button>
-                </div>
+                {category.user_id && (
+                  <div className="flex items-center gap-2">
+                    <Button
+                      buttonStyle="p-1 hover:bg-zinc-200 transition-colors cursor-pointer "
+                      onClick={() => {
+                        setEditingId(category.category_id);
+                        setNewCategoryName(category.category_name);
+                        setCreateNewCategory(false);
+                      }}
+                    >
+                      <SquarePenIcon />
+                    </Button>
+                    <Button
+                      buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer"
+                      onClick={() => deleteCategory(category.category_id)}
+                    >
+                      <TrashIcon />
+                    </Button>
+                  </div>
+                )}
               </li>
             );
           })}

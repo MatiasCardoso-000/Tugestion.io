@@ -7,7 +7,7 @@ export const ExpenseItem = ({ expense }) => {
   const { deleteExpense } = useExpenses();
 
   return (
-    <li className="flex justify-between items-center py-3 px-2 hover:bg-zinc-50 rounded transition-colors">
+    <li className="w-full flex justify-between items-center py-3 px-2 hover:bg-zinc-50 rounded transition-colors">
       <div className="w-full flex gap-8 items-center">
         <div>
           <UserIcon />
@@ -26,22 +26,22 @@ export const ExpenseItem = ({ expense }) => {
           </span>
         </div>
       </div>
-      <div className="flex items-center gap-4">
-        <div>
+      <div className="w-full flex items-center justify-end gap-4">
+        <div className="w-1/4 ">
           <h3 className="text-zinc-400 text-xl">Monto</h3>
           <span className="font-bold text-zinc-00 text-xl">
             ${expense.amount}
           </span>
         </div>
         <Link
-          to={"/expense/:id"}
+          to={`/dashboard/expense/${expense.expense_id}`}
           className="p-2 rounded hover:bg-zinc-200 transition-colors"
           title="Ver detalle"
         >
           <EyeIcon />
         </Link>
         <Button
-          buttonStyle="p-2 rounded hover:bg-red-100 transition-colors cursor-pointer"
+          buttonStyle="p-2 rounded hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
           onClick={() => deleteExpense(expense.expense_id)}
         >
           <TrashIcon />

@@ -6,18 +6,7 @@ import Aside from "../Aside/Aside";
 
 export const DashboardComponent = () => {
   return (
-    <div className="w-full flex flex-col">
-      <Button
-        buttonStyle={
-          "bg-zinc-900 p-2 text-zinc-50 w-1/12 flex items-center justify-evenly rounded-2xl text-xl cursor-pointer hover:bg-zinc-800 transition-colors shadow-md absolute right-20"
-        }
-      >
-        <PlusIcon />
-        <Link to={"/dashboard/registrar-gasto"} className="mb-1">
-          {" "}
-          Nuevo Gasto
-        </Link>
-      </Button>
+    <div className="w-full flex flex-col justify-between">
       <div className=" w-full flex justify-center">
         <div className="flex flex-col p-12">
           <h2 className="text-3xl font-bold text-zinc-900 mb-8 text-left">
@@ -28,6 +17,17 @@ export const DashboardComponent = () => {
           </p>
           <ExpensesList />
         </div>
+      </div>
+      <div className="w-full flex justify-center">
+        <Link to={"/dashboard/registrar-gasto"} className="mb-1  w-1/12">
+          <Button
+            buttonStyle={
+              "bg-white ring-2 ring-zinc-900  px-4 py-2 text-zinc-900  flex items-center justify-evenly rounded-2xl text-xl cursor-pointer hover:bg-zinc-800 hover:text-white transition-colors shadow-md "
+            }
+          >
+            <PlusIcon /> Nuevo Gasto
+          </Button>
+        </Link>
       </div>
     </div>
   );

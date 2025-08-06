@@ -33,21 +33,36 @@ const create = async ({
  * @param user_id - El ID del usuario que realiza la petición.
  * @returns La categoría encontrada o undefined si no existe o no le pertenece al usuario.
  */
+const getAll = async (): Promise<Category[] | undefined> => {
+  const query = {
+    text: `
+      SELECT * FROM CATEGORY
+      WHERE user_id is NULL
+      ORDER BY category_name ASC
+    `,
+  };
+  const { rows } = await pool.query(query);
+  return rows;
+};
+
 const findById = async (
-  category_id: string,
-  user_id: string
+  user_id: string,
+  category_id: string
 ): Promise<Category | undefined> => {
   const query = {
     text: `
       SELECT * FROM CATEGORY
-      WHERE category_id = $1 AND user_id = $2 OR user_id is NULL
+      WHERE user_id = $1 OR category_id = $2 AND user_id is NULL
+      ORDER BY category_name ASC
     `,
-    values: [category_id, user_id],
+    values: [user_id, category_id],
   };
   const { rows } = await pool.query(query);
+
+  // Devolvemos el array completo de resultados.
+  // Si el usuario no tiene categorías, devolverá un array vacío [].
   return rows[0];
 };
-
 /**
  * Busca y devuelve todas las categorías que le pertenecen a un usuario específico.
  * @param user_id - El ID del usuario del que se quieren obtener las categorías.
@@ -119,6 +134,7 @@ const remove = async (
 
 export const CategoryModel = {
   create,
+  getAll,
   findById,
   findByUser,
   update,

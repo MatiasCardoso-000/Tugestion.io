@@ -9,6 +9,7 @@ import ExpenseForm from "./components/ExpenseForm/ExpenseForm";
 import { Home } from "./pages/Home";
 import { CategoriesList } from "./components/CategoriesList/CategoriesList";
 import { UserProfile } from "./components/UserProfile/UserProfile";
+import { ExpenseInfo } from "./components/ExpenseInfo/ExpenseInfo";
 
 export const AppRouter = () => {
   return (
@@ -22,6 +23,7 @@ export const AppRouter = () => {
             <Route path="/dashboard" element={<Layout />}>
               <Route index element={<Dashboard />} />
               <Route path="/dashboard/perfil" element={<UserProfile />} />
+              <Route path="/dashboard/expense/:id" element={<ExpenseInfo />} />
            
               <Route path="/dashboard/categorias" element={<CategoriesList />} />
               <Route path="/dashboard/registrar-gasto" element={<ExpenseForm />} />

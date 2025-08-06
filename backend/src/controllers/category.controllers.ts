@@ -21,7 +21,7 @@ const categorySchema = z.object({
     .trim(),
 });
 
-const createCategory = async (req: Request, res: Response)=> {
+const createCategory = async (req: Request, res: Response) => {
   try {
     const validationResult = categorySchema.safeParse(req.body);
     if (!validationResult.success) {
@@ -53,6 +53,26 @@ const createCategory = async (req: Request, res: Response)=> {
   }
 };
 
+const getAllCategories = async (req: Request, res: Response) => {
+  try {
+    const user_id = req.user!.uid;
+
+    if (!user_id) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
+
+    const categories = await CategoryModel.getAll();
+
+    if (!categories) {
+      return res.status(404).json({ message: "No existen categorías" });
+    }
+    res.json(categories);
+  } catch (error) {
+    console.error("Error en getAllCategories:", error);
+    res.status(500).json({ message: "Error al obtener todas las categorías." });
+  }
+};
+
 /**
  * Obtiene todas las categorías del usuario autenticado.
  */
@@ -61,7 +81,7 @@ const getCategoriesByUser = async (req: Request, res: Response) => {
     const user_id = req.user!.uid;
 
     const categories = await CategoryModel.findByUser(user_id);
-    
+
     res.json(categories);
   } catch (error) {
     console.error("Error en getCategoriesByUser:", error);
@@ -83,7 +103,7 @@ const updateCategory = async (req: Request, res: Response) => {
 
     const { category_name } = validationResult.data;
     console.log(category_name);
-    
+
     const updatedCategory = await CategoryModel.update({
       category_id: id,
       user_id,
@@ -115,16 +135,16 @@ const deleteCategory = async (req: Request, res: Response) => {
     const { id } = req.params;
     const user_id = req.user!.uid;
 
-      const deletedCategory = await CategoryModel.remove(id, user_id);
+    const deletedCategory = await CategoryModel.remove(id, user_id);
 
-      if (!deletedCategory) {
-        return res.status(404).json({
-          message: "Categoría no encontrada o no tienes permiso para borrarla.",
-        });
-      }
+    if (!deletedCategory) {
+      return res.status(404).json({
+        message: "Categoría no encontrada o no tienes permiso para borrarla.",
+      });
+    }
 
-      // Si la eliminación es exitosa, devolvemos el objeto borrado como confirmación.
-      res.json(deletedCategory);
+    // Si la eliminación es exitosa, devolvemos el objeto borrado como confirmación.
+    res.json(deletedCategory);
   } catch (error: any) {
     // Manejo de error específico si la categoría está en uso (foreign key violation)
     if (error.code === "23503") {
@@ -141,6 +161,7 @@ const deleteCategory = async (req: Request, res: Response) => {
 
 export const CategoryController = {
   createCategory,
+  getAllCategories,
   getCategoriesByUser,
   updateCategory,
   deleteCategory,

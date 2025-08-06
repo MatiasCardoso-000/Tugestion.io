@@ -6,6 +6,7 @@ interface InputType {
   value?: string;
   required: boolean;
   id:string;
+  autoComplete?:string
 }
 
 // Componente de campo de entrada reutilizable
@@ -15,7 +16,8 @@ export const Input = ({
   placeholder,
   register,
   required,
-  id
+  id,
+  autoComplete
 }: InputType) => {
   return (
     <input
@@ -25,6 +27,7 @@ export const Input = ({
       {...register}
       required={required}
       id={id}
+      autoComplete={autoComplete}
     />
   );
 };

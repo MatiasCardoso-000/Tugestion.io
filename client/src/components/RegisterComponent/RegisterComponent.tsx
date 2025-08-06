@@ -38,7 +38,7 @@ export const RegisterComponent = () => {
             TuGestión.io
           </Link>
         </div>
-        <div className="flex flex-col items-center justify-center w-full  h-full gap-7">
+        <div className="flex flex-col items-center  w-full  h-full gap-7">
           {RegisterErrors.map((error, i) => {
             return (
               <div
@@ -51,7 +51,7 @@ export const RegisterComponent = () => {
           })}
           <Form
             formStyle={
-              "px-4 py-6 rounded-[6%] shadow-2xl bg-white max-w-lg w-2/9 h-2/3 flex flex-col justify-between gap-2"
+              "max-w-lg w-2/9 h-2/5 flex mt-28 px-4 py-6 rounded-[6%] inset-shadow-sm shadow-xl bg-white flex-col justify-between gap-2"
             }
             onSubmit={handleSubmit(onSubmit)}
           >
@@ -72,7 +72,7 @@ export const RegisterComponent = () => {
 
                   <Input
                     inputStyle={
-                      "w-full p-2 text-zinc-900 placeholder-zinc-400 focus:outline-none "
+                      "w-full p-2 text-zinc-900 placeholder-zinc-400 focus:outline-zinc-400 "
                     }
                     type="username"
                     id="username"
@@ -98,7 +98,7 @@ export const RegisterComponent = () => {
 
                   <Input
                     inputStyle={
-                      "w-full p-2 text-zinc-900 placeholder-zinc-400 focus:outline-none "
+                      "w-full p-2 text-zinc-900 placeholder-zinc-400 focus:outline-zinc-400 "
                     }
                     type="email"
                     id="email"
@@ -124,7 +124,7 @@ export const RegisterComponent = () => {
                   </div>
                   <Input
                     inputStyle={
-                      "w-full p-2  bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none "
+                      "w-full p-2  bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-zinc-400 "
                     }
                     type="password"
                     placeholder="Contraseña"
@@ -140,7 +140,7 @@ export const RegisterComponent = () => {
                 )}
               </div>
             </div>
-            <Button buttonStyle="w-full py-2  bg-zinc-900 text-zinc-100 rounded-lg font-semibold text-lg cursor-pointer shadow-md hover:bg-zinc-800 transition-colors">
+            <Button buttonStyle="w-full py-2  bg-white text-zinc-900 rounded-lg ring-2 ring-zinc-900 font-semibold text-lg cursor-pointer shadow-md hover:bg-zinc-800 hover:text-white transition-colors">
               Registrarse
             </Button>
 

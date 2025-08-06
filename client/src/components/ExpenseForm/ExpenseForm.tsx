@@ -37,7 +37,7 @@ const ExpenseForm = () => {
           Registrar gasto
         </h2>
         <div>
-          <label className="block text-zinc-700 font-semibold mb-1">
+          <label className="block text-zinc-700 font-semibold mb-1" htmlFor="amount">
             Monto
           </label>
           <Input
@@ -46,10 +46,11 @@ const ExpenseForm = () => {
             inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
             placeholder="Ej: 1000"
             required
+            id="amount"
           />
         </div>
         <div>
-          <label className="block text-zinc-700 font-semibold mb-1">
+          <label className="block text-zinc-700 font-semibold mb-1" htmlFor="description">
             Descripción
           </label>
           <Input
@@ -58,6 +59,7 @@ const ExpenseForm = () => {
             inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
             placeholder="Ej: Supermercado, alquiler, etc."
             required
+            id="description"
           />
         </div>
         <div>
@@ -82,7 +84,7 @@ const ExpenseForm = () => {
             })}
           </select>
         </div>
-        <Button buttonStyle="w-full py-3 bg-zinc-900 text-zinc-100 rounded-lg font-bold text-lg cursor-pointer shadow-md  hover:bg-zinc-800  transition-colors  mt-2">
+        <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2">
           Registrar gasto
         </Button>
       </Form>

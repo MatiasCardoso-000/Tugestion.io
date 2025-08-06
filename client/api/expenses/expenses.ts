@@ -20,6 +20,14 @@ export const getExpensesByUserRequest = async () => {
 };
 
 
+export const getExpenseByIdRequest = async(id:string)=> {
+  return await apiFetch(`/expenses/${id}`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+}
+
 export const deleteExpenseRequest = async (id: string) => {
   return await apiFetch(`/expenses/${id}`, {
     method: "DELETE",

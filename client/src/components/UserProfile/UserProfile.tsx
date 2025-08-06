@@ -12,8 +12,8 @@ export const UserProfile = () => {
         <p className="text-3xl">Bienvenido {user?.username}</p>
       </div>
       <div className="flex flex-col gap-22 py-4 px-4">
-        <div className="grid grid-cols-[800px_800px] justify-between ">
-          <div className="px-4 py-8 bg-[#f9fafb] text-zinc-900 border border-red-300 rounded-md">
+        <div className="ring-2 ring-zinc-800 inset-shadow-2xs flex  flex-col w-1/3">
+          <div className="w-full px-4 py-8 bg-[#f9fafb] text-zinc-900  flex flex-col gap-4">
             <h2 className="font-semibold text-4xl border-b  border-b-zinc-200 py-4">
               Detalles de la cuenta
             </h2>
@@ -34,7 +34,7 @@ export const UserProfile = () => {
               </span>
             </div>
           </div>
-          <div className="px-4 py-8 bg-blue-200 border border-blue-400 rounded-md  text-white">
+          <div className="w-full  px-4 py-8 bg-[#f9fafb]  text-zinc-900 flex flex-col gap-4">
             <h2 className="text-4xl font-semibold mb-4 py-4">
               Total gastos del mes
             </h2>
@@ -48,20 +48,20 @@ export const UserProfile = () => {
                 .toFixed(2)}
             </span>
           </div>
-        </div>
-        <div className="px-4 py-8 bg-green-200/70 border border-green-400 rounded-md  text-white">
-          <h2 className="text-4xl font-semibold text-zinc-900">
-            Total de Gastos Históricos
-          </h2>
-          <span className="text-zinc-900 font-bold text-6xl">
-            $
-            {expenses
-              .reduce((acc, expense) => {
-                acc += Number(expense.amount);
-                return acc;
-              }, 0)
-              .toFixed(2)}
-          </span>
+          <div className="px-4 py-8 bg-[#f9fafb]  border  text-white">
+            <h2 className="text-4xl font-semibold text-zinc-900">
+              Total de Gastos Históricos
+            </h2>
+            <span className="text-zinc-900 font-bold text-6xl">
+              $
+              {expenses
+                .reduce((acc, expense) => {
+                  acc += Number(expense.amount);
+                  return acc;
+                }, 0)
+                .toFixed(2)}
+            </span>
+          </div>
         </div>
       </div>
     </div>
