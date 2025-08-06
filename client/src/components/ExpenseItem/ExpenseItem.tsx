@@ -22,7 +22,7 @@ export const ExpenseItem = ({ expense }) => {
         <div className="w-full">
           <h3 className="text-zinc-400 text-xl">Fecha</h3>
           <span className="block  text-zinc-400 text-xl">
-            {expense.expense_date.split("T")[0].split("-").reverse().join("/")}
+            {new Date(expense.expense_date).toLocaleDateString("es-ES")}
           </span>
         </div>
       </div>
@@ -34,8 +34,8 @@ export const ExpenseItem = ({ expense }) => {
           </span>
         </div>
         <Link
-          to={`/dashboard/expense/${expense.expense_id}`}
-          className="p-2 rounded hover:bg-zinc-200 transition-colors"
+          to={`/dashboard/informacion-gasto/${expense.expense_id}`}
+          className="p-2 rounded hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
           title="Ver detalle"
         >
           <EyeIcon />

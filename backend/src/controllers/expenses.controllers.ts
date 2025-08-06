@@ -3,9 +3,12 @@ import { ExpensesModel } from "../models/expenses.model";
 import { CategoryModel } from "../models/category.model";
 import { UserModel } from "../models/user.model";
 import { z } from "zod";
-
-interface RequestWithUser extends Request {
-  user?: { uid: string };
+declare global {
+  namespace Express {
+    interface Request {
+      user?: { uid: string };
+    }
+  }
 }
 
 const createExpenseSchema = z.object({
@@ -17,19 +20,21 @@ const createExpenseSchema = z.object({
 
 const updateExpenseSchema = z.object({
   amount: z.string(),
-  category_id:z.string(),
+  category_id: z.string(),
   description: z.string().min(1).max(255).optional(),
   expense_date: z.string().datetime().optional(),
 });
 
 const registerExpense = async (
-  req: RequestWithUser,
+  req: Request,
   res: Response
 ): Promise<Response | undefined> => {
   try {
     const validationResult = createExpenseSchema.safeParse(req.body);
     if (!validationResult.success) {
-      return res.status(400).json({ errors: validationResult.error.flatten().fieldErrors });
+      return res
+        .status(400)
+        .json({ errors: validationResult.error.flatten().fieldErrors });
     }
 
     const { category_id, amount, description, expense_date } =
@@ -52,7 +57,7 @@ const registerExpense = async (
     const newExpense = await ExpensesModel.create({
       category_id,
       user_id,
-      amount ,
+      amount,
       description,
       expense_date: expense_date ? new Date(expense_date) : undefined,
     });
@@ -67,7 +72,7 @@ const registerExpense = async (
 };
 
 const getAllExpenses = async (
-  req: RequestWithUser,
+  req: Request,
   res: Response
 ): Promise<Response | undefined> => {
   try {
@@ -99,7 +104,7 @@ const getAllExpenses = async (
   }
 };
 
-const getExpensesByUser = async (req: RequestWithUser, res: Response) => {
+const getExpensesByUser = async (req: Request, res: Response) => {
   try {
     const user_id = req.user!.uid;
 
@@ -118,7 +123,7 @@ const getExpensesByUser = async (req: RequestWithUser, res: Response) => {
 };
 
 const getExpenseById = async (
-  req: RequestWithUser,
+  req: Request,
   res: Response
 ): Promise<Response | undefined> => {
   try {
@@ -130,7 +135,7 @@ const getExpenseById = async (
       return res.status(404).json({ message: "Expense not found" });
     }
 
-    res.json({ expense });
+    return res.json({ expense });
   } catch (error: any) {
     console.error("Error en getExpenseById:", error);
     res.status(500).json({ message: error.message });
@@ -138,7 +143,7 @@ const getExpenseById = async (
 };
 
 const updateExpense = async (
-  req: RequestWithUser,
+  req: Request,
   res: Response
 ): Promise<Response | undefined> => {
   try {
@@ -181,7 +186,7 @@ const updateExpense = async (
   }
 };
 
-const deleteExpense = async (req: RequestWithUser, res: Response) => {
+const deleteExpense = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user_id = req.user?.uid;

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { ExpensesContext } from "./ExpensesContext";
-import { Expenses } from "../../types/expenses.types";
 import {
   getExpensesByUserRequest,
   addExpenseRequest,
@@ -9,6 +8,7 @@ import {
 } from "../../../api/expenses/expenses";
 import { useAuth } from "../../hooks/useAuth";
 import { set } from "react-hook-form";
+import { Expenses } from "../../types/expenses.types";
 
 export const ExpensesProvider = ({
   children,
@@ -16,9 +16,10 @@ export const ExpensesProvider = ({
   children: React.ReactNode;
 }) => {
   const [expenses, setExpenses] = useState<Expenses[]>([]);
-  const [expense, setExpense] = useState<Expenses>({} as Expenses);
+  const [expense, setExpense] = useState<Expenses | null>(null);
   const { isAuthenticated } = useAuth();
   const [errors, setErrors] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const addExpense = async (expense: Expenses[]) => {
     try {
@@ -27,22 +28,30 @@ export const ExpensesProvider = ({
       setExpenses([...expenses, data]);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const getExpenseById = async (expenseId: string) => {
     try {
+      setIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       const res = await getExpenseByIdRequest(expenseId);
       if (!res.ok) {
         throw new Error("Error al obtener el gasto");
       }
-      const data = await res.json();
-      // If the API returns the expense directly, use setExpense(data)
-      // If it returns { expense: ... }, use setExpense(data.expense)
-      setExpense(data.expense ?? data);
+      const expenseData = await res.json();
+
+      setExpense(expenseData.expense);
     } catch (error: any) {
+      setExpense(null);
+
       setErrors([error.message || "Error desconocido al obtener el gasto"]);
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,6 +69,8 @@ export const ExpensesProvider = ({
   useEffect(() => {
     if (isAuthenticated) {
       const getExpensesByUser = async () => {
+        setIsLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 500));
         try {
           const res = await getExpensesByUserRequest();
           if (!res.ok) {
@@ -69,6 +80,8 @@ export const ExpensesProvider = ({
           setExpenses(data);
         } catch (error) {
           setErrors(error);
+        } finally {
+          setIsLoading(false);
         }
       };
       getExpensesByUser();
@@ -77,7 +90,15 @@ export const ExpensesProvider = ({
 
   return (
     <ExpensesContext.Provider
-      value={{ expenses, expense, addExpense, getExpenseById, deleteExpense }}
+      value={{
+        expenses,
+        expense,
+        isLoading,
+        errors,
+        addExpense,
+        getExpenseById,
+        deleteExpense,
+      }}
     >
       {children}
     </ExpensesContext.Provider>
