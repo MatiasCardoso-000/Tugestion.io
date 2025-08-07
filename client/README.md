@@ -1,12 +1,33 @@
-# React + Vite
+# Frontend (Cliente)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este directorio contiene el código del cliente de la aplicación de gestión de gastos, construido con React y Vite.
 
-Currently, two official plugins are available:
+## Estructura de Carpetas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   `src/`
+    -   `api/`: Funciones para realizar peticiones a la API del backend.
+    -   `assets/`: Archivos estáticos como imágenes y SVGs.
+    -   `components/`: Componentes de React reutilizables.
+    -   `context/`: Contextos de React para el manejo del estado global.
+    -   `hooks/`: Hooks de React personalizados.
+    -   `pages/`: Páginas principales de la aplicación.
+    -   `router/`: Configuración de las rutas de la aplicación.
+    -   `types/`: Definiciones de tipos de TypeScript.
+    -   `App.tsx`: Componente principal de la aplicación.
+    -   `main.tsx`: Punto de entrada de la aplicación.
 
-## Expanding the ESLint configuration
+## Scripts
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-   `npm run dev`: Inicia el servidor de desarrollo de Vite.
+-   `npm run build`: Compila la aplicación para producción.
+-   `npm run lint`: Ejecuta el linter de ESLint.
+-   `npm run preview`: Sirve la aplicación compilada localmente.
+
+## Componentes Principales
+
+-   **`Header`**: Barra de navegación superior.
+-   **`Aside`**: Barra lateral con las categorías.
+-   **`ExpensesList`**: Lista de gastos.
+-   **`ExpenseForm`**: Formulario para añadir nuevos gastos.
+-   **`CategoriesList`**: Lista de categorías.
+-   **`LoginComponent` / `RegisterComponent`**: Formularios de autenticación.

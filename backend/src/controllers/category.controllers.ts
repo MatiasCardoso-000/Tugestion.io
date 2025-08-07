@@ -1,3 +1,7 @@
+/**
+ * @file Controlador para las operaciones CRUD de categorías.
+ */
+
 import { Request, Response } from "express";
 import { CategoryModel } from "../models/category.model";
 import { z } from "zod";
@@ -21,6 +25,12 @@ const categorySchema = z.object({
     .trim(),
 });
 
+/**
+ * @description Crea una nueva categoría para el usuario autenticado.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response>} - Una promesa que se resuelve con la nueva categoría creada.
+ */
 const createCategory = async (req: Request, res: Response) => {
   try {
     const validationResult = categorySchema.safeParse(req.body);
@@ -53,6 +63,12 @@ const createCategory = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @description Obtiene todas las categorías de todos los usuarios. (Ruta de administrador)
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response>} - Una promesa que se resuelve con la lista de todas las categorías.
+ */
 const getAllCategories = async (req: Request, res: Response) => {
   try {
     const user_id = req.user!.uid;
@@ -74,7 +90,10 @@ const getAllCategories = async (req: Request, res: Response) => {
 };
 
 /**
- * Obtiene todas las categorías del usuario autenticado.
+ * @description Obtiene todas las categorías del usuario autenticado.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response>} - Una promesa que se resuelve con la lista de categorías del usuario.
  */
 const getCategoriesByUser = async (req: Request, res: Response) => {
   try {
@@ -89,6 +108,12 @@ const getCategoriesByUser = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @description Actualiza una categoría existente del usuario autenticado.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response>} - Una promesa que se resuelve con la categoría actualizada.
+ */
 const updateCategory = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -130,6 +155,12 @@ const updateCategory = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @description Elimina una categoría del usuario autenticado.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response>} - Una promesa que se resuelve con la categoría eliminada.
+ */
 const deleteCategory = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

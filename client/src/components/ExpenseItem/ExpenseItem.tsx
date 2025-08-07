@@ -12,9 +12,9 @@ export const ExpenseItem = ({ expense }) => {
         <div>
           <UserIcon />
         </div>
-        <div className="w-1/4">
+        <div className="w-full">
           <h3 className="text-zinc-400 text-xl">Descripción</h3>
-          <span className="font-semibold text-zinc-800 text-xl">
+          <span className="w-full text-zinc-800 text-xl">
             {expense.description}
           </span>
         </div>

@@ -1,3 +1,7 @@
+/**
+ * @file Controlador para las operaciones CRUD de gastos.
+ */
+
 import { Request, Response } from "express";
 import { ExpensesModel } from "../models/expenses.model";
 import { CategoryModel } from "../models/category.model";
@@ -25,6 +29,12 @@ const updateExpenseSchema = z.object({
   expense_date: z.string().datetime().optional(),
 });
 
+/**
+ * @description Registra un nuevo gasto para el usuario autenticado.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response | undefined>} - Una promesa que se resuelve con el nuevo gasto creado.
+ */
 const registerExpense = async (
   req: Request,
   res: Response
@@ -71,6 +81,12 @@ const registerExpense = async (
   }
 };
 
+/**
+ * @description Obtiene todos los gastos de todos los usuarios. (Ruta de administrador)
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response | undefined>} - Una promesa que se resuelve con la lista de todos los gastos.
+ */
 const getAllExpenses = async (
   req: Request,
   res: Response
@@ -104,6 +120,12 @@ const getAllExpenses = async (
   }
 };
 
+/**
+ * @description Obtiene todos los gastos del usuario autenticado.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response>} - Una promesa que se resuelve con la lista de gastos del usuario.
+ */
 const getExpensesByUser = async (req: Request, res: Response) => {
   try {
     const user_id = req.user!.uid;
@@ -122,6 +144,12 @@ const getExpensesByUser = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @description Obtiene un gasto específico por su ID.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response | undefined>} - Una promesa que se resuelve con el gasto solicitado.
+ */
 const getExpenseById = async (
   req: Request,
   res: Response
@@ -142,6 +170,12 @@ const getExpenseById = async (
   }
 };
 
+/**
+ * @description Actualiza un gasto existente del usuario autenticado.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response | undefined>} - Una promesa que se resuelve con el gasto actualizado.
+ */
 const updateExpense = async (
   req: Request,
   res: Response
@@ -186,6 +220,12 @@ const updateExpense = async (
   }
 };
 
+/**
+ * @description Elimina un gasto del usuario autenticado.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response>} - Una promesa que se resuelve con el gasto eliminado.
+ */
 const deleteExpense = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

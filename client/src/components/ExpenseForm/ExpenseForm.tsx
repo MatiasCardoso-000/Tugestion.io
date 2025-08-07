@@ -14,11 +14,9 @@ const ExpenseForm = () => {
   const { handleSubmit, register } = useForm<any>();
 
   const { addExpense } = useExpenses();
-  const { categories, createCategory } = useCategories();
+  const { categories } = useCategories();
 
-  const handleNewCategory = async (data: Category) => {
-    createCategory(data);
-  };
+ 
 
   const handleNewExpense = async (expense: Expenses[]) => {
     addExpense(expense);
@@ -37,7 +35,10 @@ const ExpenseForm = () => {
           Registrar gasto
         </h2>
         <div>
-          <label className="block text-zinc-700 font-semibold mb-1" htmlFor="amount">
+          <label
+            className="block text-zinc-700 font-semibold mb-1"
+            htmlFor="amount"
+          >
             Monto
           </label>
           <Input
@@ -50,7 +51,10 @@ const ExpenseForm = () => {
           />
         </div>
         <div>
-          <label className="block text-zinc-700 font-semibold mb-1" htmlFor="description">
+          <label
+            className="block text-zinc-700 font-semibold mb-1"
+            htmlFor="description"
+          >
             Descripción
           </label>
           <Input
@@ -66,8 +70,17 @@ const ExpenseForm = () => {
           <label className="block text-zinc-700 font-semibold mb-1">
             Categoria
           </label>
-          <select className="border rounded-md p-3 w-full bg-zinc-50 text-shadow-zinc-900 focus:outline-none">
-            <option disabled selected className="disabled:hidden text-zinc-400">
+
+          <select
+            {...register(`category_id`, { required: true })}
+            defaultValue={""}
+            className="border rounded-md p-3 w-full bg-zinc-50 text-shadow-zinc-900 focus:outline-none"
+          >
+            <option
+              disabled
+              defaultValue={""}
+              className="disabled:hidden text-zinc-400"
+            >
               Ej: Transporte
             </option>
             {categories.map((category: Category) => {
@@ -76,7 +89,6 @@ const ExpenseForm = () => {
                   key={category.category_id}
                   value={category.category_id}
                   className="w-full"
-                  {...register(`category_id`, { required: true })}
                 >
                   {category.category_name}
                 </option>

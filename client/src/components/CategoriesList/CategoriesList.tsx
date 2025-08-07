@@ -1,31 +1,22 @@
-import { useState } from "react";
 import { useCategories } from "../../hooks/useCategories";
 import Button from "../Button/Button";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Category } from "../../types/categories.types";
 import { Input } from "../Input/Input";
-import {
-  CheckIcon,
-  LeftArrowIcon,
-  SquarePenIcon,
-  TrashIcon,
-} from "../Icons/Icons";
+import { LeftArrowIcon } from "../Icons/Icons";
 import { Link } from "react-router-dom";
 import { Form } from "../Form/Form";
+import { CategoryItem } from "../CategoryItem/CategoryItem";
 
 export const CategoriesList = () => {
   const { handleSubmit, register, reset } = useForm<Category>();
 
-  const [createNewCategory, setCreateNewCategory] = useState(false);
   const {
     categories,
-    editingId,
-    newCategoryName,
     createCategory,
-    updateCategory,
-    deleteCategory,
     setEditingId,
-    setNewCategoryName,
+    setCreateNewCategory,
+    createNewCategory,
   } = useCategories();
 
   const onCreateCategorySubmit = async (data: Category) => {
@@ -34,18 +25,12 @@ export const CategoriesList = () => {
     reset();
   };
 
-  const onUpdateCategorySubmit = async (
-    category_id: string,
-    newCategoryName: string
-  ) => {
-    await updateCategory(category_id, newCategoryName);
-    setEditingId("");
-    setNewCategoryName("");
-  };
-
   return (
-    <div className="flex flex-col gap-y-4 relative">
-      <Link to={"/dashboard"} className="flex gap-4 p-4">
+    <div className="flex flex-col px-4 gap-y-4 relative">
+      <Link
+        to={"/dashboard"}
+        className="inline-flex text-lg items-center gap-2 text-zinc-900 hover:underline transition-colors mb-4"
+      >
         <LeftArrowIcon /> Volver al inicio
       </Link>
       <div>
@@ -92,73 +77,21 @@ export const CategoriesList = () => {
         <ul className="w-full grid grid-cols-4  gap-4  py-8 bg-white  text-2xl ">
           {categories.map((category: Category) => {
             return (
-              <li
-                key={category.category_id}
-                className="flex items-center justify-between gap-2 p-2 px-10 py-2 cursor-pointer hover:bg-zinc-50 transition-colors"
-              >
-                {editingId === category.category_id ? (
-                  <div className="w-full flex items-center gap-4">
-                    <Form
-                      onSubmit={() =>
-                        onUpdateCategorySubmit(
-                          category.category_id,
-                          newCategoryName
-                        )
-                      }
-                      formStyle="flex gap-4"
-                    >
-                      <input
-                        type={"text"}
-                        placeholder={"Nueva categoria"}
-                        className={
-                          "w-full p-1 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-                        }
-                        onChange={(e) => setNewCategoryName(e.target.value)}
-                        value={newCategoryName}
-                        required
-                      />
-                      <Button
-                        onClick={() => {
-                          onUpdateCategorySubmit(
-                            category.category_id,
-                            newCategoryName
-                          );
-                          setEditingId("");
-                          setNewCategoryName("");
-                        }}
-                        buttonStyle="cursor-pointer"
-                      >
-                        <CheckIcon />
-                      </Button>
-                    </Form>
-                  </div>
-                ) : (
-                  <p>
-                    {category.category_name.slice(0, 1).toLocaleUpperCase() +
-                      category.category_name.slice(1)}
-                  </p>
-                )}{" "}
-                {category.user_id && (
-                  <div className="flex items-center gap-2">
-                    <Button
-                      buttonStyle="p-1 hover:bg-zinc-200 transition-colors cursor-pointer "
-                      onClick={() => {
-                        setEditingId(category.category_id);
-                        setNewCategoryName(category.category_name);
-                        setCreateNewCategory(false);
-                      }}
-                    >
-                      <SquarePenIcon />
-                    </Button>
-                    <Button
-                      buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer"
-                      onClick={() => deleteCategory(category.category_id)}
-                    >
-                      <TrashIcon />
-                    </Button>
-                  </div>
-                )}
-              </li>
+              category.user_id === null && (
+                <CategoryItem category={category} key={category.category_id} />
+              )
+            );
+          })}
+        </ul>
+      </section>
+     <section className="w-full flex flex-col  justify-center gap-6 px-8 py-8">
+        <h1 className="w-1/4 text-left text-6xl ">Categorías del usuario</h1>
+        <ul className="w-full grid grid-cols-4  gap-4  py-8 bg-white  text-2xl ">
+          {categories.map((category: Category) => {
+            return (
+              category.user_id  && (
+                <CategoryItem category={category} key={category.category_id} />
+              )
             );
           })}
         </ul>

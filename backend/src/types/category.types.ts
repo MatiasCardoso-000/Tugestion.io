@@ -1,6 +1,6 @@
 // Definimos un tipo para la categoría en la DB
 export interface Category {
-    category_id: string;
+    category_id: number;
     category_name: string;
     user_id: string;
    

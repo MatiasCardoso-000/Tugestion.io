@@ -11,7 +11,7 @@ export const createCategoryRequest = async (category: Category) => {
   });
 };
 
-export const getCategoriesRequest = async () => {
+export const getCategoriesByUserRequest = async () => {
   return await apiFetch(`/categories`, {
     method: "GET",
   });

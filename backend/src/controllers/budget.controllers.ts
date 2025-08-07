@@ -10,6 +10,14 @@ declare global {
   }
 }
 
+/**
+ * @description Establece o actualiza el presupuesto para un usuario.
+ * Si el usuario ya tiene un presupuesto, lo actualiza.
+ * Si no, crea un nuevo presupuesto.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response>} - Una promesa que se resuelve con el presupuesto creado o actualizado.
+ */
 const setBudget = async (req: Request, res: Response) => {
   try {
     const user_id = req.user!.uid;
@@ -28,8 +36,9 @@ const setBudget = async (req: Request, res: Response) => {
         amount,
         period
       );
+    } else {
+      budget = await BudgetModel.addBudget(user_id, amount, period);
     }
-    budget = await BudgetModel.addBudget(user_id, amount, period);
     return res.status(200).json(budget);
   } catch (error) {
     console.error("Error setting budget:", error);
@@ -37,6 +46,12 @@ const setBudget = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @description Obtiene el presupuesto del usuario autenticado.
+ * @param {Request} req - El objeto de solicitud de Express.
+ * @param {Response} res - El objeto de respuesta de Express.
+ * @returns {Promise<Response>} - Una promesa que se resuelve con el presupuesto del usuario.
+ */
 const getBudget = async (req: Request, res: Response): Promise<Response> => {
   try {
     const userId = req.user!.uid;

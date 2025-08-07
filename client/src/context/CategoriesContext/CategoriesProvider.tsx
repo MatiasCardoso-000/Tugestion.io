@@ -4,7 +4,7 @@ import { Category } from "../../types/categories.types";
 import {
   createCategoryRequest,
   deleteCategoryRequest,
-  getCategoriesRequest,
+  getCategoriesByUserRequest,
   updateCategoryRequest,
 } from "../../../api/categories/categories";
 import { useAuth } from "../../hooks/useAuth";
@@ -17,9 +17,8 @@ export const CategoriesProvider = ({ children }: CategoriesProviderType) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const { isAuthenticated } = useAuth();
   const [editingId, setEditingId] = useState<string>("");
-  const [newCategoryName, setNewCategoryName] = useState<string>("");
-
-
+  const [updateCategoryName, setUpdateCategoryName] = useState<string>("");
+  const [createNewCategory, setCreateNewCategory] = useState(false);
 
   const createCategory = async (category: Category) => {
     const res = await createCategoryRequest(category);
@@ -39,7 +38,6 @@ export const CategoriesProvider = ({ children }: CategoriesProviderType) => {
           : prevCategory
       )
     );
-
   };
 
   const deleteCategory = async (category_id: string) => {
@@ -49,32 +47,36 @@ export const CategoriesProvider = ({ children }: CategoriesProviderType) => {
     );
   };
 
+
   useEffect(() => {
     if (isAuthenticated) {
-      const getCategories = async () => {
+      const getCategoriesByUser = async () => {
         try {
-          const res = await getCategoriesRequest();
+          const res = await getCategoriesByUserRequest();
           const categoriesData = await res.json();
           setCategories(categoriesData);
         } catch (error) {
           console.error("Error fetching categories:", error);
         }
       };
-      getCategories();
+      getCategoriesByUser();
     }
   }, [isAuthenticated]);
+
 
   return (
     <CategoriesContext.Provider
       value={{
         categories,
+        createNewCategory,
+        editingId,
+        updateCategoryName,
         createCategory,
         updateCategory,
         deleteCategory,
         setEditingId,
-        setNewCategoryName,
-        editingId,
-        newCategoryName,
+        setUpdateCategoryName,
+        setCreateNewCategory,
       }}
     >
       {children}

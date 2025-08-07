@@ -52,15 +52,14 @@ const findById = async (
   const query = {
     text: `
       SELECT * FROM CATEGORY
-      WHERE user_id = $1 OR category_id = $2 AND user_id is NULL
+      WHERE category_id = $1 AND (user_id = $2 OR user_id IS NULL)
       ORDER BY category_name ASC
     `,
-    values: [user_id, category_id],
+    values: [category_id, user_id],
   };
   const { rows } = await pool.query(query);
 
-  // Devolvemos el array completo de resultados.
-  // Si el usuario no tiene categorías, devolverá un array vacío [].
+  // Devolvemos la categoría encontrada o undefined si no existe.
   return rows[0];
 };
 /**

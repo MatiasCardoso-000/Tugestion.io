@@ -5,7 +5,7 @@ const ExpensesList = () => {
   const { expenses} = useExpenses();
 
   return (
-      <div className="bg-white rounded-sm inset-shadow-sm shadow-xl p-6 mt-6 w-[70vw] mx-auto">
+      <div className="bg-white rounded-sm inset-shadow-sm shadow-xl p-6 mt-6 md:w-[80vw] mx-auto">
         <h3 className="text-2xl font-bold text-zinc-800 mb-4">
           Tus gastos recientes
         </h3>

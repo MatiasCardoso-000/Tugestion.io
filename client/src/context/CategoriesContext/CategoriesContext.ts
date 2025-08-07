@@ -6,10 +6,12 @@ interface CategoriesContextType {
   createCategory: (category: Category) => void;
   updateCategory: (category_id: string, category: string) => void;
   deleteCategory: (category_id: string) => void;
-  editingId: string ;
+  editingId: string;
   setEditingId: (id: string) => void;
-  newCategoryName: string;
-  setNewCategoryName: (name: string) => void;
+  updateCategoryName: string;
+  createNewCategory: boolean;
+  setUpdateCategoryName: (name: string) => void;
+  setCreateNewCategory: (value: boolean) => void;
 }
 
 export const CategoriesContext = createContext<CategoriesContextType>({
@@ -19,6 +21,8 @@ export const CategoriesContext = createContext<CategoriesContextType>({
   deleteCategory: () => {},
   editingId: "",
   setEditingId: () => {},
-  newCategoryName: "",
-  setNewCategoryName: () => {},
+  updateCategoryName: "",
+  createNewCategory: false,
+  setUpdateCategoryName: () => {},
+  setCreateNewCategory: () => {},
 });

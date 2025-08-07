@@ -10,6 +10,8 @@ router.get(
   validateToken,
   CategoryController.getCategoriesByUser
 );
+
+
 router.put(
   "/:id",
   validateToken,
