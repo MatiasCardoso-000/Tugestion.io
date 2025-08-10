@@ -7,7 +7,7 @@ export const ExpenseItem = ({ expense }) => {
   const { deleteExpense } = useExpenses();
 
   return (
-    <li className="w-full flex justify-between items-center py-3 px-2 hover:bg-zinc-50 rounded transition-colors">
+    <li className="w-full flex flex-wrap justify-between items-center py-3 px-2 hover:bg-zinc-50 rounded transition-colors">
       <div className="w-full flex gap-8 items-center">
         <div>
           <UserIcon />

@@ -16,8 +16,8 @@ const Header = ({ toggleMenu }) => {
   }, []);
 
   return (
-    <header className="w-full flex flex-row-reverse items-center justify-between py-4 px-8  ">
-      <Link to="/dashboard" className="text-2xl font-extrabold text-zinc-900">
+    <header className="w-full flex flex-row-reverse items-center justify-between py-4 px-8">
+      <Link to="/dashboard" className=" text-2xl font-extrabold text-zinc-900">
         TuGestión.io
       </Link>
       <nav>

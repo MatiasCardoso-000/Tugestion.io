@@ -31,14 +31,17 @@ export const LoginComponent = () => {
   }, [isAuthenticated]);
 
   return (
-    <div className="h-screen w-full items-center bg-white">
-      <div className="flex w-full h-full">
-        <div className="absolute top-10 right-20">
-          <Link to={"/"} className="text-6xl font-extrabold text-zinc-800">
+    <div className="h-screen w-full  bg-white">
+      <div className=" w-full h-full flex flex-col items-center ">
+        <div className="mt-4 md:mt-0 md:absolute top-10 right-20">
+          <Link
+            to={"/"}
+            className=" text-2xl  md:text-6xl font-extrabold text-zinc-800"
+          >
             TuGestión.io
           </Link>
         </div>
-        <div className="flex flex-col items-center w-full h-full gap-7">
+        <div className="w-full h-screen  flex flex-col items-center justify-center md:justify-start  gap-7">
           {LoginErrors.map((error, i) => {
             return (
               <div
@@ -52,12 +55,12 @@ export const LoginComponent = () => {
 
           <Form
             formStyle={
-               " max-w-lg w-2/9 h-2/5 mt-28 px-4 py-6 rounded-[6%] inset-shadow-sm shadow-xl bg-white  flex flex-col justify-between gap-2"
+              "h-full  w-full md:w-1/2  xl:w-1/3 md:h-2/5 mt-28 px-4 py-6 rounded-[6%] bg-white  flex flex-col md:justify-between gap-8 "
             }
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="w-full text-center ">
-              <h3 className="font-bold text-lg">TuGestión.io</h3>
+            <div className="hidden w-full text-center md:block">
+              <h3 className=" font-bold text-lg ">TuGestión.io</h3>
               <p>Inicia sesión</p>
             </div>
 
@@ -115,9 +118,9 @@ export const LoginComponent = () => {
                 )}
               </div>
             </div>
-              <Button buttonStyle="w-full py-2  bg-white text-zinc-900 ring-2 ring-zinc-900 rounded-lg font-semibold text-lg cursor-pointer shadow-md hover:bg-zinc-800 hover:text-white  transition-colors">
-                Iniciar sesión
-              </Button>
+            <Button buttonStyle="w-full py-2  bg-white text-zinc-900 ring-2 ring-zinc-900 rounded-lg font-semibold text-lg cursor-pointer shadow-md hover:bg-zinc-800 hover:text-white  transition-colors">
+              Iniciar sesión
+            </Button>
 
             <div className="text-center">
               <Link

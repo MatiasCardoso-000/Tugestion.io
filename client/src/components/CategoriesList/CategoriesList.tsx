@@ -9,7 +9,7 @@ import { Form } from "../Form/Form";
 import { CategoryItem } from "../CategoryItem/CategoryItem";
 
 export const CategoriesList = () => {
-  const { handleSubmit, register, reset } = useForm<Category>();
+  const { handleSubmit, register, reset ,} = useForm<Category>();
 
   const {
     categories,

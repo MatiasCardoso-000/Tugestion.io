@@ -1,19 +1,30 @@
 import { NavLink } from "react-router-dom";
 import { HomeIcon, ListIcon, UserIcon } from "../Icons/Icons";
 
+interface AsideProps {
+  menuOpen: boolean;
+  setMenuOpen: (open: boolean) => void;
+}
+
 /**
  * @description Componente de la barra lateral de navegación.
  * @param {object} props - Propiedades del componente.
  * @param {boolean} props.menuOpen - Estado que indica si el menú está abierto o cerrado.
  * @returns {JSX.Element} - El componente de la barra lateral.
  */
-const Aside = ({ menuOpen }: { menuOpen: boolean }) => {
+const Aside = ({ menuOpen, setMenuOpen }: AsideProps) => {
   return (
     <aside
       className={`min-h-screen bg-zinc-900 shadow-2xl transition-all duration-300 ease-in ${
         menuOpen ? "w-full" : "w-0"
       } overflow-hidden`}
     >
+      <button
+        className="absolute right-0 text-white p-2 text-2xl"
+        onClick={() => setMenuOpen(false)}
+      >
+        x
+      </button>
       <div
         className={`transition-opacity duration-700 ease-in-out ${
           menuOpen ? "opacity-100 delay-200" : "opacity-0"

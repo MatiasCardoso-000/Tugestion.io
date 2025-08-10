@@ -31,14 +31,14 @@ export const RegisterComponent = () => {
   }, [isAuthenticated]);
 
   return (
-    <div className="h-screen w-full flex items-center  bg-white">
-      <div className="flex w-full h-full ">
-        <div className="absolute top-10 right-20">
-          <Link to={"/"} className="text-6xl font-extrabold text-zinc-800">
+    <div className="h-screen w-full bg-white">
+      <div className="w-full h-full flex flex-col items-center">
+        <div className="mt-4 md:mt-0 md:absolute top-10 right-20">
+          <Link to={"/"}className=" text-2xl  md:text-6xl font-extrabold text-zinc-800">
             TuGestión.io
           </Link>
         </div>
-        <div className="flex flex-col items-center  w-full  h-full gap-7">
+        <div className="w-full h-screen  flex flex-col items-center justify-center md:justify-start  gap-7">
           {RegisterErrors.map((error, i) => {
             return (
               <div
@@ -51,11 +51,11 @@ export const RegisterComponent = () => {
           })}
           <Form
             formStyle={
-              "max-w-lg w-2/9 h-2/5 flex mt-28 px-4 py-6 rounded-[6%] inset-shadow-sm shadow-xl bg-white flex-col justify-between gap-2"
+              "h-full  w-full md:w-1/2  xl:w-1/3 md:h-2/5 mt-28 px-4 py-6 rounded-[6%] bg-white  flex flex-col md:justify-between gap-8 "
             }
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="w-full text-center ">
+            <div className="hidden w-full text-center md:block">
               <h3 className="font-bold text-lg">TuGestión.io</h3>
               <p>Registrarse</p>
             </div>

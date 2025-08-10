@@ -7,6 +7,7 @@ interface InputType {
   required: boolean;
   id:string;
   autoComplete?:string
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // Componente de campo de entrada reutilizable
@@ -17,7 +18,8 @@ export const Input = ({
   register,
   required,
   id,
-  autoComplete
+  autoComplete,
+  onChange
 }: InputType) => {
   return (
     <input
@@ -28,6 +30,7 @@ export const Input = ({
       required={required}
       id={id}
       autoComplete={autoComplete}
+      onChange={onChange}
     />
   );
 };
