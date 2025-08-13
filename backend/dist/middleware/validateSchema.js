@@ -1,6 +1,9 @@
-export var validateSchema = function (schema) { return function (req, res, next) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateSchema = void 0;
+const validateSchema = (schema) => (req, res, next) => {
     try {
-        var result = schema.safeParse(req.body);
+        const result = schema.safeParse(req.body);
         if (!result.success) {
             return res
                 .status(400)
@@ -11,4 +14,5 @@ export var validateSchema = function (schema) { return function (req, res, next)
     catch (error) {
         res.status(500).json({ errors: ["Internal server error"] });
     }
-}; };
+};
+exports.validateSchema = validateSchema;

@@ -49,7 +49,7 @@ const getBudget = async (req: Request, res: Response): Promise<Response> => {
       return res.status(401).json({ message: "Usuario no autenticado." });
     }
 
-    const budget = await BudgetModel.findByUserAndMonth(userId, month, year);
+    const budget = await BudgetModel.findByUserAndMonth(userId, String(month), String(year));
     
 
     if (!budget) {

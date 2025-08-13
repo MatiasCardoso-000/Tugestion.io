@@ -1,12 +1,16 @@
-import { Response, NextFunction } from 'express';'express';
+import { Request,Response, NextFunction } from 'express';'express';
 import { UserModel } from '../models/user.model';
 
-interface RequestWithUser extends Request {
-  user?: { uid: string };
+declare global {
+  namespace Express {
+    interface Request {
+      user?: { uid: string };
+    }
+  }
 }
 
 
-export const adminAuthMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction)=> {
+export const adminAuthMiddleware = async (req: Request, res: Response, next: NextFunction)=> {
   try {
     const user_id = req.user?.uid;
     

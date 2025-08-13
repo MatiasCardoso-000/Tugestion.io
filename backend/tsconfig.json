@@ -1,14 +1,18 @@
 {
   "compilerOptions": {
-    "module": "Preserve", // Conservar el tipo de módulo
-    "lib": ["es2020", "dom"],
-    "strict": true, // Habilitar todas las opciones de comprobación de tipo
-    "moduleDetection": "force", // Forzar la detección de módulos
-    "allowJs": true, // Permitir archivos JS
-    "esModuleInterop": true, // Habilitar interoperabilidad de módulos
-    "isolatedModules": true, // Habilitar la comprobación de módulos independientes,}
-    "resolveJsonModule": true // Habilitar la resolución de módulos JSON
+    /* Opciones Base del Proyecto */
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "lib": ["ES2020"],
+    "outDir": "./dist",
+
+    /* Opciones de Robustez y Calidad */
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"], // Incluir archivos
-  "exclude": ["node_modules", "dist"] // Excluir archivos
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
