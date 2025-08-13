@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL || "postgresql://postgres:root@localhost:5432/Tugestion.io";
 
 export const pool = new Pool({
   allowExitOnIdle: true,

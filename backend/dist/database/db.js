@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkDbConnection = exports.pool = void 0;
 const pg_1 = require("pg");
-const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL || "postgresql://postgres:root@localhost:5432/Tugestion.io";
 exports.pool = new pg_1.Pool({
     allowExitOnIdle: true,
     connectionString,
