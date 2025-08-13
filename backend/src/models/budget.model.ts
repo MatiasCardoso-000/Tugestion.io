@@ -1,42 +1,59 @@
 import { pool } from "../database/db";
 
-const addBudget = async (user_id: string, amount: number, period: string) => {
+const createBudget = async (
+  user_id: string,
+  category_id: string,
+  amount: string,
+  month: string,
+  year: string
+) => {
   const query = {
     text: `
-    INSERT INTO BUDGETS(user_id,amount,period)
-    VALUES($1,$2,$3)
+    INSERT INTO BUDGETS(user_id, category_id,amount,month,year)
+    VALUES(
+    $1,
+    $2,
+    $3,
+    COALESCE($4, EXTRACT(MONTH FROM NOW())),
+    COALESCE($5, EXTRACT(YEAR FROM NOW()))
+  )
     RETURNING *
     `,
-    values: [user_id, amount, period],
+    values: [user_id, category_id, amount, month, year],
   };
   const { rows } = await pool.query(query);
   return rows[0];
 };
 
-const getBudgetByUserId = async (user_id: string) => {
+const findByUserAndMonth = async (
+  user_id: string,
+  month: string,
+  year: string
+) => {
   const query = {
     text: `
-  SELECT * FROM BUDGETS WHERE user_id = $1
+  SELECT * FROM BUDGETS WHERE user_id = $1 AND month = $2 AND year = $3
   `,
-    values: [user_id],
+    values: [user_id, month, year],
   };
   const { rows } = await pool.query(query);
   return rows[0];
 };
 
 const updateBudget = async (
-  budget_id: string,
   amount: number,
-  period: string
+  month: string,
+  year: string,
+  budget_id: string
 ) => {
   const query = {
     text: `
     UPDATE BUDGETS
-    SET amount = $1, period = $2
-    WHERE budget_id = $3
+    SET amount = $1, month = $2 , year = $3
+    WHERE budget_id = $4
     RETURNING *
     `,
-    values: [amount, period, budget_id],
+    values: [amount, month, year, budget_id],
   };
   const { rows } = await pool.query(query);
   return rows[0];
@@ -56,8 +73,8 @@ const deleteBudget = async (user_id: string) => {
 };
 
 export const BudgetModel = {
-  addBudget,
-  getBudgetByUserId,
+  createBudget,
+  findByUserAndMonth,
   updateBudget,
   deleteBudget,
 };

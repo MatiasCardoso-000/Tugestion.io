@@ -15,21 +15,17 @@ interface AsideProps {
 const Aside = ({ menuOpen, setMenuOpen }: AsideProps) => {
   return (
     <aside
-      className={`min-h-screen bg-zinc-900 shadow-2xl transition-all duration-300 ease-in ${
-        menuOpen ? "w-full" : "w-0"
-      } overflow-hidden`}
+      className={`fixed inset-y-0 left-0 z-30 w-64 transform bg-zinc-900 shadow-2xl transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:w-full ${
+        menuOpen ? "translate-x-0" : "-translate-x-full"
+      }  overflow-hidden`}
     >
       <button
-        className="absolute right-0 text-white p-2 text-2xl"
+        className="absolute top-0 right-0 p-4 text-white md:hidden"
         onClick={() => setMenuOpen(false)}
       >
-        x
+        X
       </button>
-      <div
-        className={`transition-opacity duration-700 ease-in-out ${
-          menuOpen ? "opacity-100 delay-200" : "opacity-0"
-        }}`}
-      >
+      <div>
         <h2 className="text-white text-2xl font-bold p-4 ">TuGestión.io</h2>
         <nav>
           <ul className="text-white text-2xl font-bold">

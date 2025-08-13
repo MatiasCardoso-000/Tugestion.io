@@ -11,7 +11,7 @@ const Layout = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-white   md:grid  md:${menuOpen ? 'grid-cols-[300px_1fr]' : 'grid-cols-[0_1fr]'} w-full transition-all duration-300`}>
+    <div className={`min-h-screen  bg-white md:grid  ${menuOpen ? 'grid-cols-[300px_1fr]' : 'grid-cols-[0_1fr]'} w-full transition-all duration-300`}>
         <Aside menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <div className="w-full  flex flex-col gap-4">
         <Header toggleMenu={toggleMenu} />

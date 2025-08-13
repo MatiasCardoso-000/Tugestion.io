@@ -15,8 +15,8 @@ const ExpensesList = () => {
   },[]);
 
   return (
-    <div className="bg-white rounded-sm inset-shadow-sm shadow-xl p-6 mt-6 md:w-[80vw] mx-auto">
-      <h3 className="text-2xl font-bold text-zinc-800 mb-4">
+    <div className="bg-white  rounded-sm inset-shadow-sm shadow-xl p-6 mt-6 w-full mx-auto">
+      <h3 className="text-2xl text-center md:text-left font-bold text-zinc-800 mb-4">
         Tus gastos recientes
       </h3>
       {filterExpenses.length > 0 ? (

@@ -10,6 +10,7 @@ import { Home } from "./pages/Home";
 import { CategoriesList } from "./components/CategoriesList/CategoriesList";
 import { UserProfile } from "./components/UserProfile/UserProfile";
 import { ExpenseInfo } from "./components/ExpenseInfo/ExpenseInfo";
+import Budget from "./components/Budget/Budget";
 
 export const AppRouter = () => {
   return (
@@ -27,6 +28,7 @@ export const AppRouter = () => {
            
               <Route path="/dashboard/categorias" element={<CategoriesList />} />
               <Route path="/dashboard/registrar-gasto" element={<ExpenseForm />} />
+              <Route path="/dashboard/presupuesto" element={<Budget/>} />
             </Route>
           </Route>
         </Routes>

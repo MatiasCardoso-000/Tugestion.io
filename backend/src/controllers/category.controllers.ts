@@ -1,7 +1,3 @@
-/**
- * @file Controlador para las operaciones CRUD de categorías.
- */
-
 import { Request, Response } from "express";
 import { CategoryModel } from "../models/category.model";
 import { z } from "zod";
@@ -25,12 +21,7 @@ const categorySchema = z.object({
     .trim(),
 });
 
-/**
- * @description Crea una nueva categoría para el usuario autenticado.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response>} - Una promesa que se resuelve con la nueva categoría creada.
- */
+
 const createCategory = async (req: Request, res: Response) => {
   try {
     const validationResult = categorySchema.safeParse(req.body);

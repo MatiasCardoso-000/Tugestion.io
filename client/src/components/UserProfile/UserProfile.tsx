@@ -1,5 +1,6 @@
 import { useAuth } from "../../hooks/useAuth";
 import { useExpenses } from "../../hooks/useExpenses";
+import Budget from "../Budget/Budget";
 
 export const UserProfile = () => {
   const { user } = useAuth();
@@ -11,65 +12,64 @@ export const UserProfile = () => {
         <h1 className="text-6xl font-bold mb-4">Perfil de Usuario</h1>
         <p className="text-3xl">Bienvenido {user?.username}</p>
       </div>
-      <div className="flex flex-col gap-22 py-4 px-4">
-        <div className=" flex  flex-col md:w-1/3  md:h-[1000px]  justify-between">
-          <div>
-            <div className="w-full px-4 py-8  text-zinc-900  flex flex-col gap-4">
-              <h2 className="font-semibold text-4xl border-b  border-b-zinc-200 py-4">
-                Detalles de la cuenta
-              </h2>
-              <div className="flex items-center gap-2 pt-2">
-                <p className="text-xl font-semibold">Nombre de usuario:</p>
-                <span className="text-lg text-zinc-800 mt-1">
-                  {user?.username}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <p className="text-xl font-semibold">Correo Electrónico:</p>
-                <span className="text-lg text-zinc-800">{user?.email}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <p className="text-xl font-semibold">Miembro desde: </p>
-                <span className="text-lg text-zinc-800 mt-1">
-                  {user?.created_at
-                    .split("T")[0]
-                    .split("-")
-                    .reverse()
-                    .join("/")}
-                </span>
+      <div className="flex w-full justify-between px-2">
+        <div className="flex flex-col gap-22 py-4 px-4">
+          <div className=" flex  flex-col   md:h-[1000px]  justify-between">
+            <div>
+              <div className="w-full px-4 py-8  text-zinc-900  flex flex-col gap-4">
+                <h2 className="font-semibold text-4xl border-b  border-b-zinc-200 py-4">
+                  Detalles de la cuenta
+                </h2>
+                <div className="flex items-center gap-2 pt-2">
+                  <p className="text-xl font-semibold">Nombre de usuario:</p>
+                  <span className="text-lg text-zinc-800 mt-1">
+                    {user?.username}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-xl font-semibold">Correo Electrónico:</p>
+                  <span className="text-lg text-zinc-800">{user?.email}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-xl font-semibold">Miembro desde: </p>
+                  <span className="text-lg text-zinc-800 mt-1">
+                    {new Date(user!.created_at).toLocaleDateString("es-ES")}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div>
-            {" "}
-            <div className="px-4 py-8 text-zinc-900 flex flex-col ">
-              <h2 className="text-4xl font-semibold">Total gastos del mes</h2>
-              <span className="font-bold text-6xl">
-                $
-                {expenses
-                  .reduce((acc, expense) => {
-                    acc += Number(expense.amount);
-                    return acc;
-                  }, 0)
-                  .toFixed(2)}
-              </span>
-            </div>
-            <div className="px-4 py-8 text-white">
-              <h2 className="text-4xl font-semibold text-zinc-900">
-                Total de Gastos Históricos
-              </h2>
-              <span className="text-zinc-900 font-bold text-6xl">
-                $
-                {expenses
-                  .reduce((acc, expense) => {
-                    acc += Number(expense.amount);
-                    return acc;
-                  }, 0)
-                  .toFixed(2)}
-              </span>
+            <div>
+              {" "}
+              <div className="px-4 py-8 text-zinc-900 flex flex-col ">
+                <h2 className="text-4xl font-semibold">Total gastos del mes</h2>
+                <span className="font-bold text-6xl">
+                  $
+                  {expenses
+                    .reduce((acc, expense) => {
+                      acc += Number(expense.amount);
+                      return acc;
+                    }, 0)
+                    .toFixed(2)}
+                </span>
+              </div>
+              <div className="px-4 py-8 text-white">
+                <h2 className="text-4xl font-semibold text-zinc-900">
+                  Total de Gastos Históricos
+                </h2>
+                <span className="text-zinc-900 font-bold text-6xl">
+                  $
+                  {expenses
+                    .reduce((acc, expense) => {
+                      acc += Number(expense.amount);
+                      return acc;
+                    }, 0)
+                    .toFixed(2)}
+                </span>
+              </div>
             </div>
           </div>
         </div>
+        <Budget />
       </div>
     </div>
   );
