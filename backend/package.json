@@ -33,7 +33,6 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.15",
     "@types/pg": "^8.15.4",
-    "jest": "^30.0.5",
     "pkgroll": "^2.14.3",
     "ts-jest": "^29.4.0",
     "tsx": "^4.20.3",
