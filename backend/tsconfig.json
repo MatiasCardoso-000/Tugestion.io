@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "Preserve", // Conservar el tipo de módulo
+    "lib": ["es2020", "dom"],
     "strict": true, // Habilitar todas las opciones de comprobación de tipo
     "moduleDetection": "force", // Forzar la detección de módulos
     "allowJs": true, // Permitir archivos JS
