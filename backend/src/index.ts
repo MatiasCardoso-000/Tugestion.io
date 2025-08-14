@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { PORT } from "./config/config";
-import { checkDbConnection } from "./database/db";
+import { checkDbConnection, pool } from "./database/db";
 import { router as AdminRouter } from "./routes/admin.routes";
 import { router as AuthRouter } from "./routes/user.routes";
 import { router as ExpensesRouter } from "./routes/expenses.routes";
@@ -57,8 +57,8 @@ app.use("/api/categories", CategoriesRouter);
 app.use("/api/budgets", BudgetRouter);
 
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+app.get("/ping", (req: Request, res: Response) => {
+  res.send(pool.query("SELECT NOW()"));
 });
 
 
