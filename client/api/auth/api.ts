@@ -1,7 +1,7 @@
 // src/api/api.ts
 
 // La URL base de nuestro backend.
-export const BASE_URL = "http://localhost:3312/api";
+export const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api`;
 
 /**
  * Refresca el accessToken usando la cookie httpOnly.
@@ -19,7 +19,9 @@ const refreshToken = async () => {
     if (!response.ok) {
       // Si el refresco falla, limpiamos el token de localStorage.
       localStorage.removeItem("accessToken");
-      throw new Error("La sesión ha expirado. Por favor, inicia sesión de nuevo.");
+      throw new Error(
+        "La sesión ha expirado. Por favor, inicia sesión de nuevo."
+      );
     }
 
     const { accessToken } = await response.json();
@@ -53,7 +55,7 @@ const apiFetch = async (url: string, options: RequestInit = {}) => {
   if (accessToken) {
     headers["Authorization"] = `Bearer ${accessToken}`;
   }
-  
+
   options.headers = headers;
 
   // 2. HACEMOS LA PRIMERA PETICIÓN
@@ -66,7 +68,9 @@ const apiFetch = async (url: string, options: RequestInit = {}) => {
       const newAccessToken = await refreshToken();
       // Actualizamos la cabecera de la petición original con el nuevo token.
       if (options.headers) {
-        (options.headers as Record<string, string>)["Authorization"] = `Bearer ${newAccessToken}`;
+        (options.headers as Record<string, string>)[
+          "Authorization"
+        ] = `Bearer ${newAccessToken}`;
       }
 
       // Reintentamos la petición original.
