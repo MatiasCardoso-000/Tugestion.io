@@ -58,7 +58,7 @@ app.use("/api/budgets", BudgetRouter);
 
 
 app.get("/ping", (req: Request, res: Response) => {
-  res.send(pool.query("SELECT NOW()"));
+  res.send('HOLA MUNDO');
 });
 
 
