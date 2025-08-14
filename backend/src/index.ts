@@ -56,6 +56,12 @@ app.use("/api/expenses", ExpensesRouter);
 app.use("/api/categories", CategoriesRouter);
 app.use("/api/budgets", BudgetRouter);
 
+
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello World!");
+});
+
+
 const startServer = async () => {
   await checkDbConnection();
 

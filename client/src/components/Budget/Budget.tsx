@@ -46,7 +46,7 @@ const Budget = () => {
             className="form-control"
           />
         </div>
-        <button type="submit" className="btn btn-primary">Set Budget</button>
+        <button type="submit" className="btn btn-primary">Agregar presupuesto</button>
       </form>
     </div>
   );
