@@ -73,8 +73,8 @@ export const CategoriesList = () => {
         )}
       </div>
       <section className="w-full flex flex-col  justify-center gap-6 px-8 py-8">
-        <h1 className="w-1/4 text-left text-6xl ">Categorías</h1>
-        <ul className="w-full md:grid md:grid-cols-4  gap-4  py-8 bg-white  text-2xl ">
+        <h1 className="w-1/4 text-left text-3xl ">Categorías</h1>
+        <ul className="w-full md:grid md:grid-cols-4  gap-4  py-8 ">
           {categories.map((category: Category) => {
             return (
               category.user_id === null && (
@@ -85,7 +85,7 @@ export const CategoriesList = () => {
         </ul>
       </section>
      <section className="w-full flex flex-col  justify-center gap-6 px-8 py-8">
-        <h1 className="w-1/4 text-left text-6xl ">Categorías del usuario</h1>
+        <h1 className="w-1/4 text-left text-3xl ">Categorías del usuario</h1>
         <ul className="w-full grid grid-cols-4  gap-4  py-8 bg-white  text-2xl ">
           {categories.map((category: Category) => {
             return (

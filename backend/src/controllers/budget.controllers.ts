@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-const setBudget = async (req: Request, res: Response) => {
+const setBudget = async (req: Request, res: Response):Promise<Response> => {
   try {
     const user_id = req.user!.uid;
     const { amount, category_id, month, year } = req.body;

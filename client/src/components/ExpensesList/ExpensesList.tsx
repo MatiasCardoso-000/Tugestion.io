@@ -16,7 +16,7 @@ const ExpensesList = () => {
 
   return (
     <div className="bg-white  rounded-sm inset-shadow-sm shadow-xl p-6 mt-6 w-full mx-auto">
-      <h3 className="text-2xl text-center md:text-left font-bold text-zinc-800 mb-4">
+      <h3 className="text-lg md:text-2xl text-center md:text-left font-semibold text-zinc-800 mb-4">
         Tus gastos recientes
       </h3>
       {filterExpenses.length > 0 ? (
@@ -26,7 +26,7 @@ const ExpensesList = () => {
           ))}
         </ul>
       ) : (
-        <h1 className="text-4xl text-zinc-500 text-center font-semibold py-8">
+        <h1 className="text-lg text-zinc-900 text-center  py-8">
           El gasto que busca no existe
         </h1>
       )}

@@ -3,11 +3,9 @@
 // La URL base de nuestro backend.
 export const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api`;
 
-/**
- * Refresca el accessToken usando la cookie httpOnly.
- * Guarda el nuevo token en localStorage.
- * @returns {Promise<string>} El nuevo accessToken.
- */
+
+// console.log(import.meta.env.VITE_BACKEND_URL);
+
 const refreshToken = async () => {
   try {
     const response = await fetch(`${BASE_URL}/refresh-token`, {
@@ -35,12 +33,7 @@ const refreshToken = async () => {
   }
 };
 
-/**
- * Wrapper personalizado para la API fetch que maneja la autenticación y el refresco de tokens.
- * @param {string} url - La ruta del endpoint (ej. '/expenses').
- * @param {RequestInit} options - Las opciones de configuración para fetch.
- * @returns {Promise<Response>} La respuesta de la petición.
- */
+
 const apiFetch = async (url: string, options: RequestInit = {}) => {
   // 1. OBTENEMOS EL TOKEN DE LOCALSTORAGE
   // En lugar de una variable local, leemos el token desde localStorage.

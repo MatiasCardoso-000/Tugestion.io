@@ -14,12 +14,6 @@ interface TokenPayload {
   uid: string;
 }
 
-/**
- * @description Registra un nuevo usuario en el sistema.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response>} - Una promesa que se resuelve con el nuevo usuario creado y un token de acceso.
- */
 const register = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
@@ -47,26 +41,20 @@ const register = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-  const  registeredUser = {
+    const registeredUser = {
       username: newUser.username,
       email: newUser.email,
       role: newUser.role,
       user_id: newUser.user_id,
     };
 
-    res.status(201).json({user : registeredUser, accessToken });
+    res.status(201).json({ user: registeredUser, accessToken });
   } catch (error: any) {
     console.error("Error en el registro de usuario:", error);
     res.status(500).json({ message: ["Error interno del servidor."] });
   }
 };
 
-/**
- * @description Inicia sesión de un usuario existente.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response>} - Una promesa que se resuelve con el usuario logueado y un token de acceso.
- */
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -108,12 +96,6 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * @description Obtiene un usuario por su ID.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<void>} - No retorna valor.
- */
 const getUser = async (req: Request, res: Response) => {
   try {
     const { uid } = req.params;
@@ -130,12 +112,6 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * @description Cierra la sesión del usuario.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response>} - Una promesa que se resuelve con un mensaje de éxito.
- */
 const logout = async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.cookies;
@@ -151,12 +127,6 @@ const logout = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * @description Refresca el token de acceso de un usuario.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response>} - Una promesa que se resuelve con un nuevo token de acceso.
- */
 export const refreshTokenController = async (req: Request, res: Response) => {
   try {
     // 1. OBTENER EL REFRESH TOKEN DE LA COOKIE

@@ -10,8 +10,6 @@ export const registerRequest = async (user: User)=> {
       credentials: "include",
       body: JSON.stringify(user),
     });
-   
-
 
 };
 
@@ -29,14 +27,11 @@ export const loginRequest = async (user: User) => {
 export const logoutRequest = async () => {
   return await fetch(`${BASE_URL}/auth/logout`, {
     method: "POST",
+    credentials: "include",
   });
 };
 
-/**
- * Verifica si el usuario tiene una sesión activa al intentar
- * refrescar el token. Se llama al cargar la aplicación.
- * @returns La respuesta de la petición fetch.
- */
+
 export const verifyTokenRequest = async () => {
   // Usamos nuestro wrapper 'apiFetch' que ya tiene la BASE_URL
   // o fetch directamente si lo prefieres para esta llamada específica.

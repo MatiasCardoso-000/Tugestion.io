@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import { PORT } from "./config/config";
-import { checkDbConnection, pool } from "./database/db";
+import { FRONTEND_URL, PORT } from "./config/config";
+import { checkDbConnection } from "./database/db";
 import { router as AdminRouter } from "./routes/admin.routes";
 import { router as AuthRouter } from "./routes/user.routes";
 import { router as ExpensesRouter } from "./routes/expenses.routes";
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: FRONTEND_URL,
   credentials: true,
 };
 

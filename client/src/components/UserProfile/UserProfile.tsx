@@ -12,9 +12,9 @@ export const UserProfile = () => {
         <h1 className="text-6xl font-bold mb-4">Perfil de Usuario</h1>
         <p className="text-3xl">Bienvenido {user?.username}</p>
       </div>
-      <div className="flex w-full justify-between px-2">
-        <div className="flex flex-col gap-22 py-4 px-4">
-          <div className=" flex  flex-col   md:h-[1000px]  justify-between">
+      <div className="flex flex-col w-full  px-2">
+        <div className="flex flex-col  py-4 px-4">
+          <div className=" flex justify-center w-full">
             <div>
               <div className="w-full px-4 py-8  text-zinc-900  flex flex-col gap-4">
                 <h2 className="font-semibold text-4xl border-b  border-b-zinc-200 py-4">
@@ -38,7 +38,7 @@ export const UserProfile = () => {
                 </div>
               </div>
             </div>
-            <div>
+            {/* <div>
               {" "}
               <div className="px-4 py-8 text-zinc-900 flex flex-col ">
                 <h2 className="text-4xl font-semibold">Total gastos del mes</h2>
@@ -66,10 +66,15 @@ export const UserProfile = () => {
                     .toFixed(2)}
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
-        <Budget />
+        <h3 className="font-bold text-2xl text-center py-4">
+          Control de gastos
+        </h3>
+        <div className="w-full flex justify-center">
+          <Budget />
+        </div>
       </div>
     </div>
   );

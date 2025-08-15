@@ -21,6 +21,7 @@ export const LoginComponent = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data: User) => {
+    console.log(data);
     signIn(data);
   };
 

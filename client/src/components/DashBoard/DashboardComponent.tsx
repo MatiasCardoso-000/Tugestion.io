@@ -10,9 +10,9 @@ export const DashboardComponent = () => {
   const { isLoading, expenses } = useExpenses();
 
   return (
-    <div className="w-full flex flex-col justify-between items-center gap-4 px-2 py-4 relative">
+    <div className="w-full flex flex-col justify-between items-center gap-2 px-2 py-8 ">
       <div className=" w-full flex justify-center">
-        <div className="w-full flex flex-col p-12">
+        <div className="w-full flex flex-col p-2 md:p-6">
           <h2 className="text-3xl font-bold text-zinc-900 mb-8 text-center md:text-left">
             Dashboard
           </h2>
@@ -26,7 +26,7 @@ export const DashboardComponent = () => {
       <Link to={"/dashboard/registrar-gasto"} className="mt-4 md:hidden md:w-1/12">
         <Button
           buttonStyle={
-            "bg-white ring-2 ring-zinc-900  px-4 py-2 text-zinc-900  flex items-center justify-evenly rounded-2xl text-xl cursor-pointer hover:bg-zinc-800 hover:text-white transition-colors shadow-md md:absolute right-10 bottom-10"
+            "bg-white ring-2 ring-zinc-900  px-4 py-2 text-zinc-900  flex items-center justify-evenly rounded-2xl text-sm cursor-pointer hover:bg-zinc-800 hover:text-white transition-colors shadow-md md:absolute right-10 bottom-10"
           }
         >
           <PlusIcon /> Nuevo Gasto
@@ -42,15 +42,15 @@ export const DashboardComponent = () => {
       )}
 
       {!isLoading && expenses.length === 0 && (
-        <h1 className="text-lg text-zinc-400 text-center">
+        <h1 className="text-lg text-zinc-900 text-center mt-8">
           No hay gastos registrados
         </h1>
       )}
 
-      <Link to={"/dashboard/registrar-gasto"} className="hidden md:block  w-full relative">
+      <Link to={"/dashboard/registrar-gasto"} className="hidden  w-full  justify-end px-4 md:flex  md:mt-4">
         <Button
           buttonStyle={
-            " bg-white ring-2 ring-zinc-900  px-4 py-2 text-zinc-900  flex items-center  rounded-2xl text-xl cursor-pointer hover:bg-zinc-800 hover:text-white transition-colors shadow-md absolute right-10 bottom-[-50px]"
+            " bg-white ring-2 ring-zinc-900  px-2 py-2 text-zinc-900  flex items-center  rounded-2xl text-sm cursor-pointer hover:bg-zinc-800 hover:text-white transition-colors shadow-md "
           }
         >
           <PlusIcon /> Nuevo Gasto

@@ -30,7 +30,7 @@ export const CategoryItem = ({ category }) => {
   return (
     <li
       key={category.category_id}
-      className="flex bg-white ring-2 ring-zinc-900 text-zinc-900 items-center justify-between rounded-md gap-2  px-10 py-10 cursor-pointer hover:bg-zinc-100 transition-colors"
+      className="flex bg-white  text-zinc-900 items-center rounded-md gap-2  px-10 py-10 "
     >
       {editingId === category.category_id ? (
         <div className="w-full flex items-center gap-4">
@@ -63,7 +63,7 @@ export const CategoryItem = ({ category }) => {
           </Form>
         </div>
       ) : (
-        <p className="w-full text-center text-2xl font-semibold">
+        <p className="w-full text-center text-xl font-semibold">
           {category.category_name.slice(0, 1).toLocaleUpperCase() +
             category.category_name.slice(1)}
         </p>
@@ -71,7 +71,7 @@ export const CategoryItem = ({ category }) => {
       {category.user_id && (
         <div className="flex items-center gap-2">
           <Button
-            buttonStyle="p-1 hover:bg-zinc-200 transition-colors cursor-pointer "
+            buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer rounded-md"
             onClick={() => {
               setEditingId(category.category_id);
               setUpdateCategoryName(category.category_name);
@@ -81,7 +81,7 @@ export const CategoryItem = ({ category }) => {
             <SquarePenIcon styleType={""} />
           </Button>
           <Button
-            buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer"
+            buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer rounded-md"
             onClick={() => deleteCategory(category.category_id)}
           >
             <TrashIcon />
