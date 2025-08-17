@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 const corsOptions = {
-  origin: FRONTEND_URL,
+  origin: 'https://tugestion-5i6te6rhk-matias-projects-1fee9a15.vercel.app/',
   credentials: true,
 };
 
