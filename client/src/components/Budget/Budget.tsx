@@ -17,9 +17,11 @@ const Budget = () => {
 
 
   const onSubmit = async (data:BudgetType)=> {
-    createBudget(data)
-    // console.log(data);
-    
+    createBudget({
+      budget_amount: Number(data.budget_amount),
+      budget_period: data.budget_period,
+      category_id: data.category_id,
+    })
   } 
 
 
@@ -138,6 +140,7 @@ const Budget = () => {
                 return (
                   <option
                     key={category.category_id}
+                    value={category.category_id}
                     className="w-full"
                   >
                     {category.category_name}

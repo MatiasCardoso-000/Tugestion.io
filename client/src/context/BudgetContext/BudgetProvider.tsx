@@ -16,13 +16,9 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
 
   const createBudget = async (budget: BudgetType) => {
     console.log(budget);
-    
+
     try {
-      const res = await createBudgetRequest({
-        budget_amount: Number(budget.budget_amount),
-        budget_period: budget.budget_period,
-        category_id: budget.category_id
-      });
+      const res = await createBudgetRequest(budget);
       const budgetData = await res.json();
       setBudgets([...budgets, budgetData]);
       setErrors([]);
