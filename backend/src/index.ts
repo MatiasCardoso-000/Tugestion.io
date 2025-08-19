@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 const corsOptions = {
-  origin: 'https://tugestion-io-1.onrender.com',
+  origin: FRONTEND_URL,
   credentials: true,
 };
 

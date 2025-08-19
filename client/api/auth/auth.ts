@@ -35,7 +35,7 @@ export const logoutRequest = async () => {
 export const verifyTokenRequest = async () => {
   // Usamos nuestro wrapper 'apiFetch' que ya tiene la BASE_URL
   // o fetch directamente si lo prefieres para esta llamada específica.
-  return await fetch("http://localhost:3312/api/auth/refresh-token", {
+  return await fetch(`${BASE_URL}/auth/refresh-token`, {
     method: "POST",
     credentials: "include",
   });

@@ -1,14 +1,10 @@
-// src/api/api.ts
 
 // La URL base de nuestro backend.
 export const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api`;
 
-
-// console.log(import.meta.env.VITE_BACKEND_URL);
-
 const refreshToken = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/refresh-token`, {
+    const response = await fetch(`${BASE_URL}/auth/refresh-token`, {
       method: "POST",
       // 'credentials: "include"' es CRUCIAL para que fetch envíe la cookie httpOnly.
       credentials: "include",

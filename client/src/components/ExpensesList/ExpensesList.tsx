@@ -22,7 +22,7 @@ const ExpensesList = () => {
       {filterExpenses.length > 0 ? (
         <ul className="divide-y divide-zinc-200">
           {filterExpenses.map((expense) => (
-            <ExpenseItem key={expense.expense_id} expense={expense} />
+            <ExpenseItem key={expense.id} expense={expense} />
           ))}
         </ul>
       ) : (

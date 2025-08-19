@@ -2,7 +2,7 @@ import { Expenses } from "../../src/types/expenses.types";
 import apiFetch from "../auth/api";
 
 export const addExpenseRequest = async (data: Expenses[]) => {
-  return await apiFetch("/expenses", {
+  return await apiFetch("/expenses/expense", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,7 +13,7 @@ export const addExpenseRequest = async (data: Expenses[]) => {
 };
 
 export const getExpensesByUserRequest = async () => {
-  return await apiFetch(`/expenses`, {
+  return await apiFetch(`/expenses/expense`, {
     method: "GET",
     credentials: "include",
   });
@@ -21,7 +21,7 @@ export const getExpensesByUserRequest = async () => {
 
 
 export const getExpenseByIdRequest = async(id:string)=> {
-  return await apiFetch(`/expenses/${id}`, {
+  return await apiFetch(`/expenses/expense/${id}`, {
     method: "GET",
     credentials: "include",
   });
@@ -29,7 +29,7 @@ export const getExpenseByIdRequest = async(id:string)=> {
 }
 
 export const deleteExpenseRequest = async (id: string) => {
-  return await apiFetch(`/expenses/${id}`, {
+  return await apiFetch(`/expenses/expense/${id}`, {
     method: "DELETE",
     credentials: "include",
   });

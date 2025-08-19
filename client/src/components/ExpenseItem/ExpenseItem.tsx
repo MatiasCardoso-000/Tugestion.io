@@ -40,7 +40,7 @@ export const ExpenseItem = ({ expense }) => {
         <div className="w-full text-center md:text-center">
           <h3 className="text-zinc-800 text-sm  font-semibold xl:text-xl">Fecha</h3>
           <span className={`w-full  text-sm  lg:text-[14px] text-zinc-900`}>
-            {new Date(expense.expense_date).toLocaleDateString("es-ES")}
+            {new Date(expense.date).toLocaleDateString("es-ES")}
           </span>
         </div>
       </div>
@@ -53,7 +53,7 @@ export const ExpenseItem = ({ expense }) => {
         </div>
         <div className="flex">
           <Link
-            to={`/dashboard/informacion-gasto/${expense.expense_id}`}
+            to={`/dashboard/informacion-gasto/${expense.id}`}
             className="p-2 ml-2 rounded hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
             title="Ver detalle"
           >

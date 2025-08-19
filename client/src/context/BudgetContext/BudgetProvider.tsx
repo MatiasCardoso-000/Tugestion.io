@@ -15,11 +15,12 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
   const getBudgets = async () => {};
 
   const createBudget = async (budget: BudgetType) => {
-    console.log(budget);
 
     try {
       const res = await createBudgetRequest(budget);
       const budgetData = await res.json();
+   
+      
       setBudgets([...budgets, budgetData]);
       setErrors([]);
       setIsLoading(false);

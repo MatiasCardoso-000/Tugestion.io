@@ -47,7 +47,7 @@ export const ExpenseInfo = () => {
           </div>
         )}
 
-        {expense && !isLoading && String(id) === String(expense.expense_id) ? (
+        {expense && !isLoading && String(id) === String(expense.id) ? (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>

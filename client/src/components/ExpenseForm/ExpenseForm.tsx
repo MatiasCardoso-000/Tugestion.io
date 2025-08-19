@@ -15,11 +15,25 @@ const ExpenseForm = () => {
 
   const { addExpense } = useExpenses();
   const { categories } = useCategories();
-
- 
+  const [showNewIncomeForm, setShowNewIncomeForm] = useState(false);
+  const [showNewExpenseForm, setShowExpenseForm] = useState(false);
 
   const handleNewExpense = async (expense: Expenses[]) => {
-    addExpense(expense);
+    const expenseWithTransactionType = {
+      ...expense,
+      transaction_type: "gasto",
+    };
+    addExpense(expenseWithTransactionType);
+  };
+
+    const handleNewIncome = async (expense: Expenses[]) => {
+    const expenseWithTransactionType = {
+      ...expense,
+      transaction_type: "ingreso",
+    };
+    console.log(expenseWithTransactionType);
+    
+    addExpense(expenseWithTransactionType);
   };
 
   return (
@@ -27,101 +41,138 @@ const ExpenseForm = () => {
       <Link to={"/dashboard"} className="flex gap-4 p-4">
         <LeftArrowIcon /> Volver al inicio
       </Link>
-      <Form
-        formStyle="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto "
-        onSubmit={handleSubmit(handleNewExpense)}
-      >
-        <h2 className="text-2xl font-bold text-zinc-900 mb-2">
-          Registrar gasto
-        </h2>
-        <div>
-          <label
-            className="block text-zinc-700 font-semibold mb-1"
-            htmlFor="amount"
-          >
-            Monto
-          </label>
-          <Input
-            register={{ ...register("amount", { required: true }) }}
-            type="text"
-            inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-            placeholder="Ej: 1000"
-            required
-            id="amount"
-          />
-        </div>
-        <div>
-          <label
-            className="block text-zinc-700 font-semibold mb-1"
-            htmlFor="description"
-          >
-            Descripción
-          </label>
-          <Input
-            type="text"
-            register={{ ...register("description", { required: true }) }}
-            inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-            placeholder="Ej: Supermercado, alquiler, etc."
-            required
-            id="description"
-          />
-        </div>
-        <div>
-          <label className="block text-zinc-700 font-semibold mb-1">
-            Categoria
-          </label>
 
-          <select
-            {...register(`category_id`, { required: true })}
-            defaultValue={""}
-            className="border rounded-md p-3 w-full bg-zinc-50 text-shadow-zinc-900 focus:outline-none"
-          >
-            <option
-              disabled
-              defaultValue={""}
-              className="disabled:hidden text-zinc-400"
-            >
-              Ej: Transporte
-            </option>
-            {categories.map((category: Category) => {
-              return (
-                <option
-                  key={category.category_id}
-                  value={category.category_id}
-                  className="w-full"
-                >
-                  {category.category_name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2">
-          Registrar gasto
-        </Button>
-      </Form>
-      {/* {createNewCategory && (
-        <form
-          className="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto absolute right-20 top-36"
-          onSubmit={handleSubmit(handleNewCategory)}
+      <div className="w-full flex justify-evenly mt-10">
+        <Button
+          buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold  cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2 md:w-1/10"
+          onClick={() => setShowExpenseForm(!showNewExpenseForm)}
         >
-          <div>
-            <label className="block text-zinc-700 font-semibold mb-1">
-              Nueva categoría
-            </label>
-            <Input
-              type="text"
-              inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-              placeholder="Ej: Ropa"
-              register={{ ...register("category_name", { required: true }) }}
-              required
-            />
+          Nuevo gasto
+        </Button>
+        <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold  cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2 md:w-1/10" onClick={() => setShowNewIncomeForm(!showNewIncomeForm)}>
+          Nuevo ingreso
+        </Button>
+      </div>
+      <div className="w-full flex justify-between mt-10">
+        {showNewExpenseForm && (
+          <div className={`w-full`}>
+            <Form
+              formStyle={`bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto`}
+              onSubmit={handleSubmit(handleNewExpense)}
+            >
+              <div className="w-full text-right ">
+                <button
+                  className="font-bold cursor-pointer"
+                  onClick={() => setShowExpenseForm(false)}
+                  type="button"
+                >
+                  X
+                </button>
+              </div>
+              <h2 className="text-2xl font-bold text-zinc-900 mb-2">
+                Registrar gasto
+              </h2>
+              <div>
+                <label
+                  className="block text-zinc-700 font-semibold mb-1"
+                  htmlFor="amount"
+                >
+                  Monto
+                </label>
+                <Input
+                  register={{ ...register("amount", { required: true }) }}
+                  type="text"
+                  inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
+                  placeholder="Ej: 1000"
+                  required
+                  id="amount"
+                />
+              </div>
+              <div>
+                <label
+                  className="block text-zinc-700 font-semibold mb-1"
+                  htmlFor="description"
+                >
+                  Descripción
+                </label>
+                <Input
+                  type="text"
+                  register={{ ...register("description", { required: true }) }}
+                  inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
+                  placeholder="Ej: Supermercado, alquiler, etc."
+                  required
+                  id="description"
+                />
+              </div>
+              <div>
+                <label className="block text-zinc-700 font-semibold mb-1">
+                  Categoria
+                </label>
+
+                <select
+                  {...register(`category_id`, { required: true })}
+                  defaultValue={""}
+                  className="border rounded-md p-3 w-full bg-zinc-50 text-shadow-zinc-900 focus:outline-none"
+                >
+                  <option
+                    disabled
+                    defaultValue={""}
+                    className="disabled:hidden text-zinc-400"
+                  >
+                    Ej: Transporte
+                  </option>
+                  {categories.map((category: Category) => {
+                    return (
+                      <option
+                        key={category.category_id}
+                        value={category.category_id}
+                        className="w-full"
+                      >
+                        {category.category_name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2">
+                Registrar gasto
+              </Button>
+            </Form>
           </div>
-          <Button buttonStyle="w-full py-3 bg-zinc-900 text-zinc-100 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800 transition-colors mt-2">
-            Agregar categoría
-          </Button>
-        </form>
-      )} */}
+        )}
+        {showNewIncomeForm && (
+          <div className="w-full">
+            <Form
+              formStyle="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto "
+              onSubmit={handleSubmit(handleNewIncome)}
+            >
+              <h2 className="text-2xl font-bold text-zinc-900 mb-2">
+                Registrar Ingreso
+              </h2>
+              <div>
+                <label
+                  className="block text-zinc-700 font-semibold mb-1"
+                  htmlFor="amount"
+                >
+                  Monto
+                </label>
+                <Input
+                register={{ ...register("amount", { required: true }) }}
+                type="text"
+                inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
+                placeholder="Ej: 1000"
+                required
+                id="amount"
+              />
+              </div>
+
+              <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2">
+                Registrar ingreso
+              </Button>
+            </Form>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

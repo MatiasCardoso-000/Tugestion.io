@@ -7,23 +7,23 @@ import { useBudgets } from "../../hooks/useBudgets";
 import { BudgetType } from "../../types/budget.types";
 
 const Budget = () => {
-  const [budgetAmount, setBudgetAmount] = useState(0);
-  const [totalAmount, setTotalBudget] = useState(0);
-  const { register,handleSubmit } = useForm<BudgetType>();
+  const { register, handleSubmit } = useForm<BudgetType>();
 
-  const { createBudget } = useBudgets();
+  const { createBudget,budgets } = useBudgets();
 
   const { categories } = useCategories();
 
+  const onSubmit = async (data: BudgetType) => {
+    const month = new Date(data.budget_period).getMonth() + 1;
+    const year = new Date(data.budget_period).getFullYear();
 
-  const onSubmit = async (data:BudgetType)=> {
     createBudget({
-      budget_amount: Number(data.budget_amount),
-      budget_period: data.budget_period,
+      amount: Number(data.budget_amount),
+      month: month,
+      year: year,
       category_id: data.category_id,
-    })
-  } 
-
+    });
+  };
 
   return (
     <div className="budget-form-container w-full ring-2 ring-zinc-50 py-2 px-4">
@@ -44,7 +44,10 @@ const Budget = () => {
           <div>
             <p className="font-bold">Presupuesto Total</p>
             <p className="text-2xl font-semibold">
-              ${totalAmount.toLocaleString()}
+              ${budgets.reduce((acc , budget) => {
+                 acc += Number(budget.amount)
+                 return acc
+              },0)}
             </p>
           </div>
         </div>
@@ -60,13 +63,13 @@ const Budget = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex flex-col gap-2">
             <label htmlFor="budgetAmount" className="text-lg font-semibold">
-              Monto del presupuesto: ${budgetAmount}
+              Monto del presupuesto:
             </label>
             <input
               type="text"
               id="budgetAmount"
               placeholder="Ej: 1000"
-               {...register(`budget_amount`, { required: true })}
+              {...register(`budget_amount`, { required: true })}
               className="
                 /* Estilos base del input */
                 p-2 rounded-md border border-gray-300
@@ -90,7 +93,7 @@ const Budget = () => {
             <input
               type="date"
               id="budgetMonth"
-               {...register(`budget_period`, { required: true })}
+              {...register(`budget_period`, { required: true })}
               className="
                 /* Estilos base del input */
                 p-2 rounded-md border border-gray-300

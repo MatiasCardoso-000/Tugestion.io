@@ -19,22 +19,18 @@ const createExpenseSchema = z.object({
   amount: z.string(),
   category_id: z.string(),
   description: z.string().min(1, "La descripción es requerida.").max(255),
-  expense_date: z.string().datetime().optional(), // Fecha como string ISO 8601, opcional
+ date: z.string().datetime().optional(), // Fecha como string ISO 8601, opcional
+   transaction_type:z.string().min(1, "Tipo de transacción requerida.").max(255)
 });
 
 const updateExpenseSchema = z.object({
   amount: z.string(),
   category_id: z.string(),
   description: z.string().min(1).max(255).optional(),
-  expense_date: z.string().datetime().optional(),
+  date: z.string().datetime().optional(),
 });
 
-/**
- * @description Registra un nuevo gasto para el usuario autenticado.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response | undefined>} - Una promesa que se resuelve con el nuevo gasto creado.
- */
+
 const registerExpense = async (
   req: Request,
   res: Response
@@ -47,8 +43,11 @@ const registerExpense = async (
         .json({ errors: validationResult.error.flatten().fieldErrors });
     }
 
-    const { category_id, amount, description, expense_date } =
+    const { category_id, amount, description, date ,  transaction_type} =
       validationResult.data;
+
+    console.log(validationResult.data);
+    
 
     const user_id = req.user?.uid;
 
@@ -69,7 +68,8 @@ const registerExpense = async (
       user_id,
       amount,
       description,
-      expense_date: expense_date ? new Date(expense_date) : undefined,
+      date: date ? new Date(date) : undefined,
+      transaction_type
     });
 
     res.status(201).json(newExpense);
@@ -81,12 +81,7 @@ const registerExpense = async (
   }
 };
 
-/**
- * @description Obtiene todos los gastos de todos los usuarios. (Ruta de administrador)
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response | undefined>} - Una promesa que se resuelve con la lista de todos los gastos.
- */
+
 const getAllExpenses = async (
   req: Request,
   res: Response
@@ -120,12 +115,7 @@ const getAllExpenses = async (
   }
 };
 
-/**
- * @description Obtiene todos los gastos del usuario autenticado.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response>} - Una promesa que se resuelve con la lista de gastos del usuario.
- */
+
 const getExpensesByUser = async (req: Request, res: Response) => {
   try {
     const user_id = req.user!.uid;
@@ -144,12 +134,6 @@ const getExpensesByUser = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * @description Obtiene un gasto específico por su ID.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response | undefined>} - Una promesa que se resuelve con el gasto solicitado.
- */
 const getExpenseById = async (
   req: Request,
   res: Response
@@ -170,12 +154,6 @@ const getExpenseById = async (
   }
 };
 
-/**
- * @description Actualiza un gasto existente del usuario autenticado.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response | undefined>} - Una promesa que se resuelve con el gasto actualizado.
- */
 const updateExpense = async (
   req: Request,
   res: Response
@@ -195,16 +173,16 @@ const updateExpense = async (
         .json({ errors: validationResult.error.flatten().fieldErrors });
     }
 
-    const { amount, category_id, description, expense_date } =
+    const { amount, category_id, description, date } =
       validationResult.data;
 
     const updatedExpense = await ExpensesModel.update({
-      expense_id: id,
+       id,
       user_id, // Para el WHERE
       amount,
       category_id,
       description,
-      expense_date: expense_date ? new Date(expense_date) : undefined,
+      date: date ? new Date(date) : undefined,
     });
 
     if (!updatedExpense) {
@@ -220,12 +198,7 @@ const updateExpense = async (
   }
 };
 
-/**
- * @description Elimina un gasto del usuario autenticado.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response>} - Una promesa que se resuelve con el gasto eliminado.
- */
+
 const deleteExpense = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

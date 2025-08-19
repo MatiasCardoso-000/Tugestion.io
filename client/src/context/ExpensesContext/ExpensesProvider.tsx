@@ -59,7 +59,7 @@ export const ExpensesProvider = ({
     try {
       await deleteExpenseRequest(expenseId);
       setExpenses(
-        expenses.filter((expense) => expense.expense_id !== expenseId)
+        expenses.filter((expense) => expense.id !== expenseId)
       );
     } catch (error) {
       console.log(error);
