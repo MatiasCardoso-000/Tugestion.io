@@ -1,12 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { LeftArrowIcon, SquarePenIcon } from "../Icons/Icons";
-import { useExpenses } from "../../hooks/useExpenses";
+import { useTransactions } from "../../hooks/useExpenses";
 import { useEffect } from "react";
 import { useCategories } from "../../hooks/useCategories";
 import Button from "../Button/Button";
 
-export const ExpenseInfo = () => {
-  const { getExpenseById, expense, isLoading, errors } = useExpenses();
+export const TransactionInfo = () => {
+  const { getExpenseById, expense, isLoading, errors } = useTransactions();
   const { categories } = useCategories();
   const { id } = useParams();
 

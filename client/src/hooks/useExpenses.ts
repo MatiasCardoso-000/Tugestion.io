@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { ExpensesContext } from "../context/ExpensesContext/ExpensesContext";
+import { TransactionsContext } from "../context/TransactionsContext/TransactionsContext";
 
-export const useExpenses = () => {
-  const context = useContext(ExpensesContext);
+export const useTransactions = () => {
+  const context = useContext(TransactionsContext);
 
   if (!context) {
     console.log("useExpenses must be used within an ExpensesProvider");

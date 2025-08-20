@@ -1,19 +1,19 @@
 import { createContext } from "react";
-import { Expenses } from "../../types/expenses.types";
+import { Transactions } from "../../types/transcations.types";
 
-interface ExpensesContextType {
-  expenses: Expenses[];
-  expense: Expenses | null;
+interface TransactionsContextType {
+  expenses: Transactions[];
+  expense: Transactions | null;
   isLoading: boolean;
   errors: string[];
-  addExpense: (expense: Expenses[]) => void;
+  addExpense: (expense: Transactions[]) => void;
   deleteExpense: (id: string) => void;
   // getExpensesByUser: () => void;
   getExpenseById: (id: string) => void;
   // updateExpense: (id: string, expense: Expenses) => void;
 }
 
-export const ExpensesContext = createContext<ExpensesContextType>({
+export const TransactionsContext = createContext<TransactionsContextType>({
   expenses: [],
   expense: null,
   isLoading: true,

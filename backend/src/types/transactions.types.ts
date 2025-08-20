@@ -1,4 +1,4 @@
-export interface Expense {
+export interface Transaction {
   id: string;
   user_id: string;
   category_id: string;
@@ -8,7 +8,7 @@ export interface Expense {
   transaction_type:string;
 }
 
-export interface CreateExpense {
+export interface CreateTransaction {
   user_id: string;
   category_id?: string;
   amount: string;
@@ -17,7 +17,7 @@ export interface CreateExpense {
   transaction_type:string
 }
 
-export interface UpdateExpenseInput {
+export interface UpdateTransactionInput {
   id: string;
   user_id: string; // ¡CRÍTICO! Necesitamos el user_id para seguridad.
   amount?: string;

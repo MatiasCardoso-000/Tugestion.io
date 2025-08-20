@@ -1,9 +1,9 @@
 import { pool } from "../database/db";
 import {
-  CreateExpense,
-  Expense,
-  UpdateExpenseInput,
-} from "../types/expenses.types";
+  CreateTransaction,
+ Transaction,
+  UpdateTransactionInput,
+} from "../types/transactions.types";
 
 const create = async ({
   category_id,
@@ -12,10 +12,10 @@ const create = async ({
   description,
   date,
   transaction_type
-}: CreateExpense): Promise<Expense> => {
+}: CreateTransaction): Promise<Transaction> => {
   const query = {
     text: `
-    INSERT INTO EXPENSES(amount, date, description, transaction_type, category_id, user_id)
+    INSERT INTO TRANSACTIONS(amount, date, description, transaction_type, category_id, user_id)
       VALUES($1, COALESCE($2, CURRENT_DATE), $3, $4, $5,$6)
       RETURNING *
     `,
@@ -25,10 +25,10 @@ const create = async ({
   return rows[0];
 };
 
-const find = async (): Promise<Expense[]> => {
+const find = async (): Promise<Transaction[]> => {
   const query = {
     text: `
-    SELECT * FROM EXPENSES
+    SELECT * FROM TRANSACTIONS
     `,
   };
   const { rows } = await pool.query(query);
@@ -38,10 +38,10 @@ const find = async (): Promise<Expense[]> => {
 const findById = async (
   id: string,
   user_id: string
-): Promise<Expense | undefined> => {
+): Promise<Transaction | undefined> => {
   const query = {
     text: `
-    SELECT * FROM EXPENSES
+    SELECT * FROM TRANSACTIONS
    WHERE id = $1 AND user_id = $2
     `,
     values: [id, user_id],
@@ -50,11 +50,11 @@ const findById = async (
   return rows[0];
 };
 
-const findByUser = async (user_id: string): Promise<Expense[]> => {
+const findByUser = async (user_id: string): Promise<Transaction[]> => {
   const query = {
     text: `
-    SELECT * FROM EXPENSES
-   WHERE user_id = $1 
+    SELECT * FROM TRANSACTIONS
+   WHERE user_id = $1
     `,
     values: [user_id],
   };
@@ -69,10 +69,10 @@ const update = async ({
   category_id,
   description,
   date,
-}: UpdateExpenseInput): Promise<Expense | undefined> => {
+}: UpdateTransactionInput): Promise<Transaction | undefined> => {
   const query = {
     text: `
-    UPDATE EXPENSES
+    UPDATE TRANSACTIONS
       SET 
         amount = COALESCE($1, amount),
         description = COALESCE($2, description),
@@ -98,10 +98,10 @@ const update = async ({
 const remove = async (
   id: string,
   user_id: string
-): Promise<Expense | undefined> => {
+): Promise<Transaction | undefined> => {
   const query = {
     text: `
-            DELETE FROM EXPENSES
+            DELETE FROM TRANSACTIONS
             WHERE id = $1 AND user_id = $2
             RETURNING *
         `,
@@ -111,7 +111,7 @@ const remove = async (
   return rows[0];
 };
 
-export const ExpensesModel = {
+export const TransactionsModel = {
   create,
   find,
   findById,

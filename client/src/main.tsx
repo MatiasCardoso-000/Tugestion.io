@@ -4,20 +4,21 @@ import "./index.css";
 import { AuthProvider } from "./context/AuthContext/AuthProvider";
 import { AppRouter } from "./AppRouter.tsx";
 import { CategoriesProvider } from "./context/CategoriesContext/CategoriesProvider.tsx";
-import ExpensesProvider from "./context/ExpensesContext/ExpensesProvider.tsx";
+
 import { SearchProvider } from "./context/SearchContext/SearchProvider.tsx";
 import { BudgetProvider } from "./context/BudgetContext/BudgetProvider.tsx";
+import TransactionsProvider from "./context/TransactionsContext/TransactionsProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
       <SearchProvider>
         <BudgetProvider>
-          <ExpensesProvider>
+          <TransactionsProvider>
             <CategoriesProvider>
               <AppRouter />
             </CategoriesProvider>
-          </ExpensesProvider>
+          </TransactionsProvider>
         </BudgetProvider>
       </SearchProvider>
     </AuthProvider>

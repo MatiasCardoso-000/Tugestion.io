@@ -1,13 +1,12 @@
-import ExpensesList from "../ExpensesList/ExpensesList";
 import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 import { PlusIcon } from "../Icons/Icons";
-import { useExpenses } from "../../hooks/useExpenses";
+import {  useTransactions } from "../../hooks/useExpenses";
 import { SearchBar } from "../SearchBar/SearchBar";
-import Budget from "../Budget/Budget";
+import TransactionsList from "../TransactionsList/TransactionsList";
 
 export const DashboardComponent = () => {
-  const { isLoading, expenses } = useExpenses();
+  const { isLoading, expenses } = useTransactions();
 
   return (
     <div className="w-full flex flex-col justify-between items-center gap-2 px-2 py-8 ">
@@ -37,7 +36,7 @@ export const DashboardComponent = () => {
 
       {!isLoading && expenses.length > 0 && (
         <div className="w-full flex flex-col  items-center  justify-center md:px-4 gap-8 md:mt-8">
-          <ExpensesList />
+          <TransactionsList />
         </div>
       )}
 

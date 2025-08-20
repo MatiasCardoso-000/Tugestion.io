@@ -3,7 +3,7 @@ import { FRONTEND_URL, PORT } from "./config/config";
 import { checkDbConnection } from "./database/db";
 import { router as AdminRouter } from "./routes/admin.routes";
 import { router as AuthRouter } from "./routes/user.routes";
-import { router as ExpensesRouter } from "./routes/expenses.routes";
+import { router as TransactionsRouter } from "./routes/transactions.routes";
 import { router as CategoriesRouter } from "./routes/category.routes";
 import {router as BudgetRouter} from './routes/budget.routes'
 import cookieParser from "cookie-parser";
@@ -52,7 +52,7 @@ app.use(cors(corsOptions));
 
 app.use("/api/admin", AdminRouter);
 app.use("/api/auth", AuthRouter);
-app.use("/api/expenses", ExpensesRouter);
+app.use("/api/transactions", TransactionsRouter);
 app.use("/api/categories", CategoriesRouter);
 app.use("/api/budgets", BudgetRouter);
 

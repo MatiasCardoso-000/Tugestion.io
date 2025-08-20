@@ -3,14 +3,13 @@ import { Dashboard } from "./pages/DashBoard";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import Layout from "./components/Layout/Layout";
-
 import { PrivateRoutes } from "./components/PrivateRoutes/PrivateRoutes";
-import ExpenseForm from "./components/ExpenseForm/ExpenseForm";
 import { Home } from "./pages/Home";
 import { CategoriesList } from "./components/CategoriesList/CategoriesList";
 import { UserProfile } from "./components/UserProfile/UserProfile";
-import { ExpenseInfo } from "./components/ExpenseInfo/ExpenseInfo";
 import Budget from "./components/Budget/Budget";
+import { TransactionInfo } from "./components/TransactionInfo/TransactionInfo";
+import TransactionsForm from "./components/TransactionsForm/TransactionsForm";
 
 export const AppRouter = () => {
   return (
@@ -24,10 +23,10 @@ export const AppRouter = () => {
             <Route path="/dashboard" element={<Layout />}>
               <Route index element={<Dashboard />} />
               <Route path="/dashboard/perfil" element={<UserProfile />} />
-              <Route path="/dashboard/informacion-gasto/:id" element={<ExpenseInfo />} />
+              <Route path="/dashboard/informacion-gasto/:id" element={<TransactionInfo />} />
            
               <Route path="/dashboard/categorias" element={<CategoriesList />} />
-              <Route path="/dashboard/registrar-gasto" element={<ExpenseForm />} />
+              <Route path="/dashboard/registrar-gasto" element={<TransactionsForm />} />
               <Route path="/dashboard/presupuesto" element={<Budget/>} />
             </Route>
           </Route>

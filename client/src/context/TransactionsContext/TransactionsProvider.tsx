@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { ExpensesContext } from "./ExpensesContext";
 import {
   getExpensesByUserRequest,
   addExpenseRequest,
   deleteExpenseRequest,
   getExpenseByIdRequest,
-} from "../../../api/expenses/expenses";
+} from "../../../api/transaction/transaction";
 import { useAuth } from "../../hooks/useAuth";
 import { set } from "react-hook-form";
-import { Expenses } from "../../types/expenses.types";
+import {  Transactions } from "../../types/transcations.types";
+import { TransactionsContext } from "./TransactionsContext";
 
-export const ExpensesProvider = ({
+export const TransactionsProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [expenses, setExpenses] = useState<Expenses[]>([]);
-  const [expense, setExpense] = useState<Expenses | null>(null);
+  const [expenses, setExpenses] = useState<Transactions[]>([]);
+  const [expense, setExpense] = useState<Transactions | null>(null);
   const { isAuthenticated } = useAuth();
   const [errors, setErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const addExpense = async (expense: Expenses[]) => {
+  const addExpense = async (expense: Transactions[]) => {
     try {
       const res = await addExpenseRequest(expense);
       const data = await res.json();
@@ -89,7 +89,7 @@ export const ExpensesProvider = ({
   }, [isAuthenticated]);
 
   return (
-    <ExpensesContext.Provider
+    <TransactionsContext.Provider
       value={{
         expenses,
         expense,
@@ -101,8 +101,8 @@ export const ExpensesProvider = ({
       }}
     >
       {children}
-    </ExpensesContext.Provider>
+    </TransactionsContext.Provider>
   );
 };
 
-export default ExpensesProvider;
+export default TransactionsProvider;

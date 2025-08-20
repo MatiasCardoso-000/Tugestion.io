@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useExpenses } from "../../hooks/useExpenses";
+import {  useTransactions } from "../../hooks/useExpenses";
 import { useFilter } from "../../hooks/useFilter";
 import { useSearch } from "../../hooks/useSearch";
-import { ExpenseItem } from "../ExpenseItem/ExpenseItem";
+import { TransactionItem } from "../TransactionItem/TransactionItem";
 
-const ExpensesList = () => {
-  const { expenses } = useExpenses();
+const TransactionsList = () => {
+  const { expenses } = useTransactions();
   const { inputValue, resetSearch } = useSearch();
   const { filteredExpenses } = useFilter();
   const filterExpenses = filteredExpenses(expenses, inputValue);
@@ -21,8 +21,8 @@ const ExpensesList = () => {
       </h3>
       {filterExpenses.length > 0 ? (
         <ul className="divide-y divide-zinc-200">
-          {filterExpenses.map((expense) => (
-            <ExpenseItem key={expense.id} expense={expense} />
+          {filterExpenses.map((transaction) => (
+            <TransactionItem key={transaction.id} transaction={transaction} />
           ))}
         </ul>
       ) : (
@@ -34,4 +34,4 @@ const ExpensesList = () => {
   );
 };
 
-export default ExpensesList;
+export default TransactionsList;

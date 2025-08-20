@@ -1,10 +1,10 @@
 import { useAuth } from "../../hooks/useAuth";
-import { useExpenses } from "../../hooks/useExpenses";
+import { useTransactions } from "../../hooks/useExpenses";
 import Budget from "../Budget/Budget";
 
 export const UserProfile = () => {
   const { user } = useAuth();
-  const { expenses } = useExpenses();
+  const { expenses } = useTransactions();
   return (
     <div className="flex flex-col gap-4 ">
       {" "}

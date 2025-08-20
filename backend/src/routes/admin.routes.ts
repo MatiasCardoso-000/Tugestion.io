@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validateToken } from "../middleware/validateToken";
 import { adminAuthMiddleware } from "../middleware/adminAuthMiddleware";
-import { ExpensesController } from "../controllers/expenses.controllers";
+import { TransactionController } from "../controllers/transactions.controllers";
 
 export const router = Router();
 
@@ -13,5 +13,5 @@ router.get(
   "/admin/expenses",
   validateToken,
   adminAuthMiddleware,
-  ExpensesController.getAllExpenses // Este es el controlador que trae todo
+  TransactionController.getAllTransactions // Este es el controlador que trae todo
 );

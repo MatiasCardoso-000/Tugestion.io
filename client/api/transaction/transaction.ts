@@ -1,8 +1,8 @@
-import { Expenses } from "../../src/types/expenses.types";
+import {  Transactions } from "../../src/types/transcations.types";
 import apiFetch from "../auth/api";
 
-export const addExpenseRequest = async (data: Expenses[]) => {
-  return await apiFetch("/expenses/expense", {
+export const addExpenseRequest = async (data: Transactions[]) => {
+  return await apiFetch("/transactions/transaction", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,7 +13,7 @@ export const addExpenseRequest = async (data: Expenses[]) => {
 };
 
 export const getExpensesByUserRequest = async () => {
-  return await apiFetch(`/expenses/expense`, {
+  return await apiFetch(`/transactions/transaction`, {
     method: "GET",
     credentials: "include",
   });
@@ -21,7 +21,7 @@ export const getExpensesByUserRequest = async () => {
 
 
 export const getExpenseByIdRequest = async(id:string)=> {
-  return await apiFetch(`/expenses/expense/${id}`, {
+  return await apiFetch(`/transactions/transaction/${id}`, {
     method: "GET",
     credentials: "include",
   });

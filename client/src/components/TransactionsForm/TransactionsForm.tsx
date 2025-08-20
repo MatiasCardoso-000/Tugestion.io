@@ -4,16 +4,16 @@ import { useCategories } from "../../hooks/useCategories";
 import { Category } from "../../types/categories.types";
 import { useForm } from "react-hook-form";
 import { Input } from "../Input/Input";
-import { useExpenses } from "../../hooks/useExpenses";
 import { Expenses } from "../../types/expenses.types";
 import { Form } from "../Form/Form";
 import { Link } from "react-router-dom";
 import { LeftArrowIcon } from "../Icons/Icons";
+import { useTransactions } from "../../hooks/useExpenses";
 
-const ExpenseForm = () => {
+const TransactionsForm = () => {
   const { handleSubmit, register } = useForm<any>();
 
-  const { addExpense } = useExpenses();
+  const { addExpense } = useTransactions();
   const { categories } = useCategories();
   const [showNewIncomeForm, setShowNewIncomeForm] = useState(false);
   const [showNewExpenseForm, setShowExpenseForm] = useState(false);
@@ -177,4 +177,4 @@ const ExpenseForm = () => {
   );
 };
 
-export default ExpenseForm;
+export default TransactionsForm;

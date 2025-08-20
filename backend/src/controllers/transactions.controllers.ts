@@ -1,9 +1,6 @@
-/**
- * @file Controlador para las operaciones CRUD de gastos.
- */
 
 import { Request, Response } from "express";
-import { ExpensesModel } from "../models/expenses.model";
+import { TransactionsModel } from "../models/transactions.model";
 import { CategoryModel } from "../models/category.model";
 import { UserModel } from "../models/user.model";
 import { z } from "zod";
@@ -15,39 +12,39 @@ declare global {
   }
 }
 
-const createExpenseSchema = z.object({
+const createTransactionSchema = z.object({
   amount: z.string(),
-  category_id: z.string(),
-  description: z.string().min(1, "La descripción es requerida.").max(255),
- date: z.string().datetime().optional(), // Fecha como string ISO 8601, opcional
-   transaction_type:z.string().min(1, "Tipo de transacción requerida.").max(255)
+  category_id: z.string().optional(),
+  description: z
+    .string()
+    .min(1, "La descripción es requerida.")
+    .max(255)
+    .optional(),
+  date: z.string().datetime().optional(), // Fecha como string ISO 8601, opcional
+  transaction_type: z.enum(["gasto", "ingreso"]),
 });
 
-const updateExpenseSchema = z.object({
+const updateTransactionSchema = z.object({
   amount: z.string(),
   category_id: z.string(),
   description: z.string().min(1).max(255).optional(),
   date: z.string().datetime().optional(),
 });
 
-
-const registerExpense = async (
+const registerTransaction = async (
   req: Request,
   res: Response
 ): Promise<Response | undefined> => {
   try {
-    const validationResult = createExpenseSchema.safeParse(req.body);
+    const validationResult = createTransactionSchema.safeParse(req.body);
     if (!validationResult.success) {
       return res
         .status(400)
         .json({ errors: validationResult.error.flatten().fieldErrors });
     }
 
-    const { category_id, amount, description, date ,  transaction_type} =
+    const { category_id, amount, description, date, transaction_type } =
       validationResult.data;
-
-    console.log(validationResult.data);
-    
 
     const user_id = req.user?.uid;
 
@@ -55,41 +52,47 @@ const registerExpense = async (
       return res.status(401).json({ message: "User not authenticated" });
     }
 
-    const category = await CategoryModel.findById(category_id, user_id);
-
-    if (!category) {
-      return res.status(403).json({
-        message: "La categoría no existe o no tienes permiso para usarla.",
-      });
+    if (transaction_type === "gasto" && !category_id) {
+      return res
+        .status(400)
+        .json({ message: "La categoría es obligatoria para los gastos." });
     }
 
-    const newExpense = await ExpensesModel.create({
+    if (category_id) {
+      const category = await CategoryModel.findById(category_id, user_id);
+      if (!category) {
+        return res.status(403).json({
+          message: "La categoría no existe o no tienes permiso para usarla.",
+        });
+      }
+    }
+
+    const newTransaction = await TransactionsModel.create({
       category_id,
       user_id,
       amount,
       description,
       date: date ? new Date(date) : undefined,
-      transaction_type
+      transaction_type,
     });
 
-    res.status(201).json(newExpense);
+    res.status(201).json(newTransaction);
   } catch (error) {
-    console.error("Error en registerExpense:", error);
+    console.error("Error en registerTransaction:", error);
     res
       .status(500)
       .json({ message: "Error en el servidor al registrar el gasto." });
   }
 };
 
-
-const getAllExpenses = async (
+const getAllTransactions = async (
   req: Request,
   res: Response
 ): Promise<Response | undefined> => {
   try {
     const user_id = req.user?.uid;
 
-    const expenses = await ExpensesModel.find();
+    const expenses = await TransactionsModel.find();
 
     if (!user_id) {
       return res.status(401).json({ message: "User not authenticated" });
@@ -115,8 +118,7 @@ const getAllExpenses = async (
   }
 };
 
-
-const getExpensesByUser = async (req: Request, res: Response) => {
+const getTransactionsByUser = async (req: Request, res: Response) => {
   try {
     const user_id = req.user!.uid;
 
@@ -124,7 +126,7 @@ const getExpensesByUser = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "User not authenticated" });
     }
 
-    const expenses = await ExpensesModel.findByUser(user_id);
+    const expenses = await TransactionsModel.findByUser(user_id);
 
     // findByUser devuelve un array. Si está vacío, no es un error, solo no hay gastos.
     res.json(expenses);
@@ -134,14 +136,14 @@ const getExpensesByUser = async (req: Request, res: Response) => {
   }
 };
 
-const getExpenseById = async (
+const getTransactionById = async (
   req: Request,
   res: Response
 ): Promise<Response | undefined> => {
   try {
     const { id } = req.params;
     const user_id = req.user!.uid;
-    const expense = await ExpensesModel.findById(id, user_id);
+    const expense = await TransactionsModel.findById(id, user_id);
 
     if (!expense) {
       return res.status(404).json({ message: "Expense not found" });
@@ -154,7 +156,7 @@ const getExpenseById = async (
   }
 };
 
-const updateExpense = async (
+const updateTransaction = async (
   req: Request,
   res: Response
 ): Promise<Response | undefined> => {
@@ -166,18 +168,17 @@ const updateExpense = async (
       return res.status(401).json({ message: "User not authenticated" });
     }
 
-    const validationResult = updateExpenseSchema.safeParse(req.body);
+    const validationResult = updateTransactionSchema.safeParse(req.body);
     if (!validationResult.success) {
       return res
         .status(400)
         .json({ errors: validationResult.error.flatten().fieldErrors });
     }
 
-    const { amount, category_id, description, date } =
-      validationResult.data;
+    const { amount, category_id, description, date } = validationResult.data;
 
-    const updatedExpense = await ExpensesModel.update({
-       id,
+    const updatedExpense = await TransactionsModel.update({
+      id,
       user_id, // Para el WHERE
       amount,
       category_id,
@@ -198,8 +199,7 @@ const updateExpense = async (
   }
 };
 
-
-const deleteExpense = async (req: Request, res: Response) => {
+const deleteTransaction = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user_id = req.user?.uid;
@@ -208,7 +208,7 @@ const deleteExpense = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "User not authenticated" });
     }
 
-    const deletedExpense = await ExpensesModel.remove(id, user_id);
+    const deletedExpense = await TransactionsModel.remove(id, user_id);
 
     if (!deletedExpense) {
       return res.status(404).json({
@@ -224,11 +224,11 @@ const deleteExpense = async (req: Request, res: Response) => {
   }
 };
 
-export const ExpensesController = {
-  registerExpense,
-  getAllExpenses,
-  getExpensesByUser,
-  getExpenseById,
-  updateExpense,
-  deleteExpense,
+export const TransactionController = {
+ registerTransaction,
+  getAllTransactions,
+  getTransactionsByUser,
+  getTransactionById,
+  updateTransaction,
+  deleteTransaction,
 };
