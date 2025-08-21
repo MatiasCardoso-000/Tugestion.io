@@ -25,7 +25,7 @@ export const TransactionItem = ({ transaction }) => {
     })?.category_name || "-";
 
   return (
-    <tr className=" hover:bg-blue-100 transition-colors duration-200 cursor-pointer">
+    <tr className=" hover:bg-blue-100 transition-colors duration-200 cursor-pointer ">
       <td className="px-6 py-4 text-slate-700 w-1/4">
         {transaction.description ? transaction.description : "-"}
       </td>

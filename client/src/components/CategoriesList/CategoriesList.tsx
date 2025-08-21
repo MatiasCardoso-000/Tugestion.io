@@ -26,7 +26,7 @@ export const CategoriesList = () => {
   };
 
   return (
-    <div className="w-[100vw]  flex items-center  flex-col px-4 relative ">
+    <div className="w-full flex items-center  flex-col px-4 relative ">
       <div className="w-full text-left">
         <Link
           to={"/dashboard"}
@@ -77,7 +77,7 @@ export const CategoriesList = () => {
           </Form>
         )}
       </div>
-      <section className="w-[100vw] flex flex-col items-center  justify-center  px-8 py-8">
+      <section className="w-full flex flex-col items-center  justify-center  px-8 py-8">
         <h1 className="w-full text-center font-semibold md:text-left md:text-3xl ">
           Categorías
         </h1>
