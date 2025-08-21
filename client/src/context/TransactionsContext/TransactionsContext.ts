@@ -2,8 +2,8 @@ import { createContext } from "react";
 import { Transactions } from "../../types/transcations.types";
 
 interface TransactionsContextType {
-  expenses: Transactions[];
-  expense: Transactions | null;
+  transactions: Transactions[];
+  transaction: Transactions | null;
   isLoading: boolean;
   errors: string[];
   addExpense: (expense: Transactions[]) => void;
@@ -14,8 +14,8 @@ interface TransactionsContextType {
 }
 
 export const TransactionsContext = createContext<TransactionsContextType>({
-  expenses: [],
-  expense: null,
+  transactions: [],
+  transaction: null,
   isLoading: true,
   errors: [],
   addExpense: () => {},

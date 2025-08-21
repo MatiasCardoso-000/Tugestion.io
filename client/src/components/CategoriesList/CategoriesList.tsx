@@ -9,7 +9,7 @@ import { Form } from "../Form/Form";
 import { CategoryItem } from "../CategoryItem/CategoryItem";
 
 export const CategoriesList = () => {
-  const { handleSubmit, register, reset ,} = useForm<Category>();
+  const { handleSubmit, register, reset } = useForm<Category>();
 
   const {
     categories,
@@ -26,27 +26,32 @@ export const CategoriesList = () => {
   };
 
   return (
-    <div className="flex flex-col px-4 gap-y-4 relative">
-      <Link
-        to={"/dashboard"}
-        className="inline-flex text-lg items-center gap-2 text-zinc-900 hover:underline transition-colors mb-4"
-      >
-        <LeftArrowIcon /> Volver al inicio
-      </Link>
-      <div>
-        <Button
-          buttonStyle="w-1/11 py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800  hover:text-white transition-colors mt-2 absolute right-20 top-8"
-          onClick={() => {
-            setCreateNewCategory(!createNewCategory);
-            setEditingId("");
-          }}
+    <div className="w-[100vw]  flex items-center  flex-col px-4 relative ">
+      <div className="w-full text-left">
+        <Link
+          to={"/dashboard"}
+          className="inline-flex text-lg items-center gap-2 text-zinc-900 hover:underline transition-colors mb-4"
         >
-          Crear Categoria
-        </Button>
+          <LeftArrowIcon /> Volver al inicio
+        </Link>
+      </div>
+
+      <div className="w-full flex justify-end md:justify-end">
+        <div>
+          <Button
+            buttonStyle="w-full   px-2 py-3 mt-6 bg-blue-600  text-white rounded-lg  text-lg cursor-pointer shadow-md hover:bg-blue-700   transition-colors md:mt-0"
+            onClick={() => {
+              setCreateNewCategory(!createNewCategory);
+              setEditingId("");
+            }}
+          >
+            Crear Categoria
+          </Button>
+        </div>
 
         {createNewCategory && (
           <Form
-            formStyle="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto absolute right-20 top-20"
+            formStyle="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto absolute left-0 md:right-20 top-20"
             onSubmit={handleSubmit(onCreateCategorySubmit)}
           >
             <div>
@@ -66,15 +71,17 @@ export const CategoriesList = () => {
                 autoComplete="off"
               />
             </div>
-            <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md hover:bg-zinc-800 hover:text-white transition-colors mt-2">
+            <Button buttonStyle="w-full py-3 bg-blue-600  text-white rounded-lg  text-lg cursor-pointer shadow-md hover:bg-blue-700 hover:text-white transition-colors mt-2">
               Agregar categoría
             </Button>
           </Form>
         )}
       </div>
-      <section className="w-full flex flex-col  justify-center gap-6 px-8 py-8">
-        <h1 className="w-1/4 text-left text-3xl ">Categorías</h1>
-        <ul className="w-full md:grid md:grid-cols-4  gap-4  py-8 ">
+      <section className="w-[100vw] flex flex-col items-center  justify-center  px-8 py-8">
+        <h1 className="w-full text-center font-semibold md:text-left md:text-3xl ">
+          Categorías
+        </h1>
+        <ul className="w-full md:grid md:grid-cols-3 xl:grid-cols-4 py-2 ">
           {categories.map((category: Category) => {
             return (
               category.user_id === null && (
@@ -84,12 +91,14 @@ export const CategoriesList = () => {
           })}
         </ul>
       </section>
-     <section className="w-full flex flex-col  justify-center gap-6 px-8 py-8">
-        <h1 className="w-1/4 text-left text-3xl ">Categorías del usuario</h1>
-        <ul className="w-full grid grid-cols-4  gap-4  py-8 bg-white  text-2xl ">
+      <section className="w-full flex flex-col   px-8 py-8">
+        <h1 className="text-center font-semibold md:text-left md:text-3xl ">
+          Categorías del usuario
+        </h1>
+        <ul className="w-full md:grid md:grid-cols-4  gap-4  py-8 bg-white  ">
           {categories.map((category: Category) => {
             return (
-              category.user_id  && (
+              category.user_id && (
                 <CategoryItem category={category} key={category.category_id} />
               )
             );

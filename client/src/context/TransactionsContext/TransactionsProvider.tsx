@@ -6,7 +6,6 @@ import {
   getExpenseByIdRequest,
 } from "../../../api/transaction/transaction";
 import { useAuth } from "../../hooks/useAuth";
-import { set } from "react-hook-form";
 import {  Transactions } from "../../types/transcations.types";
 import { TransactionsContext } from "./TransactionsContext";
 
@@ -15,8 +14,8 @@ export const TransactionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [expenses, setExpenses] = useState<Transactions[]>([]);
-  const [expense, setExpense] = useState<Transactions | null>(null);
+  const [transactions, setExpenses] = useState<Transactions[]>([]);
+  const [transaction, setExpense] = useState<Transactions | null>(null);
   const { isAuthenticated } = useAuth();
   const [errors, setErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +24,7 @@ export const TransactionsProvider = ({
     try {
       const res = await addExpenseRequest(expense);
       const data = await res.json();
-      setExpenses([...expenses, data]);
+      setExpenses([...transactions, data]);
     } catch (error) {
       console.log(error);
     } finally {
@@ -55,11 +54,11 @@ export const TransactionsProvider = ({
     }
   };
 
-  const deleteExpense = async (expenseId: string) => {
+  const deleteExpense = async (transactionId: string) => {
     try {
-      await deleteExpenseRequest(expenseId);
+      await deleteExpenseRequest(transactionId);
       setExpenses(
-        expenses.filter((expense) => expense.id !== expenseId)
+        transactions.filter((transaction) => transaction.id !== transactionId)
       );
     } catch (error) {
       console.log(error);
@@ -91,8 +90,8 @@ export const TransactionsProvider = ({
   return (
     <TransactionsContext.Provider
       value={{
-        expenses,
-        expense,
+        transactions,
+        transaction,
         isLoading,
         errors,
         addExpense,

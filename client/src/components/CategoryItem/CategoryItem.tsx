@@ -1,11 +1,7 @@
 import { useCategories } from "../../hooks/useCategories";
 import Button from "../Button/Button";
 import { Form } from "../Form/Form";
-import {
-  CheckIcon,
-  SquarePenIcon,
-  TrashIcon,
-} from "../Icons/Icons";
+import { CheckIcon, SquarePenIcon, TrashIcon } from "../Icons/Icons";
 
 export const CategoryItem = ({ category }) => {
   const {
@@ -30,7 +26,7 @@ export const CategoryItem = ({ category }) => {
   return (
     <li
       key={category.category_id}
-      className="flex bg-white  text-zinc-900 items-center rounded-md gap-2  px-10 py-10 "
+      className="flex bg-white  text-zinc-900 items-center justify-center rounded-md gap-2  py-10  md:py-4"
     >
       {editingId === category.category_id ? (
         <div className="w-full flex items-center gap-4">
@@ -52,7 +48,10 @@ export const CategoryItem = ({ category }) => {
             />
             <Button
               onClick={() => {
-                onUpdateCategorySubmit(category.category_id, updateCategoryName);
+                onUpdateCategorySubmit(
+                  category.category_id,
+                  updateCategoryName
+                );
                 setEditingId("");
                 setUpdateCategoryName("");
               }}
@@ -63,31 +62,33 @@ export const CategoryItem = ({ category }) => {
           </Form>
         </div>
       ) : (
-        <p className="w-full text-center text-xl font-semibold">
-          {category.category_name.slice(0, 1).toLocaleUpperCase() +
-            category.category_name.slice(1)}
-        </p>
-      )}{" "}
-      {category.user_id && (
-        <div className="flex items-center gap-2">
-          <Button
-            buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer rounded-md"
-            onClick={() => {
-              setEditingId(category.category_id);
-              setUpdateCategoryName(category.category_name);
-              setCreateNewCategory(false);
-            }}
-          >
-            <SquarePenIcon styleType={""} />
-          </Button>
-          <Button
-            buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer rounded-md"
-            onClick={() => deleteCategory(category.category_id)}
-          >
-            <TrashIcon />
-          </Button>
+        <div className="flex flex-wrap gap-2  text-center  md:flex-row justify-center">
+          <p className="w-full xl:text-xl ">
+            {category.category_name.slice(0, 1).toLocaleUpperCase() +
+              category.category_name.slice(1)}
+          </p>
+          {category.user_id && (
+            <div className="flex items-center gap-2">
+              <Button
+                buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer rounded-md"
+                onClick={() => {
+                  setEditingId(category.category_id);
+                  setUpdateCategoryName(category.category_name);
+                  setCreateNewCategory(false);
+                }}
+              >
+                <SquarePenIcon styleType={""} />
+              </Button>
+              <Button
+                buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer rounded-md"
+                onClick={() => deleteCategory(category.category_id)}
+              >
+                <TrashIcon />
+              </Button>
+            </div>
+          )}
         </div>
-      )}
+      )}{" "}
     </li>
   );
 };

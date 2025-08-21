@@ -4,6 +4,6 @@ export interface Transactions {
   category_id: string;
   amount: number;
   description: string;
-  expense_date: string;
+  date: string;
   transaction_type: string;
 }

@@ -4,11 +4,11 @@ import { useCategories } from "../../hooks/useCategories";
 import { Category } from "../../types/categories.types";
 import { useForm } from "react-hook-form";
 import { Input } from "../Input/Input";
-import { Expenses } from "../../types/expenses.types";
 import { Form } from "../Form/Form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LeftArrowIcon } from "../Icons/Icons";
 import { useTransactions } from "../../hooks/useExpenses";
+import { Transactions } from "../../types/transcations.types";
 
 const TransactionsForm = () => {
   const { handleSubmit, register } = useForm<any>();
@@ -18,7 +18,9 @@ const TransactionsForm = () => {
   const [showNewIncomeForm, setShowNewIncomeForm] = useState(false);
   const [showNewExpenseForm, setShowExpenseForm] = useState(false);
 
-  const handleNewExpense = async (expense: Expenses[]) => {
+
+
+  const handleNewExpense = async (expense: Transactions[]) => {
     const expenseWithTransactionType = {
       ...expense,
       transaction_type: "gasto",
@@ -26,13 +28,13 @@ const TransactionsForm = () => {
     addExpense(expenseWithTransactionType);
   };
 
-    const handleNewIncome = async (expense: Expenses[]) => {
+  const handleNewIncome = async (expense: Transactions[]) => {
     const expenseWithTransactionType = {
       ...expense,
       transaction_type: "ingreso",
     };
     console.log(expenseWithTransactionType);
-    
+
     addExpense(expenseWithTransactionType);
   };
 
@@ -49,7 +51,10 @@ const TransactionsForm = () => {
         >
           Nuevo gasto
         </Button>
-        <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold  cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2 md:w-1/10" onClick={() => setShowNewIncomeForm(!showNewIncomeForm)}>
+        <Button
+          buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold  cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2 md:w-1/10"
+          onClick={() => setShowNewIncomeForm(!showNewIncomeForm)}
+        >
           Nuevo ingreso
         </Button>
       </div>
@@ -157,15 +162,30 @@ const TransactionsForm = () => {
                   Monto
                 </label>
                 <Input
-                register={{ ...register("amount", { required: true }) }}
-                type="text"
-                inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-                placeholder="Ej: 1000"
-                required
-                id="amount"
-              />
+                  register={{ ...register("amount", { required: true }) }}
+                  type="text"
+                  inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
+                  placeholder="Ej: 1000"
+                  required
+                  id="amount"
+                />
               </div>
-
+              <div>
+                <label
+                  className="block text-zinc-700 font-semibold mb-1"
+                  htmlFor="description"
+                >
+                  Descripción
+                </label>
+                <Input
+                  type="text"
+                  register={{ ...register("description", { required: true }) }}
+                  inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
+                  placeholder="Ej: Supermercado, alquiler, etc."
+                  required
+                  id="description"
+                />
+              </div>
               <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2">
                 Registrar ingreso
               </Button>

@@ -6,22 +6,26 @@ import { useCategories } from "../../hooks/useCategories";
 import Button from "../Button/Button";
 
 export const TransactionInfo = () => {
-  const { getExpenseById, expense, isLoading, errors } = useTransactions();
+  const { getExpenseById, transaction, isLoading, errors } = useTransactions();
   const { categories } = useCategories();
   const { id } = useParams();
+
+  const isExpense = transaction?.transaction_type === "gasto";
+  const amountColor = isExpense ? "text-red-400" : "text-green-400";
+
+    const categoryName = categories
+    .find((c) => {
+      return (
+         c.category_id === transaction?.category_id
+      );
+    })?.category_name || "-"
+
 
   useEffect(() => {
     if (id) {
       getExpenseById(id);
     }
   }, [id]);
-
-  const categoryName = categories.filter((category) => {
-    if (String(category.category_id) === String(expense?.category_id)) {
-      return category.category_name;
-    }
-    return null;
-  });
 
   return (
     <div className="w-full text-zinc-900 px-4 py-2 mx-auto mt-10">
@@ -47,14 +51,16 @@ export const TransactionInfo = () => {
           </div>
         )}
 
-        {expense && !isLoading && String(id) === String(expense.id) ? (
+        {transaction && !isLoading && String(id) === String(transaction.id) ? (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-4xl font-semibold text-zinc-300 mb-4">
                   Descripción
                 </h3>
-                <p className="text-zinc-400 text-2xl">{expense.description}</p>
+                <p className="text-zinc-400 text-2xl">
+                  {transaction.description}
+                </p>
               </div>
               <Button>
                 <SquarePenIcon styleType={"text-zinc-400"} />
@@ -63,8 +69,8 @@ export const TransactionInfo = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-zinc-300 ">Monto</h3>
-                <p className="text-green-400 text-2xl font-bold ">
-                  ${expense.amount}
+                <p className={`${amountColor} text-2xl font-bold`}>
+                  ${transaction.amount}
                 </p>
               </div>
 
@@ -76,8 +82,10 @@ export const TransactionInfo = () => {
               <div>
                 <h3 className="text-lg font-semibold text-zinc-300">Fecha</h3>
                 <p className="text-zinc-400 text-2xl">
-                  {expense.expense_date &&
-                    new Date(expense.expense_date).toLocaleDateString("es-ES")}
+                  {transaction.date &&
+                    new Date(transaction.date).toLocaleDateString(
+                      "es-ES"
+                    )}
                 </p>
               </div>
               <Button>
@@ -90,7 +98,7 @@ export const TransactionInfo = () => {
                   Categoría
                 </h3>
                 <p className="text-zinc-400 text-2xl">
-                  {categoryName.map((category) => category.category_name)}
+                  {categoryName}
                 </p>
               </div>
               <Button>
@@ -98,7 +106,7 @@ export const TransactionInfo = () => {
               </Button>
             </div>
           </div>
-        ) : !isLoading && !expense && errors.length === 0 ? (
+        ) : !isLoading && !transaction && errors.length === 0 ? (
           <p className="text-zinc-500 text-lg text-center">
             No se pudo cargar la información del gasto o el gasto no existe.
           </p>
