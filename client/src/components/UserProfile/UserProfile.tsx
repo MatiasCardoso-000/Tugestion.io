@@ -31,7 +31,7 @@ export const UserProfile = () => {
                 <div className="flex items-center gap-2">
                   <p className="text-xl font-semibold">Miembro desde: </p>
                   <span className="text-lg text-zinc-800 mt-1">
-                    {new Date(user!.created_at).toLocaleDateString("es-ES")}
+                    {new Date(user?.created_at).toLocaleDateString("es-ES")}
                   </span>
                 </div>
             </div>
