@@ -7,6 +7,7 @@ import { router as CategoriesRouter } from "./routes/category.routes";
 import {router as BudgetRouter} from './routes/budget.routes'
 import cookieParser from "cookie-parser";
 import cors from 'cors';
+import { PORT } from "./config/config";
 
 const app = express();
 
@@ -14,8 +15,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+const allowedURL = ['https://frontend-2-lc2d.onrender.com','http://localhost:5173']
+
+
 app.use(cors( {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: allowedURL ,
   credentials: true,
 }));
 
