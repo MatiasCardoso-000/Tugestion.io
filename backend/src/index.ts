@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-import { FRONTEND_URL, PORT } from "./config/config";
 import { checkDbConnection } from "./database/db";
 import { router as AdminRouter } from "./routes/admin.routes";
 import { router as AuthRouter } from "./routes/user.routes";
@@ -15,13 +14,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-
-const corsOptions = {
-  origin: FRONTEND_URL,
+app.use(cors( {
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true,
-};
-
-app.use(cors(corsOptions));
+}));
 
 
 // app.use((req, res, next) => {
