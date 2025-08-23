@@ -1,5 +1,4 @@
 import { useAuth } from "../../hooks/useAuth";
-import { useTransactions } from "../../hooks/useExpenses";
 import Budget from "../Budget/Budget";
 
 export const UserProfile = () => {
