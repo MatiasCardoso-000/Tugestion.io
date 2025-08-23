@@ -15,11 +15,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
-const allowedURL = ['https://frontend-2-lc2d.onrender.com','http://localhost:5173']
-
 
 app.use(cors( {
-  origin: allowedURL ,
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true,
 }));
 
