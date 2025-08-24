@@ -2,7 +2,8 @@ import { User } from "../../src/types/user.types";
 import { BASE_URL } from "./api";
 
 export const registerRequest = async (user: User)=> {
- return await fetch(`${BASE_URL}/auth/register`, {
+try {
+   return await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -10,6 +11,10 @@ export const registerRequest = async (user: User)=> {
       credentials: "include",
       body: JSON.stringify(user),
     });
+} catch (error) {
+  console.log(error);
+  
+}
 
 };
 
