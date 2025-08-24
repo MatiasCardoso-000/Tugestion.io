@@ -22,32 +22,6 @@ app.use(cors( {
 }));
 
 
-// app.use((req, res, next) => {
-//   // Define el origen permitido.
-//   res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-
-//   // Define los métodos HTTP permitidos.
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, DELETE, OPTIONS"
-//   );
-
-//   // Define los encabezados permitidos en las solicitudes.
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-//   // Permite que el navegador envíe credenciales (cookies).
-//   res.setHeader("Access-Control-Allow-Credentials", 'true');
-
-//   // --- ¡LA PARTE NUEVA Y CRUCIAL! ---
-//   // Si la petición es de tipo OPTIONS (pre-flight), respondemos con 200 OK.
-//   if (req.method === 'OPTIONS') {
-//     return res.sendStatus(200);
-//   }
-
-//   // Para todas las demás peticiones, pasamos a la siguiente función.
-//   next();
-// });
-
 app.use("/api/admin", AdminRouter);
 app.use("/api/auth", AuthRouter);
 app.use("/api/transactions", TransactionsRouter);
