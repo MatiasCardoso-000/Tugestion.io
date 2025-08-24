@@ -5,7 +5,9 @@ const connectionString = process.env.DATABASE_URL;
 export const pool = new Pool({
   allowExitOnIdle: true,
   connectionString,
-  ssl:true
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 export const checkDbConnection = async () => {
