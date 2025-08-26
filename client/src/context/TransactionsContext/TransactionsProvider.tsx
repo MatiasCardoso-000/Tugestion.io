@@ -35,7 +35,7 @@ export const TransactionsProvider = ({
   const getExpenseById = async (expenseId: string) => {
     try {
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 500));
+    
 
       const res = await getExpenseByIdRequest(expenseId);
       if (!res.ok) {
@@ -69,7 +69,6 @@ export const TransactionsProvider = ({
     if (isAuthenticated) {
       const getExpensesByUser = async () => {
         setIsLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 500));
         try {
           const res = await getExpensesByUserRequest();
           if (!res.ok) {

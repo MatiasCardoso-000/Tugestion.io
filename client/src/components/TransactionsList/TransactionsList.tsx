@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useTransactions } from "../../hooks/useExpenses";
+import TransactionsListSkeleton from "./TransactionsListSkeleton";
 import { useFilter } from "../../hooks/useFilter";
 import { useSearch } from "../../hooks/useSearch";
 import { TransactionItem } from "../TransactionItem/TransactionItem";
 import { TransactionCard } from "../TransactionCard/TransactionCard";
 
 const TransactionsList = () => {
-  const { transactions } = useTransactions();
+  const { transactions, isLoading } = useTransactions();
   const { inputValue, resetSearch } = useSearch();
   const { filteredExpenses } = useFilter();
   const filterExpenses = filteredExpenses(transactions, inputValue);
@@ -14,6 +15,8 @@ const TransactionsList = () => {
   useEffect(() => {
     resetSearch();
   }, []);
+
+
 
   return (
     <div className="bg-white rounded-lg shadow-2xl px-6 py-8 mt-6 w-full mx-auto">

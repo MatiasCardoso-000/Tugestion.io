@@ -4,6 +4,7 @@ import { PlusIcon } from "../Icons/Icons";
 import { useTransactions } from "../../hooks/useExpenses";
 import { SearchBar } from "../SearchBar/SearchBar";
 import TransactionsList from "../TransactionsList/TransactionsList";
+import TransactionsListSkeleton from "../TransactionsList/TransactionsListSkeleton";
 
 export const DashboardComponent = () => {
   const { isLoading, transactions } = useTransactions();
@@ -35,8 +36,7 @@ export const DashboardComponent = () => {
         </Button>
       </Link>
 
-      {isLoading && <p>Cargando...</p>}
-
+      {isLoading && <TransactionsListSkeleton />}
       {!isLoading && transactions.length > 0 && (
         <div className="w-full flex flex-col  items-center  justify-center md:px-4 gap-8 md:mt-8">
           <TransactionsList />

@@ -70,6 +70,7 @@ export const UserProfile = () => {
         </h3>
         <div className="w-full flex justify-center">
           <Budget />
+       
         </div>
       </div>
     </div>

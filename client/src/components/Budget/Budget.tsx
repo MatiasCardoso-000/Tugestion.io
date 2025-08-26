@@ -9,7 +9,7 @@ import { BudgetType } from "../../types/budget.types";
 const Budget = () => {
   const { register, handleSubmit } = useForm<BudgetType>();
 
-  const { createBudget, budgets, getBudgets } = useBudgets();
+  const { createBudget, budgets, getBudgets,errors} = useBudgets();
 
   const { categories } = useCategories();
 
@@ -27,9 +27,7 @@ const Budget = () => {
 
   useEffect(() => {
     getBudgets();
-  }, [budgets]);
-
-
+  }, []);
 
   const total = budgets.reduce((acc, budget) => {
     return acc + Number(budget.amount);
@@ -59,16 +57,29 @@ const Budget = () => {
       </div>
       <div className="mt-8">
         <h3 className="text-xl font-bold mb-4">Presupuestos por categoría</h3>
-        <ul className="list-disc list-inside space-y-2">
+        <ul className=" space-y-3 grid grid-cols-3">
           {budgets.map((budget) => {
-            const categoryName = categories.find(c =>c.category_id === budget.category_id)?.category_name
+            const categoryName = categories.find(
+              (c) => c.category_id === budget.category_id
+            )?.category_name;
 
-          return  <li key={budget.id} className="text-gray-700">
-              <span className="font-semibold">{categoryName}:</span> $
-              {budget.amount}
-            </li>
-         })}
+            return (
+              <li key={budget.id} className="text-gray-700 gap-4">
+                <p className="font-semibold">{categoryName}:</p>
+                <p> ${budget.amount}</p>
+                <p>
+                  {" "}
+                 Periodo: {budget.month}/{budget.year}
+                </p>
+              </li>
+            );
+          })}
         </ul>
+            {
+          errors.map(e => (
+            <div className="bg-red-500 text-white w-full">{e}</div>
+          ))
+         }
       </div>
 
       <h2 className="text-2xl font-bold mb-4 text-gray-800">

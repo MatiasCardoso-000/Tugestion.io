@@ -7,8 +7,6 @@ import {
 import { User } from "../../types/user.types";
 import { AuthContext } from "./AuthContext";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import { Navigate, useNavigate } from "react-router-dom";
 
 interface AuthProviderType {
   children: React.ReactNode;
@@ -19,15 +17,12 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState<string[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   const signUp = async (data: User) => {
     try {
-    
       const response = await registerRequest(data);
-      const responseData = await response.json();
-    
-        
-      if (!response.ok) {
+      const responseData = await response?.json();
+
+      if (!response?.ok) {
         let errorMessages;
 
         // Caso 1: Hay un objeto de errores de validación de Zod
@@ -45,7 +40,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
         }
 
         setErrors(errorMessages);
-        setIsAuthenticated(false)
+        setIsAuthenticated(false);
         return; // Detenemos la ejecución
       }
 
@@ -57,7 +52,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
       setUser(responseData.user);
     } catch (error) {
       setErrors(["No se pudo conectar con el servidor."]);
-      setIsAuthenticated(false)
+      setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
     }
@@ -135,7 +130,6 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
         }
         const data = await res.json();
         setUser(data.user);
-
         setIsAuthenticated(true);
         localStorage.setItem("accessToken", data.accessToken);
       } catch (error) {
@@ -153,7 +147,7 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
     const timer = setTimeout(() => {
       setErrors([]);
     }, 4000);
-     return ()=>clearInterval(timer);
+    return () => clearInterval(timer);
   });
 
   return (

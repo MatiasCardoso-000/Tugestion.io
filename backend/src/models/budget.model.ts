@@ -29,6 +29,8 @@ const getAll = async () => {
   const query = {
     text: `
       SELECT * FROM BUDGETS
+    ORDER BY month 
+
     `,
   };
   const { rows } = await pool.query(query);

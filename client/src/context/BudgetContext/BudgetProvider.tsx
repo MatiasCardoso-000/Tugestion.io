@@ -23,7 +23,8 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
       setErrors([]);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      setErrors(error.res.message);
+      console.log(error.res.message);
     }
   };
 
@@ -31,12 +32,23 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
     try {
       const res = await createBudgetRequest(budget);
       const budgetData = await res.json();
+      console.log(budgetData);
+      
+      if (!res.ok) {
+        let errorMessages;
+
+        if (budgetData.message) {
+          errorMessages = [budgetData.message];
+        }
+        setErrors(errorMessages);
+        return
+      }
 
       setBudgets([...budgets, budgetData]);
       setErrors([]);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      setErrors(["Hubo un problema al crear el presupuesto"]);
     }
   };
 

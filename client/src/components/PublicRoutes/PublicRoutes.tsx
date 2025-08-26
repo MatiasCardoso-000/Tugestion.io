@@ -1,19 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
-interface PrivateRoutes {
+interface PublicRoutesType {
   children?: React.ReactNode;
   redirectTo: string;
 }
 
-export const PrivateRoutes = ({ children, redirectTo }: PrivateRoutes) => {
+export const PublicRoutes = ({ children, redirectTo }: PublicRoutesType) => {
   const { isLoading, isAuthenticated } = useAuth();
 
-  
-  if (isLoading) return <h1>Cargando...</h1>;
-
-  if (!isAuthenticated && !isLoading)
+  if (isAuthenticated && !isLoading)
     return <Navigate to={redirectTo} replace />;
 
   return children ? <> {children}</> : <Outlet />;
+
 };
