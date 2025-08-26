@@ -99,12 +99,6 @@ const getCategoriesByUser = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * @description Actualiza una categoría existente del usuario autenticado.
- * @param {Request} req - El objeto de solicitud de Express.
- * @param {Response} res - El objeto de respuesta de Express.
- * @returns {Promise<Response>} - Una promesa que se resuelve con la categoría actualizada.
- */
 const updateCategory = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -118,7 +112,7 @@ const updateCategory = async (req: Request, res: Response) => {
     }
 
     const { category_name } = validationResult.data;
-    console.log(category_name);
+    
 
     const updatedCategory = await CategoryModel.update({
       category_id: id,

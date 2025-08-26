@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import { Category } from "../../types/categories.types";
 import { useCategories } from "../../hooks/useCategories";
@@ -9,7 +9,7 @@ import { BudgetType } from "../../types/budget.types";
 const Budget = () => {
   const { register, handleSubmit } = useForm<BudgetType>();
 
-  const { createBudget,budgets } = useBudgets();
+  const { createBudget, budgets, getBudgets } = useBudgets();
 
   const { categories } = useCategories();
 
@@ -24,6 +24,16 @@ const Budget = () => {
       category_id: data.category_id,
     });
   };
+
+  useEffect(() => {
+    getBudgets();
+  }, [budgets]);
+
+
+
+  const total = budgets.reduce((acc, budget) => {
+    return acc + Number(budget.amount);
+  }, 0);
 
   return (
     <div className="budget-form-container w-full ring-2 ring-zinc-50 py-2 px-4">
@@ -43,14 +53,22 @@ const Budget = () => {
           </div>
           <div>
             <p className="font-bold">Presupuesto Total</p>
-            <p className="text-2xl font-semibold">
-              ${budgets.reduce((acc , budget) => {
-                 acc += Number(budget.amount)
-                 return acc
-              },0)}
-            </p>
+            <p className="text-2xl font-semibold">${total}</p>
           </div>
         </div>
+      </div>
+      <div className="mt-8">
+        <h3 className="text-xl font-bold mb-4">Presupuestos por categoría</h3>
+        <ul className="list-disc list-inside space-y-2">
+          {budgets.map((budget) => {
+            const categoryName = categories.find(c =>c.category_id === budget.category_id)?.category_name
+
+          return  <li key={budget.id} className="text-gray-700">
+              <span className="font-semibold">{categoryName}:</span> $
+              {budget.amount}
+            </li>
+         })}
+        </ul>
       </div>
 
       <h2 className="text-2xl font-bold mb-4 text-gray-800">

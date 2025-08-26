@@ -25,6 +25,16 @@ const createBudget = async (
   return rows[0];
 };
 
+const getAll = async () => {
+  const query = {
+    text: `
+      SELECT * FROM BUDGETS
+    `,
+  };
+  const { rows } = await pool.query(query);
+  return rows;
+};
+
 const findByUserAndMonth = async (
   user_id: string,
   month: string,
@@ -74,6 +84,7 @@ const deleteBudget = async (user_id: string) => {
 
 export const BudgetModel = {
   createBudget,
+  getAll,
   findByUserAndMonth,
   updateBudget,
   deleteBudget,

@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-const setBudget = async (req: Request, res: Response):Promise<Response> => {
+const setBudget = async (req: Request, res: Response): Promise<Response> => {
   try {
     const user_id = req.user!.uid;
     const { amount, category_id, month, year } = req.body;
@@ -49,8 +49,11 @@ const getBudget = async (req: Request, res: Response): Promise<Response> => {
       return res.status(401).json({ message: "Usuario no autenticado." });
     }
 
-    const budget = await BudgetModel.findByUserAndMonth(userId, String(month), String(year));
-    
+    const budget = await BudgetModel.findByUserAndMonth(
+      userId,
+      String(month),
+      String(year)
+    );
 
     if (!budget) {
       return res.status(404).json({ message: "Presupuesto no encontrado." });
@@ -63,7 +66,20 @@ const getBudget = async (req: Request, res: Response): Promise<Response> => {
   }
 };
 
+const getAllBudgets = async (req: Request, res: Response) => {
+  try {
+    const budgets = await BudgetModel.getAll();
+    if (!budgets) {
+      return res.status(400).json({ message: "Budgets are not avalaible" });
+    }
+    res.json(budgets);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const budgetController = {
   setBudget,
+  getAllBudgets,
   getBudget,
 };

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { BudgetContext } from "./BudgetContext";
 import { BudgetType } from "../../types/budget.types";
-import { createBudgetRequest } from "../../../api/budgets/budget";
+import {
+  createBudgetRequest,
+  getBudgetsRequest,
+} from "../../../api/budgets/budget";
 
 interface BudgetProviderProps {
   children: React.ReactNode;
@@ -12,15 +15,23 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
   const [errors, setErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getBudgets = async () => {};
+  const getBudgets = async () => {
+    try {
+      const res = await getBudgetsRequest();
+      const budgetData = await res.json();
+      setBudgets(budgetData);
+      setErrors([]);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const createBudget = async (budget: BudgetType) => {
-
     try {
       const res = await createBudgetRequest(budget);
       const budgetData = await res.json();
-   
-      
+
       setBudgets([...budgets, budgetData]);
       setErrors([]);
       setIsLoading(false);

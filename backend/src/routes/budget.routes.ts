@@ -13,4 +13,5 @@ router.post(
   budgetController.setBudget
 );
 
-router.get("/", validateToken, budgetController.getBudget);
+
+router.get("/", validateToken, budgetController.getAllBudgets);

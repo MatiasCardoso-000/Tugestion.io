@@ -58,14 +58,14 @@ const registerTransaction = async (
         .json({ message: "La categoría es obligatoria para los gastos." });
     }
 
-    if (category_id) {
-      const category = await CategoryModel.findById(category_id, user_id);
-      if (!category) {
-        return res.status(403).json({
-          message: "La categoría no existe o no tienes permiso para usarla.",
-        });
-      }
-    }
+    // if (category_id) {
+    //   const category = await CategoryModel.findById(category_id, user_id);
+    //   if (!category) {
+    //     return res.status(403).json({
+    //       message: "La categoría no existe o no tienes permiso para usarla.",
+    //     });
+    //   }
+    // }
 
     const newTransaction = await TransactionsModel.create({
       category_id,

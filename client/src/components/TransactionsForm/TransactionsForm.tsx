@@ -1,41 +1,14 @@
-import React, { useState } from "react";
-import Button from "../Button/Button";
-import { useCategories } from "../../hooks/useCategories";
-import { Category } from "../../types/categories.types";
-import { useForm } from "react-hook-form";
-import { Input } from "../Input/Input";
-import { Form } from "../Form/Form";
-import { Link, useNavigate } from "react-router-dom";
+import {  useState } from "react";
+import { Link } from "react-router-dom";
 import { LeftArrowIcon } from "../Icons/Icons";
-import { useTransactions } from "../../hooks/useExpenses";
-import { Transactions } from "../../types/transcations.types";
+import { ExpenseForm } from "../ExpenseForm/ExpenseForm";
+import { IncomeForm } from "../IncomeForm/IncomeForm";
 
 const TransactionsForm = () => {
-  const { handleSubmit, register } = useForm<any>();
+  const [transaction, setTransaction] = useState<string>("");
 
-  const { addExpense } = useTransactions();
-  const { categories } = useCategories();
-  const [showNewIncomeForm, setShowNewIncomeForm] = useState(false);
-  const [showNewExpenseForm, setShowExpenseForm] = useState(false);
-
-
-
-  const handleNewExpense = async (expense: Transactions[]) => {
-    const expenseWithTransactionType = {
-      ...expense,
-      transaction_type: "gasto",
-    };
-    addExpense(expenseWithTransactionType);
-  };
-
-  const handleNewIncome = async (expense: Transactions[]) => {
-    const expenseWithTransactionType = {
-      ...expense,
-      transaction_type: "ingreso",
-    };
-    console.log(expenseWithTransactionType);
-
-    addExpense(expenseWithTransactionType);
+  const handleTransaction = (transaction: string) => {
+    setTransaction(transaction);
   };
 
   return (
@@ -44,154 +17,23 @@ const TransactionsForm = () => {
         <LeftArrowIcon /> Volver al inicio
       </Link>
 
-      <div className="w-full flex justify-evenly mt-10">
-        <Button
-          buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold  cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2 md:w-1/10"
-          onClick={() => setShowExpenseForm(!showNewExpenseForm)}
+      <div className="w-full flex flex-col items-center  mt-10">
+        <h1 className="w-full px-4 font-bold text-lg">
+          Registrar nuevo movimiento
+        </h1>
+        <select
+          onChange={(e) => handleTransaction(e.currentTarget.value)}
+          className="px-8 py-1 ring-2 ring-zinc-800 rounded-xl text-lg cursor-pointer"
         >
-          Nuevo gasto
-        </Button>
-        <Button
-          buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold  cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2 md:w-1/10"
-          onClick={() => setShowNewIncomeForm(!showNewIncomeForm)}
-        >
-          Nuevo ingreso
-        </Button>
-      </div>
-      <div className="w-full flex justify-between mt-10">
-        {showNewExpenseForm && (
-          <div className={`w-full`}>
-            <Form
-              formStyle={`bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto`}
-              onSubmit={handleSubmit(handleNewExpense)}
-            >
-              <div className="w-full text-right ">
-                <button
-                  className="font-bold cursor-pointer"
-                  onClick={() => setShowExpenseForm(false)}
-                  type="button"
-                >
-                  X
-                </button>
-              </div>
-              <h2 className="text-2xl font-bold text-zinc-900 mb-2">
-                Registrar gasto
-              </h2>
-              <div>
-                <label
-                  className="block text-zinc-700 font-semibold mb-1"
-                  htmlFor="amount"
-                >
-                  Monto
-                </label>
-                <Input
-                  register={{ ...register("amount", { required: true }) }}
-                  type="text"
-                  inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-                  placeholder="Ej: 1000"
-                  required
-                  id="amount"
-                />
-              </div>
-              <div>
-                <label
-                  className="block text-zinc-700 font-semibold mb-1"
-                  htmlFor="description"
-                >
-                  Descripción
-                </label>
-                <Input
-                  type="text"
-                  register={{ ...register("description", { required: true }) }}
-                  inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-                  placeholder="Ej: Supermercado, alquiler, etc."
-                  required
-                  id="description"
-                />
-              </div>
-              <div>
-                <label className="block text-zinc-700 font-semibold mb-1">
-                  Categoria
-                </label>
+            <option value="">--</option>
 
-                <select
-                  {...register(`category_id`, { required: true })}
-                  defaultValue={""}
-                  className="border rounded-md p-3 w-full bg-zinc-50 text-shadow-zinc-900 focus:outline-none"
-                >
-                  <option
-                    disabled
-                    defaultValue={""}
-                    className="disabled:hidden text-zinc-400"
-                  >
-                    Ej: Transporte
-                  </option>
-                  {categories.map((category: Category) => {
-                    return (
-                      <option
-                        key={category.category_id}
-                        value={category.category_id}
-                        className="w-full"
-                      >
-                        {category.category_name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2">
-                Registrar gasto
-              </Button>
-            </Form>
-          </div>
-        )}
-        {showNewIncomeForm && (
-          <div className="w-full">
-            <Form
-              formStyle="bg-white rounded-xl shadow-2xl max-w-lg w-full p-8 flex flex-col gap-6 mt-8 mx-auto "
-              onSubmit={handleSubmit(handleNewIncome)}
-            >
-              <h2 className="text-2xl font-bold text-zinc-900 mb-2">
-                Registrar Ingreso
-              </h2>
-              <div>
-                <label
-                  className="block text-zinc-700 font-semibold mb-1"
-                  htmlFor="amount"
-                >
-                  Monto
-                </label>
-                <Input
-                  register={{ ...register("amount", { required: true }) }}
-                  type="text"
-                  inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-                  placeholder="Ej: 1000"
-                  required
-                  id="amount"
-                />
-              </div>
-              <div>
-                <label
-                  className="block text-zinc-700 font-semibold mb-1"
-                  htmlFor="description"
-                >
-                  Descripción
-                </label>
-                <Input
-                  type="text"
-                  register={{ ...register("description", { required: true }) }}
-                  inputStyle="w-full p-3 border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-500"
-                  placeholder="Ej: Supermercado, alquiler, etc."
-                  required
-                  id="description"
-                />
-              </div>
-              <Button buttonStyle="w-full py-3 bg-white ring-2 ring-zinc-900 text-zinc-900 rounded-lg font-bold text-lg cursor-pointer shadow-md  hover:bg-zinc-800  hover:text-white transition-colors  mt-2">
-                Registrar ingreso
-              </Button>
-            </Form>
-          </div>
-        )}
+            <option value="gasto">Gasto</option>
+            <option value="ingreso">Ingreso</option>
+        </select>
+
+        {transaction === "gasto"  && <ExpenseForm transaction={transaction} setTransaction={setTransaction}/>}
+
+        {transaction === "ingreso" && <IncomeForm transaction={transaction}  />}
       </div>
     </div>
   );
