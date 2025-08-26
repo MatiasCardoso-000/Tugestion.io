@@ -18,6 +18,17 @@ export const getBudgetsRequest = async () => {
   });
 };
 
-export const updateBudget = async () => {};
+export const updateBudgetRequest = async (id:string, budget: {}) => {
+ return await apiFetch(`/budgets/${id}`, {
+  method:"PUT",
+  credentials:"include",
+  body: JSON.stringify(budget)
+ })
+};
 
-export const deleteBudget = async () => {};
+export const deleteBudgetRequest = async (id:string) => {
+  return await apiFetch(`/budgets/${id}`, {
+    method: "DELETE",
+    credentials:"include"
+  })
+};

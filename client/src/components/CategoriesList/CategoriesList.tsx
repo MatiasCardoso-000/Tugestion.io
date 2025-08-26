@@ -81,7 +81,7 @@ export const CategoriesList = () => {
         <h1 className="w-full text-center font-semibold md:text-left md:text-3xl ">
           Categorías
         </h1>
-        <ul className="w-full md:grid md:grid-cols-3 xl:grid-cols-4 py-2 ">
+        <ul className="w-full space-y-3 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-center gap-2 mt-4">
           {categories.map((category: Category) => {
             return (
               category.user_id === null && (

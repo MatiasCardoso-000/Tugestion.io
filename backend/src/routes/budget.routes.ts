@@ -15,3 +15,7 @@ router.post(
 
 
 router.get("/", validateToken, budgetController.getAllBudgets);
+
+router.put("/", validateToken, budgetController.updateBudget);
+
+router.delete("/:id", validateToken, budgetController.deleteBudget);

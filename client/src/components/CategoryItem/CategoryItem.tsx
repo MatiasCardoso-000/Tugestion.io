@@ -26,7 +26,7 @@ export const CategoryItem = ({ category }) => {
   return (
     <li
       key={category.category_id}
-      className="flex bg-white  text-zinc-900 items-center justify-center rounded-md gap-2  py-10  md:py-4"
+      className="text-gray-700 gap-4 ring-2 ring-blue-400 bg-blue-200 w-full h-[100px] p-2 rounded-md"
     >
       {editingId === category.category_id ? (
         <div className="w-full flex items-center gap-4">

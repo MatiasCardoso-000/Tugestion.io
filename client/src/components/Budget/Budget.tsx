@@ -5,11 +5,13 @@ import { useCategories } from "../../hooks/useCategories";
 import { useForm } from "react-hook-form";
 import { useBudgets } from "../../hooks/useBudgets";
 import { BudgetType } from "../../types/budget.types";
+import { TrashIcon } from "../Icons/Icons";
 
 const Budget = () => {
   const { register, handleSubmit } = useForm<BudgetType>();
 
-  const { createBudget, budgets, getBudgets,errors} = useBudgets();
+  const { createBudget, deleteBudget, budgets, getBudgets, errors } =
+    useBudgets();
 
   const { categories } = useCategories();
 
@@ -56,138 +58,144 @@ const Budget = () => {
         </div>
       </div>
       <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">
+          Agregar presupuesto
+        </h2>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="p-6 bg-white rounded-lg shadow-md mt-6 mb-6"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="budgetAmount" className="text-lg font-semibold">
+                Monto del presupuesto:
+              </label>
+              <input
+                type="text"
+                id="budgetAmount"
+                placeholder="Ej: 1000"
+                {...register(`budget_amount`, { required: true })}
+                className="
+                /* Estilos base del input */
+                p-2 rounded-md border border-gray-300
+                text-gray-900 bg-white
+                
+                /* Apariencia para remover la flecha del input */
+                appearance-none
+                
+                /* Estilos para el focus */
+                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                
+                /* Estilo del cursor */
+                cursor-pointer
+              "
+              />
+            </div>
+            <div className="form-group flex flex-col gap-2 ">
+              <label htmlFor="budgetMonth" className="text-lg font-semibold">
+                Mes y Año:
+              </label>
+              <input
+                type="date"
+                id="budgetMonth"
+                {...register(`budget_period`, { required: false })}
+                className="
+                /* Estilos base del input */
+                p-2 rounded-md border border-gray-300
+                text-gray-900 bg-white
+                
+                /* Apariencia para remover la flecha del input */
+                appearance-none
+                
+                /* Estilos para el focus */
+                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                
+                /* Estilo del cursor */
+                cursor-pointer
+              "
+              />
+            </div>
+            <div className="form-group flex flex-col gap-2 ">
+              <label htmlFor="budgetMonth" className="text-lg font-semibold">
+                Categoria
+              </label>
+              <select
+                {...register(`category_id`, { required: true })}
+                defaultValue={""}
+                className="
+                /* Estilos base del input */
+                p-2 rounded-md border border-gray-300
+                text-gray-900 bg-white
+                
+                /* Apariencia para remover la flecha del input */
+                appearance-none
+                
+                /* Estilos para el focus */
+                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                
+                /* Estilo del cursor */
+                cursor-pointer
+              "
+              >
+                <option
+                  disabled
+                  defaultValue={""}
+                  className="disabled:hidden text-zinc-400"
+                >
+                  Ej: Transporte
+                </option>
+                {categories.map((category: Category) => {
+                  return (
+                    <option
+                      key={category.category_id}
+                      value={category.category_id}
+                      className="w-full"
+                    >
+                      {category.category_name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+          <div className="mt-6 text-right">
+            <Button buttonStyle="px-6 py-2 bg-zinc-900 text-white font-semibold rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500 transition duration-150 ease-in-out cursor-pointer">
+              Agregar
+            </Button>
+          </div>
+        </form>
         <h3 className="text-xl font-bold mb-4">Presupuestos por categoría</h3>
-        <ul className=" space-y-3 grid grid-cols-3">
+        <ul className=" space-y-3 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-center  gap-2">
           {budgets.map((budget) => {
             const categoryName = categories.find(
               (c) => c.category_id === budget.category_id
             )?.category_name;
 
             return (
-              <li key={budget.id} className="text-gray-700 gap-4">
-                <p className="font-semibold">{categoryName}:</p>
-                <p> ${budget.amount}</p>
-                <p>
-                  {" "}
-                 Periodo: {budget.month}/{budget.year}
-                </p>
+              <li
+                key={budget.budget_id}
+                className="text-gray-700 gap-4 ring-2 ring-blue-400 bg-blue-200 w-full h-[100px] p-2 rounded-md md:w-1/2  mx-auto flex justify-between items-start"
+              >
+                <div>
+                  <p className="font-semibold ">
+                    {categoryName}: ${budget.amount}
+                  </p>
+                  <p>
+                    {" "}
+                    Periodo: {budget.month}/{budget.year}
+                  </p>
+                </div>
+                <button onClick={() => deleteBudget(budget.budget_id)} className="cursor-pointer p-2 hover:bg-blue-300 transition-colors">
+                  <TrashIcon />
+                </button>
               </li>
             );
           })}
         </ul>
-            {
-          errors.map(e => (
-            <div className="bg-red-500 text-white w-full">{e}</div>
-          ))
-         }
+        {errors.map((e) => (
+          <div className="bg-red-500 text-white w-full px-2 text-lg">{e}</div>
+        ))}
       </div>
-
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">
-        Agregar presupuesto
-      </h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="p-6 bg-white rounded-lg shadow-md mt-6"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="budgetAmount" className="text-lg font-semibold">
-              Monto del presupuesto:
-            </label>
-            <input
-              type="text"
-              id="budgetAmount"
-              placeholder="Ej: 1000"
-              {...register(`budget_amount`, { required: true })}
-              className="
-                /* Estilos base del input */
-                p-2 rounded-md border border-gray-300
-                text-gray-900 bg-white
-                
-                /* Apariencia para remover la flecha del input */
-                appearance-none
-                
-                /* Estilos para el focus */
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                
-                /* Estilo del cursor */
-                cursor-pointer
-              "
-            />
-          </div>
-          <div className="form-group flex flex-col gap-2 ">
-            <label htmlFor="budgetMonth" className="text-lg font-semibold">
-              Mes y Año:
-            </label>
-            <input
-              type="date"
-              id="budgetMonth"
-              {...register(`budget_period`, { required: true })}
-              className="
-                /* Estilos base del input */
-                p-2 rounded-md border border-gray-300
-                text-gray-900 bg-white
-                
-                /* Apariencia para remover la flecha del input */
-                appearance-none
-                
-                /* Estilos para el focus */
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                
-                /* Estilo del cursor */
-                cursor-pointer
-              "
-            />
-          </div>
-          <div className="form-group flex flex-col gap-2 ">
-            <label htmlFor="budgetMonth" className="text-lg font-semibold">
-              Categoria
-            </label>
-            <select
-              {...register(`category_id`, { required: true })}
-              defaultValue={""}
-              className="
-                /* Estilos base del input */
-                p-2 rounded-md border border-gray-300
-                text-gray-900 bg-white
-                
-                /* Apariencia para remover la flecha del input */
-                appearance-none
-                
-                /* Estilos para el focus */
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                
-                /* Estilo del cursor */
-                cursor-pointer
-              "
-            >
-              <option
-                disabled
-                defaultValue={""}
-                className="disabled:hidden text-zinc-400"
-              >
-                Ej: Transporte
-              </option>
-              {categories.map((category: Category) => {
-                return (
-                  <option
-                    key={category.category_id}
-                    value={category.category_id}
-                    className="w-full"
-                  >
-                    {category.category_name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </div>
-        <div className="mt-6 text-right">
-          <Button buttonStyle="px-6 py-2 bg-zinc-900 text-white font-semibold rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500 transition duration-150 ease-in-out cursor-pointer">
-            Agregar
-          </Button>
-        </div>
-      </form>
     </div>
   );
 };

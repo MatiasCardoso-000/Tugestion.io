@@ -52,6 +52,17 @@ const findByUserAndMonth = async (
   return rows[0];
 };
 
+const findById = async (budget_id: string) => {
+  const query = {
+    text: `
+  SELECT * FROM BUDGETS WHERE budget_id = $1
+  `,
+    values: [budget_id],
+  };
+  const { rows } = await pool.query(query);
+  return rows[0];
+};
+
 const updateBudget = async (
   amount: number,
   month: string,
@@ -71,14 +82,14 @@ const updateBudget = async (
   return rows[0];
 };
 
-const deleteBudget = async (user_id: string) => {
+const deleteBudget = async (budget_id: string) => {
   const query = {
     text: `
-    DELETE FROM BUDGET
-    WHERE user_id = $1
+    DELETE FROM BUDGETS
+    WHERE budget_id = $1
     RETURNING *
     `,
-    values: [user_id],
+    values: [budget_id],
   };
   const { rows } = await pool.query(query);
   return rows[0];
@@ -88,6 +99,7 @@ export const BudgetModel = {
   createBudget,
   getAll,
   findByUserAndMonth,
+  findById,
   updateBudget,
   deleteBudget,
 };

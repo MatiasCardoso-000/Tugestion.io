@@ -78,8 +78,47 @@ const getAllBudgets = async (req: Request, res: Response) => {
   }
 };
 
+const updateBudget = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { amount, month, year } = req.body;
+
+    const budget = await BudgetModel.findById(id);
+    if (!budget) {
+      return res.status(404).json({ message: "Budget doesn't exists" });
+    }
+
+    const updatedBudget = await BudgetModel.updateBudget(
+      amount,
+      month,
+      year,
+      id
+    );
+    res.json(updatedBudget);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteBudget = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const budget = await BudgetModel.findById(id);
+    if (!budget) {
+      return res.status(404).json({ message: "Budget doesn't exists" });
+    }
+
+    await BudgetModel.deleteBudget(budget.budget_id);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const budgetController = {
   setBudget,
   getAllBudgets,
   getBudget,
+  updateBudget,
+  deleteBudget,
 };

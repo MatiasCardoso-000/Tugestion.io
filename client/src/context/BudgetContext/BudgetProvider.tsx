@@ -3,6 +3,7 @@ import { BudgetContext } from "./BudgetContext";
 import { BudgetType } from "../../types/budget.types";
 import {
   createBudgetRequest,
+  deleteBudgetRequest,
   getBudgetsRequest,
 } from "../../../api/budgets/budget";
 
@@ -24,7 +25,6 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
       setIsLoading(false);
     } catch (error) {
       setErrors(error.res.message);
-      console.log(error.res.message);
     }
   };
 
@@ -32,7 +32,6 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
     try {
       const res = await createBudgetRequest(budget);
       const budgetData = await res.json();
-      console.log(budgetData);
       
       if (!res.ok) {
         let errorMessages;
@@ -54,12 +53,14 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
 
   const updateBudget = async (id: string, budget: BudgetType) => {};
 
-  const deleteBudget = async (id: string) => {};
+  const deleteBudget = async (id: string) => {
+    await deleteBudgetRequest(id)
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setErrors([]);
-    }, 4000);
+    },3000);
     return () => clearTimeout(timer);
   }, [errors]);
 
