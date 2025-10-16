@@ -1,4 +1,10 @@
 ![Login Page](./client//public/images/login-image.PNG)
+![Register Page](./client//public/images/register-image.PNG)
+![Dashboard](./client//public/images/Dashboard-image.PNG)
+![Categories](./client//public/images/Categories-image.PNG)
+![Profile](./client//public/images/Profile1-image.PNG)
+![Profile](./client//public/images/Profile2-image.PNG)
+![Transaction Info](./client//public/images/TransactionInfo-image.PNG)
 
 
 
