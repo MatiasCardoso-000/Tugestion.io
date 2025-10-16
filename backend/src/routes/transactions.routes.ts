@@ -13,12 +13,12 @@ router.post('/transaction', validateToken, TransactionController.registerTransac
 // // ¡Esta es la ruta que faltaba! Llama al controlador 'getExpensesByUser'
 router.get('/transaction', validateToken, TransactionController.getTransactionsByUser);
 
-// GET /api/expenses/:id - Obtener un gasto específico del usuario
-router.get('/transaction/:id', validateToken, TransactionController.getTransactionById);
+// GET /api/expenses/:transaction_id - Obtener un gasto específico del usuario
+router.get('/transaction/:transaction_id', validateToken, TransactionController.getTransactionById);
 
-// PUT /api/expenses/:id - Actualizar un gasto específico del usuario
-router.put('/transaction/:id', validateToken, TransactionController.updateTransaction);
+// PUT /api/expenses/:transaction_id - Actualizar un gasto específico del usuario
+router.put('/transaction/:transaction_id', validateToken, TransactionController.updateTransaction);
 
-// DELETE /api/expenses/:id - Borrar un gasto específico del usuario (ruta corregida)
-router.delete('/transaction/:id', validateToken, TransactionController.deleteTransaction);
+// DELETE /api/expenses/:transaction_id - Borrar un gasto específico del usuario (ruta corregida)
+router.delete('/transaction/:transaction_id', validateToken, TransactionController.deleteTransaction);
 

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowDownIcon, ArrowUpIcon, EyeIcon, TrashIcon } from "../Icons/Icons";
 import { useTransactions } from "../../hooks/useExpenses";
 import { useCategories } from "../../hooks/useCategories";
+import { Transactions } from "../../types/transcations.types";
 
 export const TransactionItem = ({ transaction }) => {
   const { deleteExpense } = useTransactions();
@@ -41,11 +42,11 @@ export const TransactionItem = ({ transaction }) => {
       </td>
       <td className="px-6 py-4 text-slate-700">{transaction.amount}</td>
       <td className="px-6 py-4 font-semibold text-slate-800 flex items-center gap-6 justify-left lg:h-[12vh] xl:h-0">
-          <Link to={`/dashboard/transaccion/${transaction.id}`}>
+          <Link to={`/dashboard/transaccion/${transaction.transaction_id}`}>
             <EyeIcon />
           </Link>
 
-        <button onClick={() => deleteExpense(transaction.id)}>
+        <button onClick={() => deleteExpense(transaction.transaction_id)}>
           <TrashIcon />
         </button>
       </td>

@@ -8,7 +8,7 @@ import Button from "../Button/Button";
 export const TransactionInfo = () => {
   const { getExpenseById, transaction, isLoading, errors } = useTransactions();
   const { categories } = useCategories();
-  const { id } = useParams();
+  const { transaction_id } = useParams();
 
   const isExpense = transaction?.transaction_type === "gasto";
   const amountColor = isExpense ? "text-red-400" : "text-green-400";
@@ -22,10 +22,10 @@ export const TransactionInfo = () => {
 
 
   useEffect(() => {
-    if (id) {
-      getExpenseById(id);
+    if (transaction_id) {
+      getExpenseById(transaction_id);
     }
-  }, [id]);
+  }, [transaction_id]);
 
   return (
     <div className="w-full text-zinc-900 px-4 py-2 mx-auto mt-10">
@@ -51,7 +51,7 @@ export const TransactionInfo = () => {
           </div>
         )}
 
-        {transaction && !isLoading && String(id) === String(transaction.id) ? (
+        {transaction && !isLoading && String(transaction_id) === String(transaction.transaction_id) ? (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>

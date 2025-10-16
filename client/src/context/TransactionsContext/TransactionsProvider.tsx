@@ -58,7 +58,7 @@ export const TransactionsProvider = ({
     try {
       await deleteExpenseRequest(transactionId);
       setExpenses(
-        transactions.filter((transaction) => transaction.id !== transactionId)
+        transactions.filter((transaction) => transaction.transaction_id !== transactionId)
       );
     } catch (error) {
       console.log(error);

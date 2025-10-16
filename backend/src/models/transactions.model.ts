@@ -36,15 +36,15 @@ const find = async (): Promise<Transaction[]> => {
 };
 
 const findById = async (
-  id: string,
+  transaction_id: string,
   user_id: string
 ): Promise<Transaction | undefined> => {
   const query = {
     text: `
     SELECT * FROM TRANSACTIONS
-   WHERE id = $1 AND user_id = $2
+   WHERE transaction_id = $1 AND user_id = $2
     `,
-    values: [id, user_id],
+    values: [transaction_id, user_id],
   };
   const { rows } = await pool.query(query);
   return rows[0];
@@ -63,7 +63,7 @@ const findByUser = async (user_id: string): Promise<Transaction[]> => {
 };
 
 const update = async ({
- id,
+ transaction_id,
   user_id,
   amount,
   category_id,
@@ -87,7 +87,7 @@ const update = async ({
       description,
       category_id,
      date,
-      id,
+     transaction_id,
       user_id,
     ],
   };
@@ -96,16 +96,16 @@ const update = async ({
 };
 
 const remove = async (
-  id: string,
+  transaction_id: string,
   user_id: string
 ): Promise<Transaction | undefined> => {
   const query = {
     text: `
             DELETE FROM TRANSACTIONS
-            WHERE id = $1 AND user_id = $2
+            WHERE transaction_id = $1 AND user_id = $2
             RETURNING *
         `,
-    values: [id, user_id],
+    values: [transaction_id, user_id],
   };
   const { rows } = await pool.query(query);
   return rows[0];

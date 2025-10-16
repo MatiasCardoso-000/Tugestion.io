@@ -29,7 +29,7 @@ const TransactionsList = () => {
             {/* Mobile view */}
             <div className="md:hidden">
               {filterExpenses.map((transaction) => (
-                <TransactionCard key={transaction.id} transaction={transaction} />
+                <TransactionCard key={transaction.transaction_id} transaction={transaction} />
               ))}
             </div>
 
@@ -49,7 +49,7 @@ const TransactionsList = () => {
                   </tr>
                 </thead>
                 {filterExpenses.map((transaction) => (
-                  <tbody className="divide-y divide-slate-100" key={transaction.id}>
+                  <tbody className="divide-y divide-slate-100" key={transaction.transaction_id}>
                     <TransactionItem transaction={transaction} />
                   </tbody>
                 ))}

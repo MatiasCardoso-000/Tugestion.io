@@ -27,7 +27,7 @@ export const AppRouter = () => {
               <Route index element={<DashboardComponent />} />
               <Route path="/dashboard/perfil" element={<UserProfile />} />
               <Route
-                path="/dashboard/transaccion/:id"
+                path="/dashboard/transaccion/:transaction_id"
                 element={<TransactionInfo />}
               />
 

@@ -141,9 +141,9 @@ const getTransactionById = async (
   res: Response
 ): Promise<Response | undefined> => {
   try {
-    const { id } = req.params;
+    const { transaction_id } = req.params;
     const user_id = req.user!.uid;
-    const expense = await TransactionsModel.findById(id, user_id);
+    const expense = await TransactionsModel.findById(transaction_id, user_id);
 
     if (!expense) {
       return res.status(404).json({ message: "Expense not found" });
@@ -161,7 +161,7 @@ const updateTransaction = async (
   res: Response
 ): Promise<Response | undefined> => {
   try {
-    const { id } = req.params;
+    const { transaction_id } = req.params; 
     const user_id = req.user?.uid;
 
     if (!user_id) {
@@ -178,7 +178,7 @@ const updateTransaction = async (
     const { amount, category_id, description, date } = validationResult.data;
 
     const updatedExpense = await TransactionsModel.update({
-      id,
+      transaction_id,
       user_id, // Para el WHERE
       amount,
       category_id,
@@ -201,14 +201,14 @@ const updateTransaction = async (
 
 const deleteTransaction = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { transaction_id } = req.params;
     const user_id = req.user?.uid;
 
     if (!user_id) {
       return res.status(401).json({ message: "User not authenticated" });
     }
 
-    const deletedExpense = await TransactionsModel.remove(id, user_id);
+    const deletedExpense = await TransactionsModel.remove( transaction_id, user_id);
 
     if (!deletedExpense) {
       return res.status(404).json({

@@ -28,8 +28,8 @@ export const getExpenseByIdRequest = async(id:string)=> {
 
 }
 
-export const deleteExpenseRequest = async (id: string) => {
-  return await apiFetch(`/transactions/transaction/${id}`, {
+export const deleteExpenseRequest = async (transaction_id: string) => {
+  return await apiFetch(`/transactions/transaction/${transaction_id}`, {
     method: "DELETE",
     credentials: "include",
   });

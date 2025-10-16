@@ -1,3 +1,7 @@
+![Login Page](./client//public/images/login-image.PNG)
+
+
+
 # Gestión de Gastos
 
 Aplicación web full-stack para la gestión de gastos personales. Permite a los usuarios registrarse, iniciar sesión, crear categorías de gastos, registrar nuevos gastos y visualizarlos de forma organizada.
