@@ -68,9 +68,12 @@ const getBudget = async (req: Request, res: Response): Promise<Response> => {
 
 const getAllBudgets = async (req: Request, res: Response) => {
   try {
-    const budgets = await BudgetModel.getAll();
+
+    const userId = req.user!.uid;
+
+    const budgets = await BudgetModel.findById(userId);
     if (!budgets) {
-      return res.status(400).json({ message: "Budgets are not avalaible" });
+      return res.status(400).json([]);
     }
     res.json(budgets);
   } catch (error) {

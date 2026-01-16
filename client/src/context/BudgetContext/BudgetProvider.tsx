@@ -19,12 +19,20 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
   const getBudgets = async () => {
     try {
       const res = await getBudgetsRequest();
+      
       const budgetData = await res.json();
+      console.log(budgetData);
       setBudgets(budgetData);
-      setErrors([]);
+      setErrors([]);  
       setIsLoading(false);
-    } catch (error) {
-      setErrors(error.res.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrors([error.message]);
+      } else {
+        setErrors(["An unexpected error occurred"]);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,15 +54,31 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
       setBudgets([...budgets, budgetData]);
       setErrors([]);
       setIsLoading(false);
-    } catch (error) {
-      setErrors(["Hubo un problema al crear el presupuesto"]);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrors([error.message]);
+      } else {
+        setErrors(["An unexpected error occurred"]);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const updateBudget = async (id: string, budget: BudgetType) => {};
 
   const deleteBudget = async (id: string) => {
-    await deleteBudgetRequest(id)
+    try {
+      await deleteBudgetRequest(id)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrors([error.message]);
+      } else {
+        setErrors(["An unexpected error occurred"]);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
