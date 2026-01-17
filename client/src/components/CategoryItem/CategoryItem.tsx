@@ -2,8 +2,11 @@ import { useCategories } from "../../hooks/useCategories";
 import Button from "../Button/Button";
 import { Form } from "../Form/Form";
 import { CheckIcon, SquarePenIcon, TrashIcon } from "../Icons/Icons";
+import { CategoryIcon } from "../CategoryIcon/CategoryIcon";
 
-export const CategoryItem = ({ category }) => {
+import { Category } from "../../types/categories.types";
+
+export const CategoryItem = ({ category }: { category: Category }) => {
   const {
     editingId,
     updateCategoryName,
@@ -62,11 +65,8 @@ export const CategoryItem = ({ category }) => {
           </Form>
         </div>
       ) : (
-        <div className="flex flex-wrap gap-2  text-center  md:flex-row justify-center">
-          <p className="w-full xl:text-xl ">
-            {category.category_name.slice(0, 1).toLocaleUpperCase() +
-              category.category_name.slice(1)}
-          </p>
+        <div className="flex flex-wrap gap-2 items-center justify-center md:flex-row">
+          <CategoryIcon categoryName={category.category_name} />
           {category.user_id && (
             <div className="flex items-center gap-2">
               <Button

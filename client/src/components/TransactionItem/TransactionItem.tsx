@@ -4,7 +4,7 @@ import { useTransactions } from "../../hooks/useExpenses";
 import { useCategories } from "../../hooks/useCategories";
 import { Transactions } from "../../types/transcations.types";
 
-export const TransactionItem = ({ transaction }) => {
+export const TransactionItem = ({ transaction }: { transaction: Transactions }) => {
   const { deleteExpense } = useTransactions();
   const { categories } = useCategories();
 
@@ -26,8 +26,8 @@ export const TransactionItem = ({ transaction }) => {
     })?.category_name || "-";
 
   return (
-    <tr className=" hover:bg-blue-100 transition-colors duration-200 cursor-pointer ">
-      <td className="px-6 py-4 text-slate-700 w-1/4">
+    <tr className=" hover:bg-zinc-50 transition-colors duration-200 cursor-pointer border-b border-zinc-100 last:border-0">
+      <td className="px-6 py-4 text-zinc-600 w-1/4">
         {transaction.description ? transaction.description : "-"}
       </td>
       <td className="px-6 py-4 flex items-center justify-between w-1/2">
@@ -36,12 +36,12 @@ export const TransactionItem = ({ transaction }) => {
         </span>
         <span>{icon}</span>
       </td>
-      <td className="px-6 py-4 text-slate-700 text-center">{categoryName}</td>
-      <td className="px-6 py-4 text-slate-700">
+      <td className="px-6 py-4 text-zinc-600 text-center">{categoryName}</td>
+      <td className="px-6 py-4 text-zinc-600">
         {new Date(transaction.date).toLocaleDateString("es-ES")}
       </td>
-      <td className="px-6 py-4 text-slate-700">{transaction.amount}</td>
-      <td className="px-6 py-4 font-semibold text-slate-800 flex items-center gap-6 justify-left lg:h-[12vh] xl:h-0">
+      <td className="px-6 py-4 text-zinc-600">{transaction.amount}</td>
+      <td className="px-6 py-4 font-semibold text-zinc-900 flex items-center gap-6 justify-left lg:h-[12vh] xl:h-0">
           <Link to={`/dashboard/transaccion/${transaction.transaction_id}`}>
             <EyeIcon />
           </Link>

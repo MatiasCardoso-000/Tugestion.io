@@ -15,7 +15,7 @@ export const SearchBar = () => {
       <input
         type="text"
         placeholder="Buscar gasto"
-        className="w-2/3  md:w-1/2  lg:w-1/2 xl:w-1/4 p-1 md:p-3 border border-zinc-600 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        className="w-2/3  md:w-1/2  lg:w-1/2 xl:w-1/4 p-1 md:p-3 border border-zinc-200 rounded-md bg-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         required
         id="search"
         autoComplete="off"

@@ -15,26 +15,25 @@ interface AsideProps {
 const Aside = ({ menuOpen, setMenuOpen }: AsideProps) => {
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-30 w-64 transform bg-zinc-900 shadow-2xl transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:w-full ${
-        menuOpen ? "translate-x-0" : "-translate-x-full"
-      }  overflow-hidden`}
+      className={`fixed inset-y-0 left-0 z-30 w-64 transform bg-inherit  shadow-2xl transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:w-full ${menuOpen ? "translate-x-0" : "-translate-x-full"
+        }  overflow-hidden`}
     >
       <button
-        className="absolute top-0 right-0 p-4 text-white md:hidden"
+        className="absolute top-0 right-0 p-4 text-indigo-700 md:hidden"
         onClick={() => setMenuOpen(false)}
       >
         X
       </button>
       <div>
-        <h2 className="text-white text-2xl font-bold p-4 ">TuGestión.io</h2>
+        <h2 className="text-indigo-700 text-2xl font-bold p-4 ">TuGestión.io</h2>
         <nav>
-          <ul className="text-white text-2xl font-bold">
-            <h3 className="text-white text-xl p-4">Menú</h3>
+          <ul className="text-2xl font-bold">
+            <h3 className="text-indigo-700 text-xl p-4">Menú</h3>
             <NavLink
               to="/dashboard"
-              className="text-white text-xl font-semibold"
+              className="text-indigo-700 hover:text-zinc-200 text-xl font-semibold"
             >
-              <li className="flex items-center gap-4 hover:bg-zinc-800 transition-colors p-4 cursor-pointer">
+              <li className="flex items-center gap-4 hover:bg-indigo-700 hover:text-zinc-200 transition-colors p-4 cursor-pointer">
                 <div>
                   <HomeIcon />
                 </div>
@@ -42,12 +41,12 @@ const Aside = ({ menuOpen, setMenuOpen }: AsideProps) => {
               </li>
             </NavLink>
 
-            {/* <li ><a href="/dashboard/expenses" className='text-white text-xl'>Gastos</a></li> */}
+
             <NavLink
               to="/dashboard/categorias"
-              className="text-white text-xl font-semibold"
+              className="text-indigo-700 hover:text-zinc-200 text-xl font-semibold"
             >
-              <li className="flex items-center gap-4 hover:bg-zinc-800 transition-colors p-4 cursor-pointer">
+              <li className="flex items-center gap-4 hover:bg-indigo-700  transition-colors p-4 cursor-pointer">
                 <div>
                   <ListIcon />
                 </div>
@@ -56,10 +55,10 @@ const Aside = ({ menuOpen, setMenuOpen }: AsideProps) => {
             </NavLink>
             <NavLink
               to="/dashboard/perfil"
-              className="text-white text-xl font-semibold"
+              className="text-indigo-700 hover:text-zinc-200  text-xl font-semibold"
             >
-              <li className="flex items-center gap-4 hover:bg-zinc-800 transition-colors p-4 cursor-pointer">
-                <div className="text-white">
+              <li className="flex items-center gap-4 hover:bg-indigo-700 hover:text-zinc-200 transition-colors p-4 cursor-pointer">
+                <div>
                   <UserIcon />
                 </div>
                 Perfil

@@ -29,16 +29,16 @@ export const TransactionCard = ({
       ?.category_name || "-";
 
   return (
-    <div className="bg-white flex flex-col justify-between gap-4 h-[30vh] rounded-lg shadow-md p-4 mb-4">
+    <div className="bg-white flex flex-col justify-between gap-4 h-[30vh] rounded-2xl shadow-lg border border-zinc-100 p-4 mb-4">
         <div className="flex flex-col items-center gap-2">
          <div>
            {icon}
          </div>
           <div className=" w-full ">
-            <p className="text-center text-sm font-semibold text-slate-800">
+            <p className="text-center text-sm font-semibold text-zinc-900">
               {transaction.description ? transaction.description : "-"}
             </p>
-            <p className="text-sm text-slate-500 text-center">{categoryName}</p>
+            <p className="text-sm text-zinc-500 text-center">{categoryName}</p>
           </div>
         </div>
       <div className="flex items-center justify-center mb-4">
@@ -46,20 +46,20 @@ export const TransactionCard = ({
           <p className={`text-lg font-semibold ${amountColor}`}>
             {transaction.amount}
           </p>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-zinc-500">
             {new Date(transaction.date).toLocaleDateString("es-ES")}
           </p>
         </div>
       </div>
       <div className="flex justify-center gap-4">
-        <Link to={`/dashboard/transaccion/${transaction.id}`}>
-          <button className="text-slate-500 hover:text-slate-700 align-middle">
+        <Link to={`/dashboard/transaccion/${transaction.transaction_id}`}>
+          <button className="text-zinc-400 hover:text-indigo-600 align-middle transition-colors">
             <EyeIcon />
           </button>
         </Link>
         <button
-          onClick={() => deleteExpense(transaction.id)}
-          className="text-slate-500 hover:text-red-500"
+          onClick={() => deleteExpense(transaction.transaction_id)}
+          className="text-zinc-400 hover:text-red-500 transition-colors"
         >
           <TrashIcon />
         </button>

@@ -19,8 +19,8 @@ const TransactionsList = () => {
 
 
   return (
-    <div className="bg-white rounded-lg shadow-2xl px-6 py-8 mt-6 w-full mx-auto">
-      <h3 className="text-3xl font-light text-slate-800 mb-6 pb-3 border-b-2 border-slate-200">
+    <div className="bg-white rounded-2xl shadow-xl border border-zinc-100 px-6 py-8 mt-6 w-full mx-auto">
+      <h3 className="text-3xl font-bold tracking-tight text-zinc-900 mb-6 pb-3 border-b border-zinc-200">
         Detalles
       </h3>
       <div>
@@ -36,7 +36,7 @@ const TransactionsList = () => {
             {/* Desktop view */}
             <div className="hidden md:block">
               <table className="w-full">
-                <thead className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                <thead className="bg-indigo-600 text-white border-b border-zinc-200">
                   <tr className="px-6 py-4 text-left font-semibold">
                     <th className="px-6 py-4 text-left font-semibold">
                       Descripción
@@ -49,7 +49,7 @@ const TransactionsList = () => {
                   </tr>
                 </thead>
                 {filterExpenses.map((transaction) => (
-                  <tbody className="divide-y divide-slate-100" key={transaction.transaction_id}>
+                  <tbody className="divide-y divide-zinc-100" key={transaction.transaction_id}>
                     <TransactionItem transaction={transaction} />
                   </tbody>
                 ))}
