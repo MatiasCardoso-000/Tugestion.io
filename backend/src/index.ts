@@ -4,7 +4,7 @@ import { router as AdminRouter } from "./routes/admin.routes";
 import { router as AuthRouter } from "./routes/user.routes";
 import { router as TransactionsRouter } from "./routes/transactions.routes";
 import { router as CategoriesRouter } from "./routes/category.routes";
-import {router as BudgetRouter} from './routes/budget.routes'
+import { router as BudgetRouter } from './routes/budget.routes'
 import cookieParser from "cookie-parser";
 import cors from 'cors';
 import { PORT } from "./config/config";
@@ -16,8 +16,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 
-app.use(cors( {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+app.use(cors({
+  origin: process.env.FRONTEND_URL || ['http://localhost:5173', 'http://localhost:5174'],
   credentials: true,
 }));
 

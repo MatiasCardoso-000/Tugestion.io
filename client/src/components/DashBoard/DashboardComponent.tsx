@@ -5,24 +5,29 @@ import { useTransactions } from "../../hooks/useExpenses";
 import { SearchBar } from "../SearchBar/SearchBar";
 import TransactionsList from "../TransactionsList/TransactionsList";
 import TransactionsListSkeleton from "../TransactionsList/TransactionsListSkeleton";
-import { ArrowDown, ArrowUp, TrendingDown, Wallet } from "lucide-react";
+import { ArrowDown, ArrowUp, TrendingDown, Wallet, TrendingUp, Minus } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from "recharts";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 export const DashboardComponent = () => {
   const { isLoading, transactions } = useTransactions();
 
   const totalSpending = useMemo(() => {
     return transactions
-      .filter(t => t.transaction_type.toLowerCase() === "expense")
-      .reduce((sum, t) => sum + t.amount, 0);
+      .filter(t => t.transaction_type.toLowerCase() === "gasto")
+      .reduce((sum, t) => { return Number(sum) + Number(t.amount) }, 0);
   }, [transactions]);
 
   const totalIncome = useMemo(() => {
     return transactions
-      .filter(t => t.transaction_type.toLowerCase() === "income")
-      .reduce((sum, t) => sum + t.amount, 0);
+      .filter(t => t.transaction_type.toLowerCase() === "ingreso")
+      .reduce((sum, t) => { return Number(sum) + Number(t.amount) }, 0);
   }, [transactions]);
+
+  const balance = useMemo(() => {
+    return totalIncome - totalSpending;
+  }, [totalIncome, totalSpending]);
+
 
   const monthlyData = useMemo(() => {
     const monthMap: Record<string, { income: number; spending: number }> = {};
@@ -35,10 +40,10 @@ export const DashboardComponent = () => {
         monthMap[monthKey] = { income: 0, spending: 0 };
       }
 
-      if (t.transaction_type.toLowerCase() === "income") {
-        monthMap[monthKey].income += t.amount;
-      } else if (t.transaction_type.toLowerCase() === "expense") {
-        monthMap[monthKey].spending += t.amount;
+      if (t.transaction_type.toLowerCase() === "ingreso") {
+        monthMap[monthKey].income += Number(t.amount);
+      } else if (t.transaction_type.toLowerCase() === "gasto") {
+        monthMap[monthKey].spending += Number(t.amount);
       }
     });
 
@@ -99,6 +104,46 @@ export const DashboardComponent = () => {
           <div className="flex items-center gap-2 text-sm">
             <ArrowUp className="w-4 h-4 text-green-600" />
             <span className="text-green-600 font-medium">Entrada de dinero</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full px-2 md:px-6 mb-4">
+        <div className={`w-full bg-white rounded-2xl shadow-lg p-6 border border-zinc-100 ${balance > 0 ? 'border-emerald-200' : balance < 0 ? 'border-red-200' : ''}`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${balance > 0 ? 'bg-emerald-100' : balance < 0 ? 'bg-red-100' : 'bg-zinc-100'}`}>
+                {balance > 0 && <TrendingUp className="w-6 h-6 text-emerald-600" />}
+                {balance < 0 && <TrendingDown className="w-6 h-6 text-red-600" />}
+                {balance === 0 && <Minus className="w-6 h-6 text-zinc-600" />}
+              </div>
+              <div>
+                <h3 className="text-zinc-500 text-sm font-medium">
+                  {balance > 0 ? 'Beneficio' : balance < 0 ? 'Déficit' : 'Balance Equilibrado'}
+                </h3>
+                <p className={`text-3xl font-bold ${balance > 0 ? 'text-emerald-600' : balance < 0 ? 'text-red-600' : 'text-zinc-900'}`}>
+                  ${balance.toLocaleString()}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              {balance > 0 ? (
+                <>
+                  <TrendingUp className="w-4 h-4 text-emerald-600" />
+                  <span className="text-emerald-600 font-medium">Saldo positivo</span>
+                </>
+              ) : balance < 0 ? (
+                <>
+                  <TrendingDown className="w-4 h-4 text-red-600" />
+                  <span className="text-red-600 font-medium">Saldo negativo</span>
+                </>
+              ) : (
+                <>
+                  <Minus className="w-4 h-4 text-zinc-600" />
+                  <span className="text-zinc-600 font-medium">Sin ganancias ni pérdidas</span>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

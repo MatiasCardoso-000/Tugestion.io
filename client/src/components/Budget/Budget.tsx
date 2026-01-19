@@ -36,120 +36,85 @@ const Budget = () => {
   }, 0);
 
   return (
-    <div className="budget-form-container w-full ring-2 ring-zinc-50 py-2 px-4">
-      <div
-        className="bg-blue-100 border-t-4 border-blue-500 rounded-b text-blue-900 px-4 py-3 shadow-md mb-6"
-        role="alert"
-      >
-        <div className="flex items-center">
-          <div className="py-1">
-            <svg
-              className="fill-current h-6 w-6 text-blue-500 mr-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zM9 11v4h2v-4h-2zm0-4h2v2h-2V7z" />
+    <div className="w-full">
+      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border-l-4 border-indigo-600 rounded-r-2xl p-6 mb-8 shadow-sm">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <div>
-            <p className="font-bold">Presupuesto Total</p>
-            <p className="text-2xl font-semibold">${total}</p>
+            <p className="text-sm font-semibold text-zinc-600 mb-1">Presupuesto Total</p>
+            <p className="text-3xl font-bold text-zinc-900">${total.toLocaleString()}</p>
           </div>
         </div>
       </div>
-      <div className="mt-8">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">
-          Agregar presupuesto
-        </h2>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="p-6 bg-white rounded-lg shadow-md mt-6 mb-6"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+      <div className="bg-white rounded-2xl shadow-xl border border-zinc-100 p-8 mb-8">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-zinc-100">
+          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-zinc-900">Agregar presupuesto</h2>
+            <p className="text-zinc-500 text-sm">Define un límite para tus gastos</p>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex flex-col gap-2">
-              <label htmlFor="budgetAmount" className="text-lg font-semibold">
-                Monto del presupuesto:
+              <label htmlFor="budgetAmount" className="text-sm font-semibold text-zinc-700">
+                Monto del presupuesto
               </label>
-              <input
-                type="text"
-                id="budgetAmount"
-                placeholder="Ej: 1000"
-                {...register(`budget_amount`, { required: true })}
-                className="
-                /* Estilos base del input */
-                p-2 rounded-md border border-gray-300
-                text-gray-900 bg-white
-                
-                /* Apariencia para remover la flecha del input */
-                appearance-none
-                
-                /* Estilos para el focus */
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                
-                /* Estilo del cursor */
-                cursor-pointer
-              "
-              />
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 font-medium">$</span>
+                <input
+                  type="number"
+                  id="budgetAmount"
+                  placeholder="Ej: 1000"
+                  {...register(`budget_amount`, { required: true })}
+                  className="w-full pl-8 pr-4 py-3 border border-zinc-300 rounded-xl bg-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                />
+              </div>
             </div>
-            <div className="form-group flex flex-col gap-2 ">
-              <label htmlFor="budgetMonth" className="text-lg font-semibold">
-                Mes y Año:
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="budgetMonth" className="text-sm font-semibold text-zinc-700">
+                Mes y Año
               </label>
               <input
                 type="date"
                 id="budgetMonth"
                 {...register(`budget_period`, { required: false })}
-                className="
-                /* Estilos base del input */
-                p-2 rounded-md border border-gray-300
-                text-gray-900 bg-white
-                
-                /* Apariencia para remover la flecha del input */
-                appearance-none
-                
-                /* Estilos para el focus */
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                
-                /* Estilo del cursor */
-                cursor-pointer
-              "
+                className="w-full px-4 py-3 border border-zinc-300 rounded-xl bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all cursor-pointer"
               />
             </div>
-            <div className="form-group flex flex-col gap-2 ">
-              <label htmlFor="budgetMonth" className="text-lg font-semibold">
-                Categoria
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="budgetCategory" className="text-sm font-semibold text-zinc-700">
+                Categoría
               </label>
               <select
                 {...register(`category_id`, { required: true })}
                 defaultValue={""}
-                className="
-                /* Estilos base del input */
-                p-2 rounded-md border border-gray-300
-                text-gray-900 bg-white
-                
-                /* Apariencia para remover la flecha del input */
-                appearance-none
-                
-                /* Estilos para el focus */
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                
-                /* Estilo del cursor */
-                cursor-pointer
-              "
+                className="w-full px-4 py-3 border border-zinc-300 rounded-xl bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all cursor-pointer appearance-none"
               >
                 <option
                   disabled
-                  defaultValue={""}
-                  className="disabled:hidden text-zinc-400"
+                  value=""
+                  className="text-zinc-400"
                 >
-                  Ej: Transporte
+                  Seleccionar categoría...
                 </option>
                 {categories.map((category: Category) => {
                   return (
                     <option
                       key={category.category_id}
                       value={category.category_id}
-                      className="w-full"
                     >
                       {category.category_name}
                     </option>
@@ -158,43 +123,84 @@ const Budget = () => {
               </select>
             </div>
           </div>
-          <div className="mt-6 text-right">
-            <Button buttonStyle="px-6 py-2 bg-zinc-900 text-white font-semibold rounded-md hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500 transition duration-150 ease-in-out cursor-pointer">
-              Agregar
+
+          <div className="text-right">
+            <Button buttonStyle="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer">
+              Agregar Presupuesto
             </Button>
           </div>
         </form>
-        <h3 className="text-xl font-bold mb-4">Presupuestos por categoría</h3>
-        <ul className=" space-y-3 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] justify-center  gap-2">
-          {budgets.map((budget) => {
-            const categoryName = categories.find(
-              (c) => c.category_id === budget.category_id
-            )?.category_name;
+      </div>
 
-            return (
-              <li
-                key={budget.budget_id}
-                className="text-gray-700 gap-4 ring-2 ring-blue-400 bg-blue-200 w-full h-[100px] p-2 rounded-md md:w-1/2  mx-auto flex justify-between items-start"
-              >
-                <div>
-                  <p className="font-semibold ">
-                    {categoryName}: ${budget.amount}
-                  </p>
-                  <p>
-                    {" "}
-                    Periodo: {budget.month}/{budget.year}
-                  </p>
-                </div>
-                <button onClick={() => deleteBudget(budget.budget_id)} className="cursor-pointer p-2 hover:bg-blue-300 transition-colors">
-                  <TrashIcon />
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-        {errors.map((e) => (
-          <div className="bg-red-500 text-white w-full px-2 text-lg">{e}</div>
-        ))}
+      <div className="bg-white rounded-2xl shadow-xl border border-zinc-100 p-8">
+        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-zinc-100">
+          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-zinc-900">Presupuestos por categoría</h3>
+            <p className="text-zinc-500 text-sm">Tus límites establecidos</p>
+          </div>
+        </div>
+
+        {budgets.length > 0 ? (
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {budgets.map((budget) => {
+              const categoryName = categories.find(
+                (c) => c.category_id === budget.category_id
+              )?.category_name;
+
+              return (
+                <li
+                  key={budget.budget_id}
+                  className="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100 rounded-xl p-5 flex flex-col gap-3 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="font-bold text-zinc-900 text-lg mb-1">{categoryName}</p>
+                      <p className="text-2xl font-bold text-indigo-600">${budget.amount.toLocaleString()}</p>
+                      <p className="text-sm text-zinc-600 mt-1">
+                        Período: {budget.month}/{budget.year}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => deleteBudget(budget.budget_id)}
+                    className="self-end p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <TrashIcon />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <div className="text-center py-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-zinc-100 mb-4">
+              <svg className="w-8 h-8 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+            <p className="text-zinc-600 text-lg font-medium mb-1">
+              No hay presupuestos configurados
+            </p>
+            <p className="text-zinc-400 text-sm">
+              Agrega tu primer presupuesto para empezar a controlar tus gastos
+            </p>
+          </div>
+        )}
+
+        {errors.length > 0 && (
+          <div className="mt-6">
+            {errors.map((e, index) => (
+              <div key={index} className="bg-red-50 border-2 border-red-200 text-red-700 px-6 py-4 rounded-xl font-medium">
+                {e}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

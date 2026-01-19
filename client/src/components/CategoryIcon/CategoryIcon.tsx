@@ -34,7 +34,7 @@ export const CategoryIcon = ({ categoryName }: CategoryIconProps) => {
     if (normalizedName.includes("ocio") || normalizedName.includes("juego") || normalizedName.includes("entretenimiento")) {
       return entretenimientoIcon;
     }
-    if (normalizedName.includes("educacion") || normalizedName.includes("curso") || normalizedName.includes("universidad")) {
+    if (normalizedName.includes("educación") || normalizedName.includes("curso") || normalizedName.includes("universidad")) {
       return educacionIcon;
     }
     if (normalizedName.includes("deporte") || normalizedName.includes("gym") || normalizedName.includes("fitness")) {

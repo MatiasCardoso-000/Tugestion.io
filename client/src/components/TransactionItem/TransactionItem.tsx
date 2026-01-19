@@ -9,15 +9,15 @@ export const TransactionItem = ({ transaction }: { transaction: Transactions }) 
   const { categories } = useCategories();
 
   const isExpense = transaction.transaction_type === "gasto";
-  const amountColor = isExpense ? "text-red-500" : "text-green-500";
+  const amountColor = isExpense ? "text-red-600" : "text-emerald-600";
   const icon = isExpense ? (
-    <button className="h-5 w-5 text-red-500">
+    <div className="h-6 w-6 rounded-lg bg-red-100 flex items-center justify-center">
       <ArrowDownIcon />
-    </button>
+    </div>
   ) : (
-    <button className="h-5 w-5 text-green-500">
+    <div className="h-6 w-6 rounded-lg bg-emerald-100 flex items-center justify-center">
       <ArrowUpIcon />
-    </button>
+    </div>
   );
 
   const categoryName =
@@ -26,29 +26,48 @@ export const TransactionItem = ({ transaction }: { transaction: Transactions }) 
     })?.category_name || "-";
 
   return (
-    <tr className=" hover:bg-zinc-50 transition-colors duration-200 cursor-pointer border-b border-zinc-100 last:border-0">
-      <td className="px-6 py-4 text-zinc-600 w-1/4">
-        {transaction.description ? transaction.description : "-"}
+    <tr className="hover:bg-zinc-50 transition-colors duration-200 group">
+      <td className="px-6 py-4">
+        <div className="flex items-center gap-3">
+          {icon}
+          <span className="font-medium text-zinc-800">
+            {transaction.description ? transaction.description : "-"}
+          </span>
+        </div>
       </td>
-      <td className="px-6 py-4 flex items-center justify-between w-1/2">
-        <span className={`${amountColor} font-semibold`}>
+      <td className="px-6 py-4">
+        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${isExpense ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`}>
           {transaction.transaction_type}
         </span>
-        <span>{icon}</span>
       </td>
-      <td className="px-6 py-4 text-zinc-600 text-center">{categoryName}</td>
-      <td className="px-6 py-4 text-zinc-600">
-        {new Date(transaction.date).toLocaleDateString("es-ES")}
+      <td className="px-6 py-4">
+        <span className="text-zinc-600">{categoryName}</span>
       </td>
-      <td className="px-6 py-4 text-zinc-600">{transaction.amount}</td>
-      <td className="px-6 py-4 font-semibold text-zinc-900 flex items-center gap-6 justify-left lg:h-[12vh] xl:h-0">
-          <Link to={`/dashboard/transaccion/${transaction.transaction_id}`}>
+      <td className="px-6 py-4">
+        <span className="text-zinc-600">
+          {new Date(transaction.date).toLocaleDateString("es-ES", { day: '2-digit', month: 'short', year: 'numeric' })}
+        </span>
+      </td>
+      <td className="px-6 py-4">
+        <span className={`font-semibold ${amountColor}`}>
+          ${Number(transaction.amount).toLocaleString()}
+        </span>
+      </td>
+      <td className="px-6 py-4">
+        <div className="flex items-center justify-end gap-2">
+          <Link 
+            to={`/dashboard/transaccion/${transaction.transaction_id}`}
+            className="p-2 rounded-lg text-zinc-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-200"
+          >
             <EyeIcon />
           </Link>
-
-        <button onClick={() => deleteExpense(transaction.transaction_id)}>
-          <TrashIcon />
-        </button>
+          <button
+            onClick={() => deleteExpense(transaction.transaction_id)}
+            className="p-2 rounded-lg text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-all duration-200"
+          >
+            <TrashIcon />
+          </button>
+        </div>
       </td>
     </tr>
   );

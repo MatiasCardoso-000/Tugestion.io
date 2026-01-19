@@ -13,13 +13,13 @@ export const TransactionCard = ({
   const { categories } = useCategories();
 
   const isExpense = transaction.transaction_type === "gasto";
-  const amountColor = isExpense ? "text-red-500" : "text-green-500";
+  const amountColor = isExpense ? "text-red-600" : "text-emerald-600";
   const icon = isExpense ? (
-    <div className="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center">
+    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center">
       <ArrowDownIcon />
     </div>
   ) : (
-    <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center">
       <ArrowUpIcon />
     </div>
   );
@@ -29,40 +29,42 @@ export const TransactionCard = ({
       ?.category_name || "-";
 
   return (
-    <div className="bg-white flex flex-col justify-between gap-4 h-[30vh] rounded-2xl shadow-lg border border-zinc-100 p-4 mb-4">
-        <div className="flex flex-col items-center gap-2">
-         <div>
-           {icon}
-         </div>
-          <div className=" w-full ">
-            <p className="text-center text-sm font-semibold text-zinc-900">
+    <div className="bg-gradient-to-br from-white to-zinc-50 rounded-2xl shadow-md border border-zinc-200 p-4 mb-4 hover:shadow-lg transition-shadow duration-300">
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-center gap-3">
+          {icon}
+          <div className="flex-1">
+            <p className="text-base font-semibold text-zinc-900 leading-tight">
               {transaction.description ? transaction.description : "-"}
             </p>
-            <p className="text-sm text-zinc-500 text-center">{categoryName}</p>
+            <p className="text-xs text-zinc-500 mt-1">{categoryName}</p>
           </div>
         </div>
-      <div className="flex items-center justify-center mb-4">
-        <div className="text-right">
-          <p className={`text-lg font-semibold ${amountColor}`}>
-            {transaction.amount}
+      </div>
+
+      <div className="flex items-center justify-between py-3 border-t border-zinc-100">
+        <div>
+          <p className={`text-xl font-bold ${amountColor}`}>
+            ${Number(transaction.amount).toLocaleString()}
           </p>
-          <p className="text-sm text-zinc-500">
-            {new Date(transaction.date).toLocaleDateString("es-ES")}
+          <p className="text-xs text-zinc-500">
+            {new Date(transaction.date).toLocaleDateString("es-ES", { day: '2-digit', month: 'short', year: 'numeric' })}
           </p>
         </div>
-      </div>
-      <div className="flex justify-center gap-4">
-        <Link to={`/dashboard/transaccion/${transaction.transaction_id}`}>
-          <button className="text-zinc-400 hover:text-indigo-600 align-middle transition-colors">
+        <div className="flex items-center gap-2">
+          <Link 
+            to={`/dashboard/transaccion/${transaction.transaction_id}`}
+            className="p-2.5 rounded-xl text-zinc-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-200"
+          >
             <EyeIcon />
+          </Link>
+          <button
+            onClick={() => deleteExpense(transaction.transaction_id)}
+            className="p-2.5 rounded-xl text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-all duration-200"
+          >
+            <TrashIcon />
           </button>
-        </Link>
-        <button
-          onClick={() => deleteExpense(transaction.transaction_id)}
-          className="text-zinc-400 hover:text-red-500 transition-colors"
-        >
-          <TrashIcon />
-        </button>
+        </div>
       </div>
     </div>
   );
