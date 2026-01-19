@@ -51,7 +51,7 @@ export const UserProfile = () => {
               </div>
               <div className="flex-1">
                 <p className="text-sm font-semibold text-zinc-500 mb-1">Correo Electrónico</p>
-                <p className="text-lg font-medium text-zinc-900">{user?.email}</p>
+                <p className="text-lg font-medium text-zinc-900">{user?.email.split("@")[0].slice(0, 3) + "***" + "@" + user?.email.split("@")[1]}</p>
               </div>
             </div>
 
@@ -64,7 +64,7 @@ export const UserProfile = () => {
               <div className="flex-1">
                 <p className="text-sm font-semibold text-zinc-500 mb-1">Miembro desde</p>
                 <p className="text-lg font-medium text-zinc-900">
-                  {new Date(user?.created_at).toLocaleDateString("es-ES", { day: '2-digit', month: 'long', year: 'numeric' })}
+                  {new Date((user!.created_at)).toLocaleDateString("es-ES", { day: '2-digit', month: 'long', year: 'numeric' })}
                 </p>
               </div>
             </div>

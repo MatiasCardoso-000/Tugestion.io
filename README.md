@@ -1,15 +1,15 @@
-# Visual Evolution (Indigo Palette Update)
+# Evolución Visual (Actualización a Paleta Índigo)
 
-We have transformed the user interface from a legacy **Red/Gray/B&W** theme to a modern, vibrant **Indigo/Zinc** design system.
+Hemos transformado la interfaz de usuario de un tema legado **Rojo/Gris/B&N** a un sistema de diseño moderno y vibrante en **Índigo/Zinc**.
 
-### 🏠 Home Page (Updated Landing)
+### 🏠 Página de Inicio (Landing Actualizada)
 ![Home Page After](./screenshots/home_after.png)
 
 ---
 
-### 🔄 Interface Comparison (Black & White vs Indigo)
+### 🔄 Comparación de Interfaz (Blanco y Negro vs Índigo)
 
-| View | Before (Black & White) | After (Indigo) |
+| Vista | Antes (Blanco y Negro) | Después (Índigo) |
 | :--- | :---: | :---: |
 | **Login** | ![Login Before](./client/public/images/login-image.PNG) | ![Login After](./screenshots/login_after.png) |
 | **Register** | ![Register Before](./client/public/images/register-image.PNG) | ![Register After](./screenshots/register_after.png) |
@@ -19,8 +19,8 @@ We have transformed the user interface from a legacy **Red/Gray/B&W** theme to a
 
 ---
 
-### 🎨 New Category Icons
-A set of custom-designed icons was added to provide a more intuitive and visual experience in the categories management.
+### 🎨 Nuevos Iconos de Categoría
+Se añadió un conjunto de iconos diseñados a medida para proporcionar una experiencia más intuitiva y visual en la gestión de categorías.
 
 <p align="center">
   <img src="./client/src/assets/imagenes/comida.png" width="80" alt="Comida">
