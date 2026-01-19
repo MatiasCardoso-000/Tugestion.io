@@ -7,15 +7,15 @@ We have transformed the user interface from a legacy **Red/Gray/B&W** theme to a
 
 ---
 
-### 🔄 Interface Comparison (Before vs After)
+### 🔄 Interface Comparison (Black & White vs Indigo)
 
-| View | Before (Original Design) | After (Indigo Design) |
+| View | Before (Black & White) | After (Indigo) |
 | :--- | :---: | :---: |
 | **Login** | ![Login Before](./client/public/images/login-image.PNG) | ![Login After](./screenshots/login_after.png) |
 | **Register** | ![Register Before](./client/public/images/register-image.PNG) | ![Register After](./screenshots/register_after.png) |
-| **Dashboard** | ![Dashboard Before](./client/public/images/Dashboard-image.PNG) | ![Dashboard After](./screenshots/Dashboard.PNG) |
-| **Categories** | ![Categories Before](./client/public/images/Categories-image.PNG) | ![Categories After](./screenshots/Categories.PNG) |
-| **Profile** | ![Profile Before](./client/public/images/Profile1-image.PNG) | ![Profile After](./screenshots/Profile1.PNG) |
+| **Dashboard** | ![Dashboard Before](./client/public/images/Dashboard-image.PNG) | ![Dashboard After](./screenshots/Dashboard.png) |
+| **Categories** | ![Categories Before](./client/public/images/Categories-image.PNG) | ![Categories After](./screenshots/Categories.png) |
+| **Profile** | ![Profile Before](./client/public/images/Profile1-image.PNG) | ![Profile After](./screenshots/Profile1.png) |
 
 ---
 
