@@ -1,16 +1,39 @@
-# Visual Changes (Indigo Palette)
+# Visual Evolution (Indigo Palette Update)
 
-We have updated the primary color palette from **Red/Orange** to **Indigo** for a more modern and consistent aesthetic across the platform.
+We have transformed the user interface from a legacy **Red/Gray/B&W** theme to a modern, vibrant **Indigo/Zinc** design system.
 
-### Home Page (Updated)
+### 🏠 Home Page (Updated Landing)
 ![Home Page After](./screenshots/home_after.png)
 
-### Comparison: Before vs After
+---
 
-| Page | Before (Red) | After (Indigo) |
+### 🔄 Interface Comparison (Before vs After)
+
+| View | Before (Original Design) | After (Indigo Design) |
 | :--- | :---: | :---: |
 | **Login** | ![Login Before](./client/public/images/login-image.PNG) | ![Login After](./screenshots/login_after.png) |
 | **Register** | ![Register Before](./client/public/images/register-image.PNG) | ![Register After](./screenshots/register_after.png) |
+| **Dashboard** | ![Dashboard Before](./client/public/images/Dashboard-image.PNG) | ![Dashboard After](./screenshots/Dashboard.PNG) |
+| **Categories** | ![Categories Before](./client/public/images/Categories-image.PNG) | ![Categories After](./screenshots/Categories.PNG) |
+| **Profile** | ![Profile Before](./client/public/images/Profile1-image.PNG) | ![Profile After](./screenshots/Profile1.PNG) |
+
+---
+
+### 🎨 New Category Icons
+A set of custom-designed icons was added to provide a more intuitive and visual experience in the categories management.
+
+<p align="center">
+  <img src="./client/src/assets/imagenes/comida.png" width="80" alt="Comida">
+  <img src="./client/src/assets/imagenes/deporte.png" width="80" alt="Deporte">
+  <img src="./client/src/assets/imagenes/educacion.png" width="80" alt="Educación">
+  <img src="./client/src/assets/imagenes/entretenimiento.png" width="80" alt="Entretenimiento">
+  <img src="./client/src/assets/imagenes/regalos.png" width="80" alt="Regalos">
+  <img src="./client/src/assets/imagenes/salud.png" width="80" alt="Salud">
+  <img src="./client/src/assets/imagenes/supermercado.png" width="80" alt="Supermercado">
+  <img src="./client/src/assets/imagenes/transporte.png" width="80" alt="Transporte">
+  <img src="./client/src/assets/imagenes/viajes.png" width="80" alt="Viajes">
+  <img src="./client/src/assets/imagenes/vivienda.png" width="80" alt="Vivienda">
+</p>
 
 ---
 
