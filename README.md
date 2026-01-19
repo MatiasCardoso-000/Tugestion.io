@@ -1,12 +1,18 @@
-![Login Page](./client//public/images/login-image.PNG)
-![Register Page](./client//public/images/register-image.PNG)
-![Dashboard](./client//public/images/Dashboard-image.PNG)
-![Categories](./client//public/images/Categories-image.PNG)
-![Profile](./client//public/images/Profile1-image.PNG)
-![Profile](./client//public/images/Profile2-image.PNG)
-![Transaction Info](./client//public/images/TransactionInfo-image.PNG)
+# Visual Changes (Indigo Palette)
 
+We have updated the primary color palette from **Red/Orange** to **Indigo** for a more modern and consistent aesthetic across the platform.
 
+### Home Page (Updated)
+![Home Page After](./screenshots/home_after.png)
+
+### Comparison: Before vs After
+
+| Page | Before (Red) | After (Indigo) |
+| :--- | :---: | :---: |
+| **Login** | ![Login Before](./client/public/images/login-image.PNG) | ![Login After](./screenshots/login_after.png) |
+| **Register** | ![Register Before](./client/public/images/register-image.PNG) | ![Register After](./screenshots/register_after.png) |
+
+---
 
 # Gestión de Gastos
 
