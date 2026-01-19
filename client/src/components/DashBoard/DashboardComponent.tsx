@@ -5,9 +5,52 @@ import { useTransactions } from "../../hooks/useExpenses";
 import { SearchBar } from "../SearchBar/SearchBar";
 import TransactionsList from "../TransactionsList/TransactionsList";
 import TransactionsListSkeleton from "../TransactionsList/TransactionsListSkeleton";
+import { ArrowDown, ArrowUp, TrendingDown, Wallet } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from "recharts";
+import { useMemo } from "react";
 
 export const DashboardComponent = () => {
   const { isLoading, transactions } = useTransactions();
+
+  const totalSpending = useMemo(() => {
+    return transactions
+      .filter(t => t.transaction_type.toLowerCase() === "expense")
+      .reduce((sum, t) => sum + t.amount, 0);
+  }, [transactions]);
+
+  const totalIncome = useMemo(() => {
+    return transactions
+      .filter(t => t.transaction_type.toLowerCase() === "income")
+      .reduce((sum, t) => sum + t.amount, 0);
+  }, [transactions]);
+
+  const monthlyData = useMemo(() => {
+    const monthMap: Record<string, { income: number; spending: number }> = {};
+
+    transactions.forEach(t => {
+      const date = new Date(t.date);
+      const monthKey = date.toLocaleString("es-ES", { month: "short", year: "numeric" });
+
+      if (!monthMap[monthKey]) {
+        monthMap[monthKey] = { income: 0, spending: 0 };
+      }
+
+      if (t.transaction_type.toLowerCase() === "income") {
+        monthMap[monthKey].income += t.amount;
+      } else if (t.transaction_type.toLowerCase() === "expense") {
+        monthMap[monthKey].spending += t.amount;
+      }
+    });
+
+    return Object.entries(monthMap)
+      .map(([month, data]) => ({ month, ...data }))
+      .sort((a, b) => {
+        const [aMonth, aYear] = a.month.split(" ");
+        const [bMonth, bYear] = b.month.split(" ");
+        return parseInt(aYear) - parseInt(bYear) ||
+          aMonth.localeCompare(bMonth, "es-ES");
+      });
+  }, [transactions]);
 
   return (
     <div className="w-full flex flex-col justify-between items-center gap-2 px-2 py-8 bg-zinc-50">
@@ -21,7 +64,102 @@ export const DashboardComponent = () => {
           </p>
         </div>
       </div>
-      <SearchBar />
+
+      <div className="w-full flex flex-col md:flex-row gap-4 px-2 md:px-6 mb-4">
+        <div className="w-full md:w-1/2 bg-white rounded-2xl shadow-lg p-6 border border-zinc-100">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                <TrendingDown className="w-6 h-6 text-red-600" />
+              </div>
+              <div>
+                <h3 className="text-zinc-500 text-sm font-medium">Total Gastos</h3>
+                <p className="text-3xl font-bold text-zinc-900">${totalSpending.toLocaleString()}</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <ArrowDown className="w-4 h-4 text-red-600" />
+            <span className="text-red-600 font-medium">Salida de dinero</span>
+          </div>
+        </div>
+
+        <div className="w-full md:w-1/2 bg-white rounded-2xl shadow-lg p-6 border border-zinc-100">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <ArrowUp className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-zinc-500 text-sm font-medium">Total Ingresos</h3>
+                <p className="text-3xl font-bold text-zinc-900">${totalIncome.toLocaleString()}</p>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <ArrowUp className="w-4 h-4 text-green-600" />
+            <span className="text-green-600 font-medium">Entrada de dinero</span>
+          </div>
+        </div>
+      </div>
+
+      {monthlyData.length > 0 && (
+        <div className="w-full bg-white rounded-2xl shadow-lg p-6 border border-zinc-100 mb-4 px-2 md:px-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+              <Wallet className="w-6 h-6 text-blue-600" />
+            </div>
+            <div>
+              <h3 className="text-zinc-900 text-lg font-bold">Ingresos vs Gastos</h3>
+              <p className="text-zinc-500 text-sm">Comparación mensual</p>
+            </div>
+          </div>
+          <div className="w-full h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={monthlyData}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e4e4e7" />
+                <XAxis
+                  dataKey="month"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "#71717a", fontSize: 12 }}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "#71717a", fontSize: 12 }}
+                  tickFormatter={(value) => `$${value}`}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #e4e4e7",
+                    borderRadius: "8px"
+                  }}
+                  formatter={(value?: string, name?: string): [string, string] => [`$${value}`, name!]}
+                />
+                <Legend
+                  verticalAlign="top"
+                  height={36}
+                  wrapperStyle={{ fontSize: "12px" }}
+                />
+                <Bar
+                  dataKey="income"
+                  name="Ingresos"
+                  fill="#22c55e"
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar
+                  dataKey="spending"
+                  name="Gastos"
+                  fill="#ef4444"
+                  radius={[4, 4, 0, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
 
       <Link
         to={"/dashboard/registrar-gasto"}
@@ -29,7 +167,7 @@ export const DashboardComponent = () => {
       >
         <Button
           buttonStyle={
-            "bg-indigo-600 px-4 py-2 text-white flex items-center justify-evenly rounded-xl text-sm cursor-pointer hover:bg-indigo-700 transition-colors shadow-xl md:absolute right-10 bottom-10"
+            "bg-red-600 px-4 py-2 text-white flex items-center justify-evenly rounded-xl text-sm cursor-pointer hover:bg-red-700 transition-colors shadow-xl md:absolute right-10 bottom-10"
           }
         >
           <PlusIcon /> Nuevo Gasto
@@ -52,7 +190,7 @@ export const DashboardComponent = () => {
         <Link to={"/dashboard/registrar-gasto"}>
           <Button
             buttonStyle={
-              "bg-indigo-600 px-4 py-2 text-white flex items-center rounded-xl text-sm cursor-pointer hover:bg-indigo-700 transition-colors shadow-xl"
+              "bg-indigo-600 px-4 py-2 text-white flex items-center rounded-xl text-sm cursor-pointer hover:bg-indigo-700 hover:text-zinc-200 transition-colors shadow-xl"
             }
           >
             <PlusIcon /> Nuevo Gasto

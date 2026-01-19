@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { HamburguerIcon, SettingsIcon } from "../Icons/Icons";
 
-const Header = ({ toggleMenu }) => {
+const Header = ({ toggleMenu }: { toggleMenu: () => void }) => {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 

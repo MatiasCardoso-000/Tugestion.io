@@ -6,8 +6,8 @@ import { Input } from "../Input/Input";
 import { useForm } from "react-hook-form";
 import { User } from "../../types/user.types";
 import { useAuth } from "../../hooks/useAuth";
-import { useEffect } from "react";
-import { BarChart3, Key, Mail, ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
+import { BarChart3, Key, Mail, ArrowLeft, Eye, EyeClosed } from "lucide-react";
 
 export const LoginComponent = () => {
   const {
@@ -17,6 +17,8 @@ export const LoginComponent = () => {
   } = useForm<User>();
 
   const { signIn, isAuthenticated, errors: LoginErrors } = useAuth();
+
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const navigate = useNavigate();
 
@@ -32,26 +34,26 @@ export const LoginComponent = () => {
 
   return (
     <div className="min-h-screen bg-zinc-50 flex flex-col items-center justify-center p-4">
-      <Link to="/" className="absolute top-8 left-8 flex items-center gap-2 text-zinc-500 hover:text-indigo-600 transition-colors font-medium">
+      <Link to="/" className="absolute top-8 left-8 flex items-center gap-2 text-zinc-500 hover:text-red-600 transition-colors font-medium">
         <ArrowLeft size={20} />
         Volver al inicio
       </Link>
 
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-zinc-100">
         <div className="flex flex-col items-center mb-8">
-            <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white mb-4 shadow-lg shadow-indigo-200">
-                <BarChart3 size={28} strokeWidth={2.5} />
-            </div>
-            <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">Bienvenido de nuevo</h1>
-            <p className="text-zinc-500">Ingresa a tu cuenta para continuar</p>
+          <div className="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center text-white mb-4 shadow-lg shadow-red-200">
+            <BarChart3 size={28} strokeWidth={2.5} />
+          </div>
+          <h1 className="text-2xl font-bold text-zinc-900 tracking-tight">Bienvenido de nuevo</h1>
+          <p className="text-zinc-500">Ingresa a tu cuenta para continuar</p>
         </div>
 
         {LoginErrors.length > 0 && (
-            <div className="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
-                {LoginErrors.map((error, i) => (
-                    <p key={i}>{error}</p>
-                ))}
-            </div>
+          <div className="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+            {LoginErrors.map((error, i) => (
+              <p key={i}>{error}</p>
+            ))}
+          </div>
         )}
 
         <Form
@@ -71,7 +73,7 @@ export const LoginComponent = () => {
                   id="email"
                   type="email"
                   placeholder="nombre@ejemplo.com"
-                  inputStyle="w-full pl-10 pr-4 py-3 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all placeholder:text-zinc-400 text-zinc-900"
+                  inputStyle="w-full pl-10 pr-4 py-3 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all placeholder:text-zinc-400 text-zinc-900"
                   register={{ ...register("email", { required: true }) }}
                   required
                 />
@@ -91,12 +93,17 @@ export const LoginComponent = () => {
                 </div>
                 <Input
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  inputStyle="w-full pl-10 pr-4 py-3 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all placeholder:text-zinc-400 text-zinc-900"
+                  inputStyle="w-full pl-10 pr-4 py-3 bg-zinc-50 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all placeholder:text-zinc-400 text-zinc-900"
                   register={{ ...register("password", { required: true }) }}
                   required
                 />
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400">
+                  {
+                    showPassword ? <button type="button" className="text-zinc-400 cursor-pointer" onClick={() => setShowPassword(false)}><Eye /></button> : <button type="button" className="text-zinc-400 cursor-pointer" onClick={() => setShowPassword(true)}><EyeClosed /></button>
+                  }
+                </div>
               </div>
               {errors.password && (
                 <span className="text-xs text-red-500 ml-1">La contraseña es requerida</span>
@@ -104,7 +111,7 @@ export const LoginComponent = () => {
             </div>
           </div>
 
-          <Button buttonStyle="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition-all shadow-lg shadow-indigo-200 active:scale-[0.98]">
+          <Button buttonStyle="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-all shadow-lg shadow-red-200 active:scale-[0.98]">
             Iniciar Sesión
           </Button>
 
@@ -112,7 +119,7 @@ export const LoginComponent = () => {
             ¿No tienes una cuenta?{" "}
             <Link
               to="/register"
-              className="text-indigo-600 font-semibold hover:text-indigo-700 hover:underline"
+              className="text-red-600 font-semibold hover:text-red-700 hover:underline"
             >
               Regístrate gratis
             </Link>

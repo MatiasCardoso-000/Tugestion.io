@@ -29,7 +29,7 @@ export const CategoryItem = ({ category }: { category: Category }) => {
   return (
     <li
       key={category.category_id}
-      className="text-gray-700 gap-4 ring-2 ring-blue-400 bg-blue-200 w-full h-[100px] p-2 rounded-md"
+      className="group relative bg-white border border-zinc-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all duration-200 flex items-center justify-center"
     >
       {editingId === category.category_id ? (
         <div className="w-full flex items-center gap-4">
@@ -65,22 +65,22 @@ export const CategoryItem = ({ category }: { category: Category }) => {
           </Form>
         </div>
       ) : (
-        <div className="flex flex-wrap gap-2 items-center justify-center md:flex-row">
+        <div className="flex flex-col items-center justify-center text-center">
           <CategoryIcon categoryName={category.category_name} />
           {category.user_id && (
-            <div className="flex items-center gap-2">
+            <div className="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <Button
-                buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer rounded-md"
+                buttonStyle="p-1.5 bg-zinc-100 hover:bg-indigo-100 hover:text-indigo-600 cursor-pointer rounded-lg transition-colors"
                 onClick={() => {
                   setEditingId(category.category_id);
                   setUpdateCategoryName(category.category_name);
                   setCreateNewCategory(false);
                 }}
               >
-                <SquarePenIcon styleType={""} />
+                <SquarePenIcon styleType={"w-4 h-4"} />
               </Button>
               <Button
-                buttonStyle="p-2 hover:bg-zinc-200  cursor-pointer rounded-md"
+                buttonStyle="p-1.5 bg-zinc-100 hover:bg-red-100 hover:text-red-600 cursor-pointer rounded-lg transition-colors"
                 onClick={() => deleteCategory(category.category_id)}
               >
                 <TrashIcon />
@@ -88,7 +88,7 @@ export const CategoryItem = ({ category }: { category: Category }) => {
             </div>
           )}
         </div>
-      )}{" "}
+      )}
     </li>
   );
 };

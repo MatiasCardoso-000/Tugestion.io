@@ -36,7 +36,7 @@ const TransactionsList = () => {
             {/* Desktop view */}
             <div className="hidden md:block">
               <table className="w-full">
-                <thead className="bg-indigo-600 text-white border-b border-zinc-200">
+                <thead className="bg-zinc-600 text-white border-b border-zinc-200">
                   <tr className="px-6 py-4 text-left font-semibold">
                     <th className="px-6 py-4 text-left font-semibold">
                       Descripción
