@@ -16,11 +16,11 @@ const Budget = () => {
   const { categories } = useCategories();
 
   const onSubmit = async (data: BudgetType) => {
-    const month = new Date(data.budget_period).getMonth() + 1;
-    const year = new Date(data.budget_period).getFullYear();
+    const month = new Date(data.month).getMonth() + 1;
+    const year = new Date(data.year).getFullYear();
 
     createBudget({
-      amount: Number(data.budget_amount),
+      amount: Number(data.amount),
       month: month,
       year: year,
       category_id: data.category_id,
@@ -34,7 +34,6 @@ const Budget = () => {
   const total = budgets.reduce((acc, budget) => {
     return acc + Number(budget.amount);
   }, 0);
-
   return (
     <div className="w-full">
       <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border-l-4 border-indigo-600 rounded-r-2xl p-6 mb-8 shadow-sm">
@@ -76,7 +75,7 @@ const Budget = () => {
                   type="number"
                   id="budgetAmount"
                   placeholder="Ej: 1000"
-                  {...register(`budget_amount`, { required: true })}
+                  {...register(`amount`, { required: true })}
                   className="w-full pl-8 pr-4 py-3 border border-zinc-300 rounded-xl bg-white text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
                 />
               </div>
@@ -89,7 +88,7 @@ const Budget = () => {
               <input
                 type="date"
                 id="budgetMonth"
-                {...register(`budget_period`, { required: false })}
+                {...register(`month`, { required: false })}
                 className="w-full px-4 py-3 border border-zinc-300 rounded-xl bg-white text-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all cursor-pointer"
               />
             </div>
@@ -167,7 +166,7 @@ const Budget = () => {
                     </div>
                   </div>
                   <button
-                    onClick={() => deleteBudget(budget.budget_id)}
+                    onClick={() => deleteBudget(budget.budget_id!)}
                     className="self-end p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                   >
                     <TrashIcon />

@@ -19,11 +19,10 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
   const getBudgets = async () => {
     try {
       const res = await getBudgetsRequest();
-      
+
       const budgetData = await res.json();
-      console.log(budgetData);
-      setBudgets(budgetData);
-      setErrors([]);  
+      setBudgets([...budgets, ...budgetData]);
+      setErrors([]);
       setIsLoading(false);
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -40,15 +39,15 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
     try {
       const res = await createBudgetRequest(budget);
       const budgetData = await res.json();
-      
+
       if (!res.ok) {
-        let errorMessages;
+        let errorMessages: string[] = [];
 
         if (budgetData.message) {
           errorMessages = [budgetData.message];
         }
         setErrors(errorMessages);
-        return
+        return;
       }
 
       setBudgets([...budgets, budgetData]);
@@ -65,9 +64,9 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
     }
   };
 
-  const updateBudget = async (id: string, budget: BudgetType) => {};
+  const updateBudget = async (id: number, budget: BudgetType) => { };
 
-  const deleteBudget = async (id: string) => {
+  const deleteBudget = async (id: number) => {
     try {
       await deleteBudgetRequest(id)
     } catch (error: unknown) {
@@ -84,7 +83,7 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setErrors([]);
-    },3000);
+    }, 3000);
     return () => clearTimeout(timer);
   }, [errors]);
 

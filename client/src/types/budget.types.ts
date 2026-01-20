@@ -1,8 +1,9 @@
 export interface BudgetType {
-    budget_id?: string;
+    budget_id?: number;
     category_id: number;
-    budget_amount: number;
-    budget_period: string;
     createdAt?: Date;
     updatedAt?: Date;
+    amount: number;
+    month: number;
+    year: number;
 }
